@@ -12,7 +12,7 @@
 
 * gradle 로 구성됨
 
-  * bsd 계열
+  * osx, linux
   ```
   ./gradlew bootRun
   ```
