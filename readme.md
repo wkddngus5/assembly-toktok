@@ -12,9 +12,22 @@
 
 * gradle 로 구성됨
 
-```
-./gradlew bootRun
-```
+  * bsd 계열
+  ```
+  ./gradlew bootRun
+  ```
+  * windows
+  ```
+  gradlew.bat bootRun
+  ```
+
+  jar 파일 실행후 localhost:8080 으로 확인 가능
+
+  ```
+  curl localhost:8080
+  ```
+
+  또는 브라우저에서 http://loaclhost:8080 접속
 
 ## 참고사항
 
