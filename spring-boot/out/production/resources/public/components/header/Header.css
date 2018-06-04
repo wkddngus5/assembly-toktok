@@ -1,0 +1,27 @@
+.header {
+    margin: 0;
+    padding: 60px 43px;
+}
+
+.header .menu {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+
+.right-elements {
+    display: inline-block;
+    float: right;
+}
+
+.search-zone {
+    vertical-align: top;
+    display: inline-block;
+    margin: 0 40px 0 0 ;
+    background-color: #5d9eee;
+}
+
+.menu {
+    display: inline-block;
+}
