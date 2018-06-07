@@ -4,3 +4,85 @@ html, body {
     margin: 0;
     background-color: #f1f1f1;
 }
+
+.header {
+    margin: 0;
+    padding: 20px;
+}
+
+.logo {
+    width: 70px;
+    height: 22px;
+    background-image: url("/img/logo.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+#search-zone {
+    display: inline-block;
+    width: 100px;
+    float: right;
+    vertical-align: top;
+    background-color: #5d9eee;
+    margin: 0 5px 0 0;
+}
+
+.search-text {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 -5px 0 10px;
+}
+
+.header .menu {
+    width: 20px;
+    height: 20px;
+    background-size: cover;
+}
+
+
+.right-elements {
+    display: inline-block;
+    float: right;
+}
+
+.search-zone {
+    vertical-align: top;
+    display: inline-block;
+    margin: 0 40px 0 0 ;
+    background-color: #5d9eee;
+}
+
+.menu {
+    display: inline-block;
+}
+
+#demo-menu-lower-right {
+    float: right;
+}
+
+footer {
+    background-color: #383838;
+    color: #717171;
+    height: 150px;
+}
+
+footer .left-side{
+    display: inline-block;
+    float: left;
+    margin: 30px 0 0 20px;
+}
+
+footer .right-side {
+    display: inline-block;
+    float: right;
+    margin: 30px 20px 0 0;
+}
+
+footer .account-list {
+    list-style: none;
+}
+
+.account-list li {
+    display: inline-block;
+}

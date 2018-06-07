@@ -3,7 +3,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.0.2.RELEASE"
     }
 }
 
@@ -32,4 +32,6 @@ dependencies {
     implementation("javax.servlet:jstl")
     implementation("org.apache.tomcat.embed:tomcat-embed-jasper")
     implementation 'pl.allegro.tech.boot:handlebars-spring-boot-starter:0.3.0'
+
+    compile("org.springframework.boot:spring-boot-devtools")
 }
