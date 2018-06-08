@@ -6,11 +6,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class WebController {
-    @GetMapping("/")
+    @GetMapping("/testWeb")
     public ModelAndView main() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("main");
+        modelAndView.setViewName("index");
         modelAndView.addObject("body", "value");
+        String[] users = {"apple", "banana1", "circ11le", "고래", "다커"};
+        modelAndView.addObject("users", users);
         return modelAndView;
     }
 }
