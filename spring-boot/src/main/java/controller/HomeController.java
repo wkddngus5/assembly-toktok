@@ -30,9 +30,10 @@ public class HomeController {
 
         modelAndView.addObject("proposals", proposalDao.findAll());
         modelAndView.addObject("questions", questionDao.findAll());
-        modelAndView.addObject("projects", projectDao.selectHottest());
+        modelAndView.addObject("projects_best", projectDao.selectByBest());
+        modelAndView.addObject("projects_imminent", projectDao.selectByImminent());
+        modelAndView.addObject("projects_new", projectDao.selecteByCreateTime());
         modelAndView.addObject("mainslieds", mainSlideDao.findAll());
-
 
         return modelAndView;
     }
