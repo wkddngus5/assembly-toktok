@@ -7,8 +7,8 @@ class carousel {
   }
 
   init() {
-    const pageListLength = this.pageList.length * 100 + 1;
-    document.querySelector('ul.carousel-page-list').style.width = `${pageListLength}%`;
+    const pageListLength = this.pageList.length * document.querySelector('.main-carousel').offsetWidth + 1;
+    document.querySelector('ul.carousel-page-list').style.width = `${pageListLength}px`;
     this.pageList.forEach(page => {
       page.style.width = 100 / this.pageList.length + '%';
     });

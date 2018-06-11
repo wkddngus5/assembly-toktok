@@ -42,7 +42,6 @@ class project {
   }
 }
 
-
-window.onload = () => {
+(function () {
   new project();
-};
+})();
