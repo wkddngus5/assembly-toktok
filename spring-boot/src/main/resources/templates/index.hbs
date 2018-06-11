@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <link rel="stylesheet" href="/css/layout.css">
     <link rel="stylesheet" href="/css/carousel.css">
-    <link rel="stylesheet" href="/css/project.css">
+    <link rel="stylesheet" href="/css/mainProjects.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 <body>
@@ -48,39 +48,21 @@
             <label class="subject-name" for="imminent">임박제안</label>
             <p class="subject-desc">마감일이 얼마 남지 않은 제안들을 확인해보세요.</p>
             <ul class="project-list imminent" id="imminent">
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">시민참여</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>임신 중단 전면 합법화를 촉구합니다.</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">시민참여</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>사립유치원 육성법 제정을 요청드립니다.</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">시민참여</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>K-POP법</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
+                {{#each projects_imminent}}
+                <a href="/projects/{{this.id}}">
+                    <li class="project">
+                        <div class="project-img">
+                            <div class="status {{this.status}}">{{this.status}}시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}">78%</p>
+                        </div>
+                    </li>
+                </a>
+                {{/each}}
             </ul>
         </div>
 
@@ -89,39 +71,19 @@
             <label class="subject-name" for="best">베스트 제안</label>
             <p class="subject-desc">가장 참여율이 높은 베스트 제안들을 확인해보세요.</p>
             <ul class="project-list best" id="best">
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">입법활동</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>몰카 판매 금지법안을 제안합니다.</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">매칭실패</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>신입사원과 복직자에게 휴가를 주세요.</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">매칭 실패</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>장애아동 참여기구를 만들어 주세요.</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
+                {{#each projects_best}}
+                    <li class="project">
+                        <div class="project-img">
+                            <div class="status">시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count" data-item="{{this.participations_count}}">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}"></p>
+                        </div>
+                    </li>
+                {{/each}}
             </ul>
         </div>
 
@@ -130,44 +92,25 @@
             <label class="subject-name" for="new">신규 제안</label>
             <p class="subject-desc">새로운 제안들을 확인해보세요.</p>
             <ul class="project-list new" id="new">
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">시민참여</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>웹소설 유통사 수수료 상한법</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">매칭실패</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>음주 범죄, 강력한 처벌이 필요합니다!</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
-                <li class="project">
-                    <div class="project-img">
-                        <div class="status">매칭 실패</div>
-                    </div>
-                    <div class="project-summary">
-                        <h5>유기견, 반려견 등 식용금지 법</h5>
-                        <div class="percentage-zone"><div class="percentage"></div></div>
-                        <p class="count">1340명</p>
-                        <p class="percentage-number">78%</p>
-                    </div>
-                </li>
+                {{#each projects_new}}
+                    <li class="project">
+                        <div class="project-img">
+                            <div class="status">시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}">78%</p>
+                        </div>
+                    </li>
+                {{/each}}
             </ul>
         </div>
     </div>
     {{> include/footer}}
     <!--<script type="text/javascript" src="/dist/index-bundle.js"></script>-->
 <script type="text/javascript" src="/js/carousel.js"></script>
+<script type="text/javascript" src="/js/mainProjects.js"></script>
 </body>
 </html>

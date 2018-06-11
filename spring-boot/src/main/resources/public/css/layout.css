@@ -21,11 +21,38 @@ html, body {
 
 #search-zone {
     display: inline-block;
-    width: 100px;
+    width: 105px;
     float: right;
     vertical-align: top;
     background-color: #5d9eee;
     margin: 0 5px 0 0;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+}
+
+#search-zone.focus {
+    width: 165px;
+}
+
+#search-zone:hover {
+    cursor: pointer;
+}
+
+#input-search {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 -5px 0 10px;
+    border: none;
+    padding: 0;
+    width: 60px;
+    font-size: 14px;
+    background-color: #5d9eee;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+}
+
+#input-search.focus {
+    width: 120px;
 }
 
 .search-text {
