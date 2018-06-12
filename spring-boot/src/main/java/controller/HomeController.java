@@ -37,10 +37,4 @@ public class HomeController {
 
         return modelAndView;
     }
-
-    @RequestMapping("/projects/{id}")
-    public ModelAndView project(ModelAndView modelAndView) {
-        modelAndView.setViewName("project");
-        return modelAndView;
-    }
 }

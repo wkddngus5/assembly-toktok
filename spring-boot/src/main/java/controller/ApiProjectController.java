@@ -13,9 +13,9 @@ public class ApiProjectController {
     @Autowired
     private ProjectDao projectDao;
 
-    @RequestMapping(value = "/projects/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/projects/{id}/{manId}", method = RequestMethod.GET)
     @ResponseStatus( HttpStatus.OK )
-    public ResponseEntity<Project> post(@PathVariable("id") final Long id) {
+    public ResponseEntity<Project> post(@PathVariable("id") final Long id, @PathVariable("manId") final Long manId) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         Project project = projectDao.findById(id).orElse(null);
