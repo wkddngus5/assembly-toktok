@@ -1,5 +1,7 @@
 package domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "projects")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Project {
     @Id
     @GeneratedValue
