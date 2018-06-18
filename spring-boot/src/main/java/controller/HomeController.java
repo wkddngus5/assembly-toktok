@@ -37,4 +37,22 @@ public class HomeController {
 
         return modelAndView;
     }
+
+    @RequestMapping("/projects/{id}")
+    public ModelAndView project(ModelAndView modelAndView) {
+        modelAndView.setViewName("project");
+        return modelAndView;
+    }
+
+    @RequestMapping("/login")
+    public ModelAndView login(ModelAndView modelAndView) {
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    @RequestMapping("/users/form")
+    public ModelAndView userForm(ModelAndView modelAndView) {
+        modelAndView.setViewName("userForm");
+        return modelAndView;
+    }
 }

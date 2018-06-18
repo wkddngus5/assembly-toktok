@@ -5,9 +5,14 @@ html, body {
     background-color: #f1f1f1;
 }
 
+a {
+    text-decoration: none;
+}
+
 .header {
     margin: 0;
     padding: 20px;
+    background-color: #FFFFFF;
 }
 
 .logo {
@@ -66,7 +71,6 @@ html, body {
     height: 20px;
     background-size: cover;
 }
-
 
 .right-elements {
     display: inline-block;
