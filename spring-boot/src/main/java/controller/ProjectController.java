@@ -20,4 +20,10 @@ public class ProjectController {
         modelAndView.addObject("project", project);
         return modelAndView;
     }
+
+    @RequestMapping("/projects")
+    public ModelAndView userForm(ModelAndView modelAndView) {
+        modelAndView.setViewName("projectList");
+        return modelAndView;
+    }
 }

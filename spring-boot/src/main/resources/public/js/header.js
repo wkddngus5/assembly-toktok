@@ -16,12 +16,9 @@ class header {
       this.inputSearch.classList.remove('focus');
     });
 
-    this.searchForm.addEventListener('click', () => {
-      console.log('asdf');
-    });
+    // this.searchForm.addEventListener('click', () => {
+    // });
   }
-
-
 }
 
 new header();

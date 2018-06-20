@@ -1,8 +1,17 @@
+@font-face {
+    font-family: NotoSans;
+    src: url("/font/NotoSans.otf") format("opentype");
+}
 html, body {
     max-width: 100%;
     overflow-x: hidden;
     margin: 0;
     background-color: #f1f1f1;
+    font-family: NotoSans;
+}
+
+h1, h2, h3 {
+    font-family: NotoSans;
 }
 
 a {

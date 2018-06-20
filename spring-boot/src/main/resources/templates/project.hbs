@@ -1,22 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-
-    <title>국회톡톡</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <link rel="stylesheet" href="/css/layout.css">
+    {{> include/head}}
     <link rel="stylesheet" href="/css/project.css">
-    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 </head>
 <body>
 {{> include/header}}
@@ -26,17 +12,17 @@
         <ul class="category-list">
             <li class="category">여성</li>
         </ul>
-        <h2>임신중단 전면 합법화를 촉구합니다.</h2>
+        <h2>{{project.title}}</h2>
         <div class="step">시민참여</div>
         <div class="writer-info">
             <div class="profile"></div>
-            <h5 class="writer">Marriott82</h5>
+            <h5 class="writer">{{project.proposer}}</h5>
         </div>
         <div class="percentage-zone">
             <div class="percentage"></div>
         </div>
-        <p class="count">1140명</p>
-        <p class="percentage-number">78%</p>
+        <p class="count">{{project.participations_count}}</p>
+        <p class="percentage-number" data-item="{{project.participations_goal_count}}">78%</p>
         <button class="join-btn">참여하기</button>
         <ul class="share-list">
             <li class="share facebook"></li>
@@ -71,11 +57,7 @@
     </nav>
     <div class="info">
         <div class="info-contents contents is-visible">
-            안녕하세요. 디지털성범죄아웃 DSO입니다.
-            2015년 8월 26일, 대한민국은 워터파크에서 벌어진 몰카 사건으로 인해 들썩였습니다. 결국 8월 31일 경찰에서는 몰카 생산 소지 판매 금지 법안을 신설을 진행 할 것이라는 발표가 있었으나. 몰카 판매 금지 법안은 아직까지 이루워지지 않았으며, 몰카의 판매량은 계속적으로 증가 하고 있다고 합니다.
-            2016년 몰카의 생산지로 주목되었던 소라넷이 폐쇄되었지만, 우리 주변의 몰카는 사라지지 않았습니다. 해외사이트 아직도 영상들을 올리고 있으며, 국내싸이트인 P2P도 끊임없이 샤워실, 화장실, 일상생활, 성행위, 성관계, 강간등 디지털성폭력 영상들이 올라오고 있는 실정입니다.
-            저희  DSO팀에서는 인터넷상에서 일어나는 ‘몰카’영상을 고발 하고 있으나. 경찰은 인력난을 이유로 최근 이슈인 화장실 몰카마저도 “성기가 나왔으나 성행위가 아니므로 정보통신망법이 있음에도 법해석은 그렇지 못하다”는 말을 하거나, 남성의 성기를 애무하는 여성의 얼굴이 적나라하게 가해자시각 (안경몰카구도) 찍힌 영상은 “남성성기만 나와서 처벌이 불가”(1)라고 말을 라는 말을 하는 등의 모습을 보이고 있습니다.
-            외국에서는 전문가가 아니라면, 허가받은 인물이 아니라면 판매를 못하도록 정해있습니다. 기술의 발전이란 허울 좋은 명분 아래 누가, 어떻게 피해자가 될지 모르는 이 현실 앞에 저희는 당장 불안과 고통을 그만하고자 합니다.
+            {{{project.body}}}
         </div>
         <div class="info-contents timeline">
             TIME LINE

@@ -72,6 +72,7 @@
             <p class="subject-desc">가장 참여율이 높은 베스트 제안들을 확인해보세요.</p>
             <ul class="project-list best" id="best">
                 {{#each projects_best}}
+                <a href="/projects/{{this.id}}">
                     <li class="project">
                         <div class="project-img">
                             <div class="status">시민참여</div>
@@ -83,6 +84,7 @@
                             <p class="percentage-number" data-item="{{this.participations_goal_count}}"></p>
                         </div>
                     </li>
+                </a>
                 {{/each}}
             </ul>
         </div>
@@ -93,6 +95,7 @@
             <p class="subject-desc">새로운 제안들을 확인해보세요.</p>
             <ul class="project-list new" id="new">
                 {{#each projects_new}}
+                <a href="/projects/{{this.id}}">
                     <li class="project">
                         <div class="project-img">
                             <div class="status">시민참여</div>
@@ -104,6 +107,7 @@
                             <p class="percentage-number" data-item="{{this.participations_goal_count}}">78%</p>
                         </div>
                     </li>
+                </a>
                 {{/each}}
             </ul>
         </div>
