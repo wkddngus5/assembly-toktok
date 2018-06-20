@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <link rel="stylesheet" href="/css/project.css">
+</head>
+<body>
+{{> include/header}}
+<main class="main">
+    <img class="main-img" src="/img/sub_02.png">
+    <div class="desc">
+        <ul class="category-list">
+            <li class="category">여성</li>
+        </ul>
+        <h2>{{project.title}}</h2>
+        <div class="step">시민참여</div>
+        <div class="writer-info">
+            <div class="profile"></div>
+            <h5 class="writer">{{project.proposer}}</h5>
+        </div>
+        <div class="percentage-zone">
+            <div class="percentage"></div>
+        </div>
+        <p class="count">{{project.participations_count}}</p>
+        <p class="percentage-number" data-item="{{project.participations_goal_count}}">78%</p>
+        <button class="join-btn">참여하기</button>
+        <ul class="share-list">
+            <li class="share facebook"></li>
+            <li class="share twitter"></li>
+            <li class="share kakao"></li>
+        </ul>
+        <div class="assembly">
+            <label class="assembly-man-list-label" for="assembly-man-list">참여의원</label>
+            <ul id="assembly-man-list">
+                <li class="assembly-man">
+                    <div class="profile-img"></div>
+                    <p>진선미 의원</p>
+                </li>
+                <li class="assembly-man">
+                    <div class="profile-img"></div>
+                    <p>남인순 의원</p>
+                </li>
+            </ul>
+
+            <label for="committee">소관 상임위</label>
+            <ul id="committee">
+                <li>여성가족위원회</li>
+                <li>행정안전위원회</li>
+            </ul>
+        </div>
+    </div>
+
+    <nav class="info-subject">
+        <button class="info-contents active" data-item="contents">제안내용</button>
+        <button class="info-timeline" data-item="timeline">타임라인</button>
+        <button class="info-discussion" data-item="discussion">토론</button>
+    </nav>
+    <div class="info">
+        <div class="info-contents contents is-visible">
+            {{{project.body}}}
+        </div>
+        <div class="info-contents timeline">
+            TIME LINE
+        </div>
+        <div class="info-contents discussion">
+            DISCUSSTION
+        </div>
+    </div>
+</main>
+{{> include/footer}}
+<!--<script type="text/javascript" src="/dist/index-bundle.js"></script>-->
+<script type="text/javascript" src="/entry/project.js"></script>
+</body>
+</html>

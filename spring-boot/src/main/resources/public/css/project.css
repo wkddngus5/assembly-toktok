@@ -22,7 +22,9 @@
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
 }
 
 .step {
@@ -91,16 +93,16 @@ h5.writer {
 }
 
 ul.share-list {
+    display: table;
     padding: 0;
-    margin: -50px 0 0 10px;
+    margin: auto;
     list-style: none;
-    float: right;
 }
 
 ul.share-list .share {
-    margin: 0 0 0 3px;
-    width: 25px;
-    height: 25px;
+    margin: 10px 5px;
+    width: 40px;
+    height: 40px;
     background-color: #5d9eee;
     border-radius: 2em;
     display: inline-block;
@@ -115,7 +117,7 @@ div.assembly label {
 }
 
 ul#assembly-man-list {
-   list-style: none;
+    list-style: none;
     padding: 0;
 }
 
@@ -131,6 +133,7 @@ ul#assembly-man-list li {
     border-radius: 2em;
     background-color: #18c3b3;
 }
+
 .assembly-man p {
     margin: 5px 0;
     font-size: 13px;
@@ -176,5 +179,16 @@ div.info-contents {
 
 div.info-contents.is-visible {
     display: block;
+}
+
+@media screen and (min-width: 900px) {
+    .step {
+        margin: 30px 0 0 0;
+    }
+
+    ul.share-list {
+        float: right;
+        margin: -60px 0 0 0;
+    }
 }
 

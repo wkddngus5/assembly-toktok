@@ -1,6 +1,5 @@
-import React from 'react';
-import ReactDom from 'react-dom';
+import carousel from '../js/carousel';
 
-import Main from '../components/main/Main';
-
-ReactDom.render(<Main />, document.querySelector('#root'));
+(function () {
+  new carousel();
+})();

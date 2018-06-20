@@ -7,6 +7,7 @@ class project {
   };
 
   init() {
+    this.percentageSet();
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
     });
@@ -17,6 +18,17 @@ class project {
       }
     });
   };
+
+  percentageSet() {
+    const count = document.querySelector('p.count').innerText;
+    const goalCount = document.querySelector('.percentage-number').getAttribute('data-item');
+
+    const percentage = (parseInt(count) / parseInt(goalCount) * 100).toFixed(1);
+
+    document.querySelector('.percentage-zone .percentage').style.width =
+      (percentage > 100.0 ? 100.0 : percentage) + '%';
+    document.querySelector('.percentage-number').innerText = percentage + '%';
+  }
 
   switchInfo(target) {
     this.nowActiveInfo.classList.remove('active');
@@ -42,7 +54,6 @@ class project {
   }
 }
 
-
-window.onload = () => {
+(function () {
   new project();
-};
+})();
