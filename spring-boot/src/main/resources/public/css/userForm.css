@@ -63,7 +63,7 @@ p.nickname-sub {
 ul.agree-info-list {
     list-style: none;
     padding: 0;
-    margin: 39px 0 0 0;
+    margin: 39px 0 34px 0;
 }
 
 li.agree-info {
@@ -81,12 +81,14 @@ label.label-agree {
 
 input#agree {
     height: 20px;
-    vertical-align: middle;
     margin: 0 0 0 10px;
+    padding: 0;
+    width: 17px;
+    vertical-align: top;
 }
 
 div.input-zone.agree {
-    margin: 20px 0 22px 130px;
+    margin: 0 0 50px 0;
 }
 
 form.signup-form .submit-btn {
@@ -95,5 +97,6 @@ form.signup-form .submit-btn {
     padding: 0;
     background-color: #fd515d;
     margin: 28px 0 80px 0;
+    font-size: 18px;
     font-weight: bold;
 }

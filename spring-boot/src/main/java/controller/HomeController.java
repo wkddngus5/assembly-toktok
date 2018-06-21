@@ -49,4 +49,10 @@ public class HomeController {
         modelAndView.setViewName("userForm");
         return modelAndView;
     }
+
+    @RequestMapping("/users/password")
+    public ModelAndView findPassword(ModelAndView modelAndView) {
+        modelAndView.setViewName("findPassword");
+        return modelAndView;
+    }
 }
