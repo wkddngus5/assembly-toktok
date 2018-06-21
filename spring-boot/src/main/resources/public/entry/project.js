@@ -3,6 +3,8 @@ class project {
     this.infoList = document.querySelectorAll('nav.info-subject button');
     this.nowActiveInfo = document.querySelector('nav.info-subject button.active');
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
+    this.dim = document.querySelector('div.dim');
+    this.infoModal = document.querySelector('div.info-modal');
     this.init();
   };
 
@@ -17,7 +19,29 @@ class project {
         this.switchInfo(e.target);
       }
     });
+
+    document.querySelector('.info-link').addEventListener('click', () => {
+      this.modalOn();
+    });
+
+    this.dim.addEventListener('click', () => {
+      this.modalOff();
+    });
+
+    this.infoModal.addEventListener('click', () => {
+      this.modalOff();
+    })
   };
+
+  modalOn() {
+    this.dim.classList.add('is-visible');
+    this.infoModal.classList.add('is-visible');
+  }
+
+  modalOff() {
+    this.dim.classList.remove('is-visible');
+    this.infoModal.classList.remove('is-visible');
+  }
 
   percentageSet() {
     const count = document.querySelector('p.count').innerText;

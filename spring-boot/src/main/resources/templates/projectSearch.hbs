@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>프로젝트 검색</title>
+    <link rel="stylesheet" href="/css/userForm.css">
+    <link rel="stylesheet" href="/css/projectSearch.css">
+</head>
+<body>
+{{> include/header}}
+<main>
+    <h2>Search</h2>
+    <form action="#" class="main-search-zone">
+        <input placeholder="검색어를 입력해주세요">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="input-search">
+            <i class="material-icons">search</i>
+        </label>
+    </form>
+
+    <ul class="project-list">
+        <a href="/projects/1">
+            <li class="project">
+                <div class="project-img">
+                    <div class="status">시민참여</div>
+                </div>
+                <div class="project-summary">
+                    <h5>임신중단 전면 합법화를 촉구합니다.</h5>
+                    <div class="percentage-zone"><div class="percentage"></div></div>
+                    <p class="count">1340명</p>
+                    <p class="percentage-number" data-item="1000">78%</p>
+                </div>
+            </li>
+        </a>
+    </ul>
+</main>
+{{> include/footer}}
+</body>
+</html>

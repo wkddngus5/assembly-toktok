@@ -6,6 +6,11 @@
 </head>
 <body>
 {{> include/header}}
+<div class="dim"></div>
+<div class="info-modal">
+    <h5 class="info-label">진행단계</h5>
+    <img class="info-img" src="/img/info.png">
+</div>
 <main class="main">
     <img class="main-img" src="/img/sub_02.png">
     <div class="desc">
@@ -13,7 +18,12 @@
             <li class="category">여성</li>
         </ul>
         <h2>{{project.title}}</h2>
-        <div class="step">시민참여</div>
+        <div class="status-zone">
+            <h6>진행상황</h6>
+            <div class="info-link">?</div>
+            <br>
+            <div class="step">시민참여</div>
+        </div>
         <div class="writer-info">
             <div class="profile"></div>
             <h5 class="writer">{{project.proposer}}</h5>
@@ -60,10 +70,172 @@
             {{{project.body}}}
         </div>
         <div class="info-contents timeline">
-            TIME LINE
+            <ul class="timeline-list">
+                <li class="each-timeline">
+                    <div class="outer-border">
+                        <p class="date">2018.02.01</p><br>
+                        <p class="contents">
+                            진선미 의원이 대표발의한 '위장형카메라의 관리에 대한 법률 제정안'이 2018년 1월 31일 행정안전위원회 전체 회의에서
+                            법안 심사소위원회로 회부되었습니다. 앞으로 법안심사소위원회에서 이 법안에 대한 세부 심사가 이루어지게 됩니다.
+                        </p>
+                    </div>
+                </li>
+                <li class="each-timeline">
+                    <div class="outer-border">
+                        <p class="date">2017.12.30</p><br>
+                        <p class="contents">
+                            드디어 몰카의 판매자와 소지자의 신상을 등록하는 몰카규제법이 발의되었습니다!!!
+                            국회톡톡에서 시민들의 제안에 응답했던 진선미(대표발의), 권미혁, 김영호, 남인순 의원님이 12월 28일
+                            '위장형카메라의 관리에 관한 법률 제정안'을 공동발의했습니다.
+                            새해에는 국회 행정안전위원회에서 조속히 이 법안의 심사가 이루어지길 기대하겠습니다.
+                            관련 기사를 보시려면 클릭하세요.
+                        </p>
+                    </div>
+                </li>
+                <li class="each-timeline">
+                    <div class="outer-border white">
+                        <p class="date">2017.11.27</p><br>
+                        <p class="contents">
+                            진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
+                            '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
+                            여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
+                            세부심사가 이루어지게 됩니다.
+                        </p>
+                    </div>
+                </li>
+            </ul>
         </div>
+
+
         <div class="info-contents discussion">
-            DISCUSSTION
+            <ul class="discussion-list best">
+                <li class="each-discussion">
+                    <table>
+                       <tr>
+                           <div class="best-tag">BEST</div><br>
+                           <td class="left">
+                               <div class="writer-info-zone">
+                                   <div class="profile"></div>
+                                   <p class="nickname">Marriott82</p>
+                                   <p class="written-date">2017.04.06</p>
+                               </div><br>
+                               <div class="discussion-info">
+                                   <button class="reply">답글 6</button>
+                                   <button class="likes">234</button>
+                               </div>
+                           </td>
+                           <td class="right">
+                               <p class="discussion-contents">
+                                   진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
+                                   '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
+                                   여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
+                               </p>
+                           </td>
+                       </tr>
+                    </table>
+                </li>
+                <li class="each-discussion">
+                    <table>
+                       <tr>
+                           <div class="best-tag">BEST</div><br>
+                           <td class="left">
+                               <div class="writer-info-zone">
+                                   <div class="profile"></div>
+                                   <p class="nickname">Marriott82</p>
+                                   <p class="written-date">2017.04.06</p>
+                               </div><br>
+                               <div class="discussion-info">
+                                   <button class="reply">답글 6</button>
+                                   <button class="likes">234</button>
+                               </div>
+                           </td>
+                           <td class="right">
+                               <p class="discussion-contents">
+                                   진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
+                                   '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
+                                   여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
+                               </p>
+                           </td>
+                       </tr>
+                    </table>
+                </li>
+                <li class="each-discussion">
+                    <table>
+                       <tr>
+                           <div class="best-tag">BEST</div><br>
+                           <td class="left">
+                               <div class="writer-info-zone">
+                                   <div class="profile"></div>
+                                   <p class="nickname">Marriott82</p>
+                                   <p class="written-date">2017.04.06</p>
+                               </div><br>
+                               <div class="discussion-info">
+                                   <button class="reply">답글 6</button>
+                                   <button class="likes">234</button>
+                               </div>
+                           </td>
+                           <td class="right">
+                               <p class="discussion-contents">
+                                   진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
+                                   '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
+                                   여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
+                               </p>
+                           </td>
+                       </tr>
+                    </table>
+                </li>
+            </ul>
+
+            <ul class="discussion-list new">
+                <li class="each-discussion">
+                    <table>
+                        <tr>
+                            <td class="left">
+                                <div class="writer-info-zone">
+                                    <div class="profile"></div>
+                                    <p class="nickname">Marriott82</p>
+                                    <p class="written-date">2017.04.06</p>
+                                </div><br>
+                                <div class="discussion-info">
+                                    <button class="reply">답글 6</button>
+                                    <button class="likes">234</button>
+                                </div>
+                            </td>
+                            <td class="right">
+                                <p class="discussion-contents">
+                                    진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
+                                    '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
+                                    여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+                <li class="each-discussion">
+                    <table>
+                        <tr>
+                            <td class="left">
+                                <div class="writer-info-zone">
+                                    <div class="profile"></div>
+                                    <p class="nickname">Marriott82</p>
+                                    <p class="written-date">2017.04.06</p>
+                                </div><br>
+                                <div class="discussion-info">
+                                    <button class="reply">답글 6</button>
+                                    <button class="likes">234</button>
+                                </div>
+                            </td>
+                            <td class="right">
+                                <p class="discussion-contents">
+                                    진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
+                                    '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
+                                    여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            </ul>
         </div>
     </div>
 </main>
