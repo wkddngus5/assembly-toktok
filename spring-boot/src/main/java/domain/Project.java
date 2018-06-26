@@ -2,10 +2,7 @@ package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "projects")
@@ -35,6 +32,8 @@ public class Project {
     private Long primary_committee_id;
     private String status;
     private String fail_staff_message;
+    @Column(length = 20)
+    private String category;
 
     public long getId() {
         return id;
@@ -210,5 +209,13 @@ public class Project {
 
     public void setFail_staff_message(String fail_staff_message) {
         this.fail_staff_message = fail_staff_message;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 }
