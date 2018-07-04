@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>국회톡톡</title>
+    <link rel="stylesheet" href="/css/carousel.css">
+    <link rel="stylesheet" href="/css/mainProjects.css">
+</head>
+<body>
+    {{> include/header}}
+    <div class="main-carousel">
+        <ul class="carousel-page-list">
+            <li class="carousel-page page-1 is-visible" data-item="1">
+                <p>시민의 제안으로 법안을 만듭니다</p>
+                <h6>새로워진 국회톡톡에서<br>
+                직접 국회에 제안해보세요.</h6>
+                <a class="project-form">제안하기</a>
+            </li>
+            <li class="carousel-page page-2" data-item="2">
+                PAGE2
+            </li>
+            <li class="carousel-page page-3" data-item="3">
+                PAGE3
+            </li>
+        </ul>
+        <ul class="carousel-index-list">
+            <li class="carousel-index is-checked" data-item="1"></li>
+            <li class="carousel-index" data-item="2"></li>
+            <li class="carousel-index" data-item="3"></li>
+        </ul>
+    </div>
+    <div class="main-projects">
+        <div class="subject imminent">
+            <hr>
+            <label class="subject-name" for="imminent">임박제안</label>
+            <p class="subject-desc">마감일이 얼마 남지 않은 제안들을 확인해보세요.</p>
+            <ul class="project-list imminent" id="imminent">
+                {{#each projects_imminent}}
+                <a href="/projects/{{this.id}}">
+                    <li class="project">
+                        <div class="project-img">
+                            <div class="status {{this.status}}">{{this.status}}시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}">78%</p>
+                        </div>
+                    </li>
+                </a>
+                {{/each}}
+            </ul>
+        </div>
+
+        <div class="subject best">
+            <hr>
+            <label class="subject-name" for="best">베스트 제안</label>
+            <p class="subject-desc">가장 참여율이 높은 베스트 제안들을 확인해보세요.</p>
+            <ul class="project-list best" id="best">
+                {{#each projects_best}}
+                <a href="/projects/{{this.id}}">
+                    <li class="project">
+                        <div class="project-img">
+                            <div class="status">시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count" data-item="{{this.participations_count}}">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}"></p>
+                        </div>
+                    </li>
+                </a>
+                {{/each}}
+            </ul>
+        </div>
+
+        <div class="subject new">
+            <hr>
+            <label class="subject-name" for="new">신규 제안</label>
+            <p class="subject-desc">새로운 제안들을 확인해보세요.</p>
+            <ul class="project-list new" id="new">
+                {{#each projects_new}}
+                <a href="/projects/{{this.id}}">
+                    <li class="project">
+                        <div class="project-img">
+                            <div class="status">시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}">78%</p>
+                        </div>
+                    </li>
+                </a>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    {{> include/footer}}
+    <!--<script type="text/javascript" src="/dist/index-bundle.js"></script>-->
+<script type="text/javascript" src="/js/carousel.js"></script>
+<script type="text/javascript" src="/js/mainProjects.js"></script>
+</body>
+</html>

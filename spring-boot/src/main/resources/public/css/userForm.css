@@ -1,0 +1,102 @@
+h1, h2 {
+    text-align: center;
+    margin: 60px 0 55px 0;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+div.signup-zone {
+    text-align: center;
+}
+
+.signup-form input {
+    display: inline-block;
+    width: 150px;
+    height: 50px;
+
+}
+
+.signup-form label {
+    position: absolute;
+    z-index: 10;
+    font-size: 11pt;
+    font-weight: bold;
+    margin: 18px 0 0 20px;
+    text-align: left;
+}
+
+.signup-form label.label-password-confirm {
+    margin: 8px 0 0 20px;
+}
+
+.label-email {
+    color: #5d9eee;
+}
+
+.label-password, .label-password-confirm {
+    color: #18c3b3;
+}
+
+.label-nickname {
+    color: #f0d102;
+}
+
+.signup-form input {
+    font-size: 10pt;
+    margin: 0 0 14px 0;
+    padding-left: 100px;
+}
+
+.signup-form input::placeholder {
+    text-align: center;
+    color: #b2b2b2;
+}
+
+p.nickname-sub {
+    display: inline-block;
+    margin-left: 100px;
+    text-align: right;
+    color: #b2b2b2;
+    font-size: 9pt;
+}
+
+ul.agree-info-list {
+    list-style: none;
+    padding: 0;
+    margin: 39px 0 34px 0;
+}
+
+li.agree-info {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #b2b2b2;
+    text-decoration: underline;
+    margin: 0 0 14px 0;
+}
+
+label.label-agree {
+    position: relative;
+    z-index: 0;
+}
+
+input#agree {
+    height: 20px;
+    margin: 0 0 0 10px;
+    padding: 0;
+    width: 17px;
+    vertical-align: top;
+}
+
+div.input-zone.agree {
+    margin: 0 0 50px 0;
+}
+
+form.signup-form .submit-btn {
+    width: 250px;
+    height: 50px;
+    padding: 0;
+    background-color: #fd515d;
+    margin: 28px 0 80px 0;
+    font-size: 18px;
+    font-weight: bold;
+}

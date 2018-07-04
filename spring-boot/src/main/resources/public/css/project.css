@@ -1,4 +1,55 @@
+body {
+    background-color: #FFFFFF;
+}
+
+div.dim {
+    display: none;
+    width: 100%;
+    height: 110%;
+    background-color: #3c3c3b;
+    position: fixed;
+    opacity: 0.6;
+    z-index: 5;
+    top: -30px;
+}
+
+div.dim.is-visible {
+    display: block;
+}
+
+div.info-modal {
+    background-color: #FFFFFF;
+    width: 350px;
+    max-width: 400px;
+    display: none;
+    position: absolute;
+    z-index: 10;
+    box-shadow: 2px 4px #BBBBBB;
+    left: 50%;
+    margin-left: -175px;
+    top: 80px;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+}
+
+div.info-modal.is-visible {
+    display: block;
+}
+
+h5.info-label {
+    margin: 0;
+    padding: 10px;
+    background-color: #5d9eee;
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 15px;
+}
+
 .main-img {
+    width: 100%;
+}
+
+img.info-img {
     width: 100%;
 }
 
@@ -22,18 +73,47 @@
 }
 
 h2 {
-    font-size: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    display: inline-block;
+}
+div.status-zone {
+    display: block;
+    text-align: right;
+}
+
+div.status-zone h6 {
+    display: inline-block;
+    font-weight: bold;
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+}
+
+div.status-zone div.info-link {
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+    display: inline-block;
+    border: solid #18c3b3;
+    border-radius: 2em;
+    color: #18c3b3;
+    font-weight: bold;
 }
 
 .step {
-    float: right;
     display: inline-block;
     width: 50px;
+    margin: 10px 0 0 0;
     padding: 5px;
     font-size: 13px;
     font-weight: bold;
-    text-align: center;
+    text-align: right;
     background-color: #fbef03;
+}
+
+.step:hover {
+    cursor: pointer;
 }
 
 .profile {
@@ -91,20 +171,33 @@ h5.writer {
 }
 
 ul.share-list {
+    display: table;
     padding: 0;
-    margin: -50px 0 0 10px;
+    margin: auto;
     list-style: none;
-    float: right;
 }
 
 ul.share-list .share {
-    margin: 0 0 0 3px;
-    width: 25px;
-    height: 25px;
-    background-color: #5d9eee;
+    margin: 10px 5px;
+    width: 40px;
+    height: 40px;
     border-radius: 2em;
     display: inline-block;
+    background-size: cover;
 }
+
+ul.share-list .facebook {
+    background-image: url("/img/facebook-icon.png");
+}
+
+ul.share-list .twitter {
+    background-image: url("/img/twitter-icon.png");
+}
+
+ul.share-list .kakao {
+    background-image: url("/img/kakao-icon.png");
+}
+
 
 div.assembly {
     margin: 40px 0 0 0;
@@ -115,7 +208,7 @@ div.assembly label {
 }
 
 ul#assembly-man-list {
-   list-style: none;
+    list-style: none;
     padding: 0;
 }
 
@@ -131,6 +224,7 @@ ul#assembly-man-list li {
     border-radius: 2em;
     background-color: #18c3b3;
 }
+
 .assembly-man p {
     margin: 5px 0;
     font-size: 13px;
@@ -153,6 +247,9 @@ ul#committee li {
 
 nav.info-subject {
     width: 100%;
+    border-top: solid #b2b2b2 1px;
+    border-bottom: solid #b2b2b2 1px;
+    padding: 14px 0;
 }
 
 nav.info-subject button {
@@ -160,6 +257,8 @@ nav.info-subject button {
     text-align: center;
     font-weight: bold;
     font-size: 15px;
+    border: none;
+    background-color: #FFFFFF;
 }
 
 nav.info-subject button.active {
@@ -172,9 +271,148 @@ div.info-contents {
 
 div.info-contents {
     display: none;
+    padding: 40px 24px;
 }
 
 div.info-contents.is-visible {
     display: block;
+}
+
+ul.timeline-list {
+    list-style: none;
+    margin: 0;
+}
+
+li.each-timeline::before {
+    content: "•";
+    color: #18c3b3;
+    display: inline-block;
+    width: 1em;
+    margin-left: -20px;
+    font-size: 54px;
+}
+
+li.each-timeline {
+    margin: -12px 0 0 0;
+}
+
+div.outer-border {
+    border-left: solid #18c3b3;
+    margin: -24px 0 0 -12.5px;
+    padding: 0 0 42px 0;
+}
+
+div.outer-border.white {
+    border: #FFFFFF;
+}
+
+p.date {
+    position: absolute;
+    margin: -10px 0 0 16px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #18c3b3;
+}
+
+p.contents {
+    margin: 5px 0 0 20px;
+    padding: 18px 24px;
+    border: solid #b2b2b2;
+}
+
+ul.discussion-list {
+    list-style: none;
+    padding: 0;
+}
+
+ul.discussion-list.best li.each-discussion {
+    border: solid #b2b2b2 1px;
+}
+
+ul.discussion-list.new li.each-discussion {
+    border-bottom: solid #b2b2b2 1px;
+}
+
+.best-tag {
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    background-color: #fd515d;
+    text-align: center;
+    color: #FFFFFF;
+}
+
+li.each-discussion td {
+    vertical-align: top;
+}
+
+li.each-discussion td.right {
+    padding: 10px 10px 20px 10px;
+}
+
+div.writer-info-zone {
+    display: inline-block;
+    margin: 13px 0 0 10px;
+}
+
+div.writer-info-zone .profile {
+    vertical-align: top;
+    margin: 0 0 0 15px;
+}
+
+div.writer-info-zone .nickname {
+    display: inline-block;
+    vertical-align: middle;
+    color: #3c3c3b;
+    font-size: 10pt;
+    margin: 10px 0 0 0;
+}
+
+div.writer-info-zone .written-date {
+    margin: 0;
+    font-size: 8pt;
+    color: #8b8b8b;
+}
+
+.discussion-info {
+    text-align: center;
+}
+
+.discussion-info button {
+    width: 60px;
+    height: 30px;
+    margin: 5px 0;
+    border: solid #b2b2b2 1px;
+    background-color: #FFFFFF;
+    font-weight: bold;
+    box-shadow: #b2b2b2 2px 1px;
+}
+
+.discussion-info button:hover {
+    cursor: pointer;
+}
+
+button.likes {
+    padding: 5px 0 5px 20px;
+    background-image: url("/img/like.png");
+    background-size: 40%;
+    background-repeat: no-repeat;
+    background-position: 3px 3px;
+}
+
+
+.discussion-info {
+    display: inline-block;
+}
+
+@media screen and (min-width: 900px) {
+    .step {
+        margin: 30px 0 0 0;
+    }
+
+    ul.share-list {
+        float: right;
+        margin: -60px 0 0 0;
+    }
 }
 

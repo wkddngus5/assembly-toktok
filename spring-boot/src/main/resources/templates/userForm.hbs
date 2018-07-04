@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>국회톡톡</title>
+    <link rel="stylesheet" href="/css/userForm.css">
+</head>
+<body>
+    {{> include/header}}
+    <div class="signup-zone">
+        <h2>Sign Up</h2>
+        <form class="signup-form">
+            <div class="input-zone">
+                <label class="label-email" for="email">E-mail</label>
+                <input class="input-email" id="email" type="email" placeholder="이메일을 입력해주세요">
+            </div>
+
+            <div class="input-zone">
+                <label class="label-password" for="password">Password</label>
+                <input class="input-password" id="password" type="password" placeholder="패스워드를 입력해주세요">
+            </div>
+
+            <div class="input-zone">
+                <label class="label-password-confirm" for="password-confirm">Password <br> Confirm</label>
+                <input class="input-password-confirm" id="password-confirm" type="password" placeholder="패스워드를 입력해주세요">
+            </div>
+
+            <div class="input-zone">
+                <label class="label-nickname" for="nickname">Nickname</label>
+                <input class="input-nickname" id="nickname" type="text" placeholder="닉네임을 입력해주세요"><br>
+                <p class="nickname-sub">한글, 알파벳, 숫자만 가능합니다.</p>
+            </div>
+
+            <ul class="agree-info-list">
+                <li class="agree-info">이용약관 보기</li>
+                <li class="agree-info">개인정보 취급방침 보기</li>
+           </ul>
+
+            <div class="input-zone agree">
+                <label class="label-agree" for="agree">이용약관, 개인정보 취급방침에 동의합니다.</label>
+                <input id="agree" type="checkbox">
+            </div>
+            <input class="submit-btn" type="submit" value="Sign Up">
+        </form>
+    </div>
+    {{> include/footer}}
+</body>
+</html>

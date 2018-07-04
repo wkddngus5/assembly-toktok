@@ -1,0 +1,190 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>제안 작성</title>
+    <link rel="stylesheet" href="/css/projectForm.css">
+    <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+{{> include/header}}
+<main>
+    <div class="notice page" id="page-1">
+        <table>
+            <tr class="contents">
+                <td>
+                    <h1>국회에 직접 입법제안을 보내세요.<br>
+                        시민의 제안으로 법안을 만듭니다.</h1>
+                    <h2>청원제안 요건</h2>
+                    <p>작성된 내용은 다른 참여자들의 동의의사가 반영된 제안이기 때문에 타인의 탐여 이후 수정 및 삭제가 불가능합니다.<br>
+                        또한 제안하시려는 내용과 중복되는 기존 제안이 있는지 확인 후 제안해주세요.</p>
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-2"><button class="next">다음</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="writer-info-zone page" id="page-2">
+        <table>
+            <tr class="contents">
+                <td>
+                    <p class="writer-notice">제안자 정보는 입법진행과정에서의 소통을 위해 사용됩니다.<br>
+                        개인정보는 외부에 공개되지 않습니다.</p>
+
+                    <div class="input-zone">
+                        <label for="name">제안하시는 분의 이름</label>
+                        <label class="sub-info" for="name">제안 페이지에 여기 써주신 이름이 나옵니다.</label>
+                        <input type="text" class="name" id="name">
+                    </div>
+
+                    <div class="input-zone">
+                        <label for="email">이메일</label>
+                        <input type="email" class="email" id="email">
+                        <label for="email"></label>
+                    </div>
+
+                    <div class="input-zone">
+                        <label for="phone">휴대폰</label>
+                        <input class="phone" id="phone">
+                    </div>
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-3"><button class="next">다음</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="writer-info-zone-2 page" id="page-3">
+        <table>
+            <tr class="contents">
+                <td>
+                    <h5>서명에 동참할 분들께 제안자를 소개합니다.<br>
+                        솔직하고 센스있는 자기소개가 사람들의 마음을 움직입니다.</h5>
+                    <div class="input-zone">
+                        <label for= "introduce">제안하시는 분의 간단한 소개</label>
+                        <textarea class="introduce" id="introduce" cols="40" placeholder="내용을 입력해주세요"></textarea>
+                    </div>
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-4"><button class="next">다음</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="title page" id="page-4">
+        <table>
+            <tr class="contents">
+                <td>
+                    <h5>제안의 첫인상 입니다. 제안의 주제가 드러나게 써주시는 것이 좋습니다.<br>
+                        시민들이 명확하게 인식할 수 있으니까요.</h5>
+                    <div class="input-zone">
+                        <label for="title">제안 제목</label>
+                        <label class="sub-info" for= "title">20자 이내로 적어주세요.</label>
+                        <input type="text" class="title" id="title">
+                    </div>
+                    <div class="desc">
+                        <p class="sub-info">제안 제목은 이렇게 사용됩니다!</p>
+                    </div>
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-5"><button class="next">다음</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="categories page" id="page-5">
+        <table>
+            <tr class="contents">
+                <td>
+                    <h5>제안과 관련된 분야를 선택해주세요.<br>
+                    제안과 관련된 상임위를 고려해 관리자에 의해 분야가 조정될 수 있습니다.</h5>
+                    <br><br><br>
+                    <label for="category">분야</label>
+                    <ul class="category-list" id="category">
+                        <li>노동</li>
+                        <li>환경</li>
+                        <li>안보</li>
+                        <li>보건복지</li>
+                        <li>행정</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-6"><button class="next">다음</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="project-detail page" id="page-6">
+        <table>
+            <tr class="contents">
+                <td>
+                    <h5>제안에 대한 구체적인 소개입니다. 제안 배경과 목적, 지향하는 개선방향, 향후 계획 등
+                        제안의 내용이 구체적일수록 사람들에게 제안을 더 잘 이해시킬 수 있습니다.<br>
+                        이미지와 영상을 적절히 활용하여 시민들의 참여를 이끌어보세요!</h5>
+                    <div class="input-zone">
+                        <label for= "editor">제안 내용</label>
+                        <div id="editor">
+                            <p>내용을 입력해주세요.</p>
+                        </div>
+                    </div>
+
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-7"><button class="next">다음</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="project-image page" id="page-7">
+        <table>
+            <tr class="contents">
+                <td>
+                    <h5>리스트에서 보여질 제안의 대표이미지입니다.<br>
+                        글자보다 이미지가 더 강력한 주목을 끌죠. 한 눈에 프로젝트를 알아볼 수 있는 인상 깊은 이미지를 등록해주세요!</h5>
+                    <div class="input-zone">
+                        <label for= "editor">대표 이미지</label>
+                        <div class="image-preview">
+                            이미지 업로드<br>
+                            이미지를 드래그 또는 업로드 해주세요.<br>
+                            (가로: 000px, 세로 000px 이상으로 올려주세요)
+                        </div>
+                        <input class="project-img" type="file">
+                    </div>
+                    <div class="desc">
+                        <p class="sub-info">대표 이미지는 이렇게 사용됩니다!</p>
+                    </div>
+
+                </td>
+            </tr>
+            <tr class="button">
+                <td>
+                    <a href="#page-6"><button class="next">완료</button></a>
+                </td>
+            </tr>
+        </table>
+    </div>
+</main>
+<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<script type="text/javascript" src="/js/projectForm.js"></script>
+{{> include/footer}}
+</body>
+</html>

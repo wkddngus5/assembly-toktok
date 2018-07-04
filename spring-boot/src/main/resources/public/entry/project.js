@@ -3,10 +3,13 @@ class project {
     this.infoList = document.querySelectorAll('nav.info-subject button');
     this.nowActiveInfo = document.querySelector('nav.info-subject button.active');
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
+    this.dim = document.querySelector('div.dim');
+    this.infoModal = document.querySelector('div.info-modal');
     this.init();
   };
 
   init() {
+    this.percentageSet();
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
     });
@@ -16,7 +19,40 @@ class project {
         this.switchInfo(e.target);
       }
     });
+
+    document.querySelector('.info-link').addEventListener('click', () => {
+      this.modalOn();
+    });
+
+    this.dim.addEventListener('click', () => {
+      this.modalOff();
+    });
+
+    this.infoModal.addEventListener('click', () => {
+      this.modalOff();
+    })
   };
+
+  modalOn() {
+    this.dim.classList.add('is-visible');
+    this.infoModal.classList.add('is-visible');
+  }
+
+  modalOff() {
+    this.dim.classList.remove('is-visible');
+    this.infoModal.classList.remove('is-visible');
+  }
+
+  percentageSet() {
+    const count = document.querySelector('p.count').innerText;
+    const goalCount = document.querySelector('.percentage-number').getAttribute('data-item');
+
+    const percentage = (parseInt(count) / parseInt(goalCount) * 100).toFixed(1);
+
+    document.querySelector('.percentage-zone .percentage').style.width =
+      (percentage > 100.0 ? 100.0 : percentage) + '%';
+    document.querySelector('.percentage-number').innerText = percentage + '%';
+  }
 
   switchInfo(target) {
     this.nowActiveInfo.classList.remove('active');
@@ -42,7 +78,6 @@ class project {
   }
 }
 
-
-window.onload = () => {
+(function () {
   new project();
-};
+})();

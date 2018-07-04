@@ -1,15 +1,23 @@
-<header className="header">
-    <a>국회톡톡</a>
-    <button id="demo-menu-lower-right"
-            className="mdl-button mdl-js-button mdl-button--icon">
-        <i className="material-icons">more_vert</i>
+<header class="header">
+    <a href="/"><div class="logo"></div></a>
+    <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+        <i class="material-icons">more_vert</i>
     </button>
 
-    <ul className="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
+    <!-- Expandable Textfield -->
+    <form action="#" id="search-zone">
+        <input id="input-search" placeholder="SEARCH">
+        <label class="mdl-button mdl-js-button mdl-button--icon" for="input-search">
+            <i class="material-icons">search</i>
+        </label>
+    </form>
+
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
         for="demo-menu-lower-right">
-        <li className="mdl-menu__item">Some Action</li>
-        <li className="mdl-menu__item">Another Action</li>
-        <li disabled className="mdl-menu__item">Disabled Action</li>
-        <li className="mdl-menu__item">Yet Another Action</li>
+        <li class="mdl-menu__item"><a href="/login">로그인</a></li>
+        <li class="mdl-menu__item">Another Action</li>
+        <li disabled class="mdl-menu__item">Disabled Action</li>
+        <li class="mdl-menu__item">Yet Another Action</li>
     </ul>
 </header>
+<script src="/js/header.js"></script>
