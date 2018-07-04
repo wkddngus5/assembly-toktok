@@ -27,6 +27,12 @@ public class ProjectController {
         return modelAndView;
     }
 
+    @RequestMapping("/projectForm")
+    public ModelAndView projectForm(ModelAndView modelAndView) {
+        modelAndView.setViewName("projectForm");
+        return modelAndView;
+    }
+
     @RequestMapping("/projects/search")
     public ModelAndView projectSearch(ModelAndView modelAndView) {
         modelAndView.setViewName("projectSearch");
