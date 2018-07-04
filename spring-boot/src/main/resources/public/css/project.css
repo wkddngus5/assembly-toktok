@@ -1,3 +1,7 @@
+body {
+    background-color: #FFFFFF;
+}
+
 div.dim {
     display: none;
     width: 100%;
@@ -177,10 +181,23 @@ ul.share-list .share {
     margin: 10px 5px;
     width: 40px;
     height: 40px;
-    background-color: #5d9eee;
     border-radius: 2em;
     display: inline-block;
+    background-size: cover;
 }
+
+ul.share-list .facebook {
+    background-image: url("/img/facebook-icon.png");
+}
+
+ul.share-list .twitter {
+    background-image: url("/img/twitter-icon.png");
+}
+
+ul.share-list .kakao {
+    background-image: url("/img/kakao-icon.png");
+}
+
 
 div.assembly {
     margin: 40px 0 0 0;
@@ -230,8 +247,8 @@ ul#committee li {
 
 nav.info-subject {
     width: 100%;
-    border-top: solid #b2b2b2 2px;
-    border-bottom: solid #b2b2b2 2px;
+    border-top: solid #b2b2b2 1px;
+    border-bottom: solid #b2b2b2 1px;
     padding: 14px 0;
 }
 
@@ -240,6 +257,8 @@ nav.info-subject button {
     text-align: center;
     font-weight: bold;
     font-size: 15px;
+    border: none;
+    background-color: #FFFFFF;
 }
 
 nav.info-subject button.active {

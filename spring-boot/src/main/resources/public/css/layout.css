@@ -127,4 +127,24 @@ footer .account-list {
 
 .account-list li {
     display: inline-block;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 2em;
 }
+
+.account-list li.facebook {
+    background-image: url("/img/facebook-icon.png");
+}
+
+.account-list li.twitter {
+    background-image: url("/img/twitter-icon.png");
+}
+
+.account-list li.kakao {
+    background-image: url("/img/kakao-icon.png");
+}
+
+
+
