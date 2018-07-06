@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     whatwg: 'whatwg-fetch',
     index: "./src/main/resources/public/entry/main.js",
+    projectList: './src/main/resources/public/entry/projectList.js'
   },
   output: {
     path: path.resolve(__dirname, "src/main/resources/public/dist/"),
