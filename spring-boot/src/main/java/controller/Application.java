@@ -20,6 +20,8 @@ import java.util.Arrays;
 @EntityScan("domain")
 @EnableJpaRepositories("dao")
 @ComponentScan("controller")
+@ComponentScan("service")
+@ComponentScan("component")
 public class Application {
 
     public static void main(String[] args) {

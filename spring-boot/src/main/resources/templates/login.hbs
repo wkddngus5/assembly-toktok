@@ -6,30 +6,30 @@
     <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-    {{> include/header}}
-    <div class="social-login-zone">
-        <h1>Log in</h1>
-        <ul class="social-login-list">
-            <li class="social-login facebook"><a href="#">Facebook 로그인</a></li>
-            <li class="social-login twitter"><a href="#">Twitter 로그인</a></li>
-            <li class="social-login kakao"><a href="#">Kakao 로그인</a></li>
-        </ul>
-    </div>
+{{> include/header}}
+<div class="social-login-zone">
+    <h1>Log in</h1>
+    <ul class="social-login-list">
+        <li class="social-login facebook"><a href="#">Facebook 로그인</a></li>
+        <li class="social-login twitter"><a href="#">Twitter 로그인</a></li>
+        <li class="social-login kakao"><a href="#">Kakao 로그인</a></li>
+    </ul>
+</div>
 
-    <div class="email-login-zone">
-        <h2>E-mail 로그인</h2>
-        <form class="login-form">
-            <input class="input-email" type="email" placeholder="E-mail">
-            <input class="input-password" type="password" placeholder="password">
-            <input class="submit-btn" type="submit" value="Log In">
-        </form>
-    </div>
+<div class="email-login-zone">
+    <h2>E-mail 로그인</h2>
+    <form class="login-form">
+        <input class="input-email" type="email" placeholder="E-mail">
+        <input class="input-password" type="password" placeholder="password">
+        <input class="submit-btn" type="submit" value="Log In">
+    </form>
+</div>
 
-    <div class="others-zone">
-        <a class="sign-up" href="/users/form">회원가입</a>
-        <a class="find-password" href="/users/password">비밀번호 찾기</a>
-    </div>
+<div class="others-zone">
+    <a class="sign-up" href="/users/form">회원가입</a>
+    <a class="find-password" href="/users/password">비밀번호 찾기</a>
+</div>
 
-    {{> include/footer}}
+{{> include/footer}}
 </body>
 </html>
