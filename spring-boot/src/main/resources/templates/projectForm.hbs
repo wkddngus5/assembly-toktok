@@ -139,11 +139,11 @@
                         이미지와 영상을 적절히 활용하여 시민들의 참여를 이끌어보세요!</h5>
                     <div class="input-zone">
                         <label for= "editor">제안 내용</label>
-                        <div id="editor">
-                            <p>내용을 입력해주세요.</p>
-                        </div>
+                        <textarea name="editor1"></textarea>
+                        <!--<div id="editor">-->
+                            <!--<p>내용을 입력해주세요.</p>-->
+                        <!--</div>-->
                     </div>
-
                 </td>
             </tr>
             <tr class="button">
@@ -177,13 +177,14 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-6"><button class="next">완료</button></a>
+                    <a href="#page-6"><button class="next complete">완료</button></a>
                 </td>
             </tr>
         </table>
     </div>
 </main>
-<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>
+<!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
+<script src="//cdn.ckeditor.com/4.10.0/basic/ckeditor.js"></script>
 <script type="text/javascript" src="/js/projectForm.js"></script>
 {{> include/footer}}
 </body>
