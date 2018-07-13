@@ -14,11 +14,22 @@ class ProjectList extends Component {
 
       let percentageNumber =
         countByGoal > 100.00 ? '100%' : countByGoal + '%';
+
+      let statusText = '시민참여';
+      switch (project.status) {
+        case 'running':
+          statusText = '입법활동';
+          break;
+        case 'fail':
+          statusText = '매칭실패';
+          break;
+      }
+
       return (
         <a href={'/projects/' + project.id}>
           <li key={i} className="project">
             <div className="project-img">
-              <div className="status">시민참여</div>
+              <div className={"status " + project.status} data-item={project.status}>{statusText}</div>
             </div>
             <div className="project-summary">
               <h5>{project.title}</h5>

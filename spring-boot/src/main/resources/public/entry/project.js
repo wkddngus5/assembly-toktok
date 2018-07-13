@@ -5,11 +5,14 @@ class project {
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
     this.dim = document.querySelector('div.dim');
     this.infoModal = document.querySelector('div.info-modal');
+    this.statusZone = document.querySelector('ul.status-zone');
+    this.timelineList = document.querySelectorAll('li.each-timeline');
     this.init();
   };
 
   init() {
     this.percentageSet();
+    this.statusSet();
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
     });
@@ -20,18 +23,28 @@ class project {
       }
     });
 
-    document.querySelector('.info-link').addEventListener('click', () => {
-      this.modalOn();
-    });
-
-    this.dim.addEventListener('click', () => {
-      this.modalOff();
-    });
-
-    this.infoModal.addEventListener('click', () => {
-      this.modalOff();
-    })
+    this.hideLastTimelineOuter();
   };
+
+  hideLastTimelineOuter() {
+    this.timelineList[this.timelineList.length - 1].querySelector('.outer-border').classList.add('white');
+  }
+
+  statusSet() {
+    let nowStatus = this.statusZone.getAttribute('data-item');
+    switch (nowStatus) {
+      case 'running':
+        this.statusZone.querySelector('.lawmaking').classList.add('active');
+        break;
+      case 'fail':
+        let step = this.statusZone.querySelector('.matching');
+        step.classList.add('active');
+        step.innerText = '매칭실패';
+        break;
+      default:
+        this.statusZone.querySelector('.participation').classList.add('active');
+    }
+  }
 
   modalOn() {
     this.dim.classList.add('is-visible');
@@ -60,7 +73,6 @@ class project {
     this.nowActiveInfo.classList.add('active');
 
     let clickedData = target.getAttribute('data-item');
-    console.log(clickedData, this.nowVisibleInfo);
     this.nowVisibleInfo.classList.remove('is-visible');
     this.nowVisibleInfo = document.querySelector(`div.info .info-contents.${clickedData}`);
     this.nowVisibleInfo.classList.add('is-visible');
