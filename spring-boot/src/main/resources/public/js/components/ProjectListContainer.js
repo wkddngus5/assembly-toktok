@@ -22,7 +22,7 @@ class ProjectListContainer extends Component {
         this.getProjects(this.by, ++this.page);
         setTimeout(() => {
           this.scrollFlag = true;
-        }, 2000)
+        }, 1000)
       }
     });
   }
@@ -64,7 +64,6 @@ class ProjectListContainer extends Component {
         this.setState({
           projects: this.state.projects.concat(json)
         });
-        console.log('state: ', this.state);
       });
   }
 

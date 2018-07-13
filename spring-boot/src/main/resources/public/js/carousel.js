@@ -7,16 +7,24 @@ class carousel {
   }
 
   init() {
+    this.resizeCarousel();
+    window.onresize = () => {
+      this.resizeCarousel();
+    };
+
+    document.querySelector('.carousel-index-list').addEventListener('click', e => {
+      if(e.target.tagName === 'LI') {
+        this.moveCarousel(e.target.getAttribute('data-item'));
+      }
+    });
+  }
+
+  resizeCarousel() {
     const pageListLength = this.pageList.length * document.querySelector('.main-carousel').offsetWidth + 1;
     document.querySelector('ul.carousel-page-list').style.width = `${pageListLength}px`;
     this.pageList.forEach(page => {
       page.style.width = 100 / this.pageList.length + '%';
     });
-    document.querySelector('.carousel-index-list').addEventListener('click', e => {
-      if(e.target.tagName === 'LI') {
-        this.moveCarousel(e.target.getAttribute('data-item'));
-      }
-    })
   }
 
   moveCarousel(index) {

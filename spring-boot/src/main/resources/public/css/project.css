@@ -47,6 +47,10 @@ h5.info-label {
 
 .main-img {
     width: 100%;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 img.info-img {
@@ -66,6 +70,10 @@ img.info-img {
     font-size: 15px;
     font-weight: bold;
     text-align: center;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .desc {
@@ -77,28 +85,29 @@ h2 {
     font-weight: bold;
     display: inline-block;
 }
-div.status-zone {
-    display: block;
-    text-align: right;
-}
 
-div.status-zone h6 {
-    display: inline-block;
-    font-weight: bold;
-    margin: 0 5px 0 0;
-    vertical-align: middle;
-}
-
-div.status-zone div.info-link {
-    width: 20px;
-    height: 20px;
+ul.status-zone {
+    list-style: none;
+    width: 80%;
+    padding: 0;
     text-align: center;
-    vertical-align: middle;
+    margin: 20px auto;
+}
+
+li.status {
     display: inline-block;
-    border: solid #18c3b3;
-    border-radius: 2em;
-    color: #18c3b3;
-    font-weight: bold;
+    width: 30%;
+    border: solid #b2b2b2 1px;
+    padding: 5px 0;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+li.status.active {
+    background-color: #5d9eee;
+    color: #FFFFFF;
 }
 
 .step {
@@ -135,6 +144,10 @@ h5.writer {
     width: 95%;
     background-color: #DDDDDD;
     margin: 15px auto;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .percentage-zone .percentage {
@@ -164,6 +177,10 @@ h5.writer {
     outline: none;
     transition: 0.2s;
     -webkit-transition: 0.2s;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .join-btn:hover {
@@ -184,6 +201,10 @@ ul.share-list .share {
     border-radius: 2em;
     display: inline-block;
     background-size: cover;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 ul.share-list .facebook {
@@ -223,6 +244,10 @@ ul#assembly-man-list li {
     height: 50px;
     border-radius: 2em;
     background-color: #18c3b3;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 .assembly-man p {
@@ -243,6 +268,10 @@ ul#committee li {
     display: inline-block;
     background-color: #fd515d;
     color: #FFFFFF;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 nav.info-subject {
@@ -250,6 +279,10 @@ nav.info-subject {
     border-top: solid #b2b2b2 1px;
     border-bottom: solid #b2b2b2 1px;
     padding: 14px 0;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
 }
 
 nav.info-subject button {
