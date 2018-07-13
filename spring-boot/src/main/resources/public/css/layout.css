@@ -1,6 +1,6 @@
 @font-face {
     font-family: NotoSans;
-    src: url("/font/NotoSans.otf") format("opentype");
+    src: url("/fonts/NotoSans.otf") format("opentype");
 }
 
 html, body {
