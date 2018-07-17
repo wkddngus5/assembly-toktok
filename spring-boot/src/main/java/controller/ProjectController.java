@@ -4,11 +4,13 @@ import dao.ProjectDao;
 import dao.TimelineDao;
 import domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +22,11 @@ public class ProjectController {
     private TimelineDao timelineDao;
 
     @RequestMapping("/projects/{id}")
-    public ModelAndView get(ModelAndView modelAndView, @PathVariable("id") final Long id) {
+    public ModelAndView get(ModelAndView modelAndView, @PathVariable("id") final Long id, HttpSession session) {
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
+
         modelAndView.setViewName("project");
         Project project = projectDao.findById(id).orElse(null);
         modelAndView.addObject("project", project);
@@ -30,19 +36,29 @@ public class ProjectController {
     }
 
     @RequestMapping("/projects")
-    public ModelAndView projectList(ModelAndView modelAndView) {
+    public ModelAndView projectList(ModelAndView modelAndView, HttpSession session) {
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
         modelAndView.setViewName("projectList");
         return modelAndView;
     }
 
     @RequestMapping("/projectForm")
-    public ModelAndView projectForm(ModelAndView modelAndView) {
+    public ModelAndView projectForm(ModelAndView modelAndView, HttpSession session) {
+        System.out.println("PROJECTFORM");
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
         modelAndView.setViewName("projectForm");
         return modelAndView;
     }
 
     @RequestMapping("/projects/search")
-    public ModelAndView projectSearch(ModelAndView modelAndView) {
+    public ModelAndView projectSearch(ModelAndView modelAndView, HttpSession session) {
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
         modelAndView.setViewName("projectSearch");
         return modelAndView;
     }

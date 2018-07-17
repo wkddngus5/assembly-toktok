@@ -4,16 +4,47 @@ class projectForm {
     this.main = document.querySelector('main');
     this.projectImageInput = document.querySelector('input.project-img');
     this.projectImagePreview = document.querySelector('div.image-preview');
+    this.completeBtn = document.querySelector('button.complete');
     this.init();
   }
 
   init() {
+    CKEDITOR.replace( 'editor1' );
     document.querySelectorAll('button.next').forEach((button, i) => {
-      console.log(button, i);
       button.addEventListener('click', e => {
-        console.log(this.pageHeight);
         this.main.style.marginTop = this.pageHeight * i * (-1) + 100 + 'px';
-        this.moveNextPage(i);
+        // this.moveNextPage(i);
+      });
+    });
+
+    this.completeBtn.addEventListener('click', e => {
+      e.preventDefault();
+      const data = {
+        'proposer': document.querySelector('#name').value,
+        'proposer_email': document.querySelector('#email').value,
+        'proposer_phone': document.querySelector('#phone').value,
+        'proposer_description': document.querySelector('#introduce').value,
+        'title': document.querySelector('#title').value,
+        'body': CKEDITOR.instances.editor1.getData()
+      };
+
+      console.log('data: ', data);
+
+      fetch('/projects', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: new Headers({
+          'accept': 'application/json',
+          'content-type': 'application/json',
+        }),
+        body: JSON.stringify(data)
+      }).then(res => {
+        if(res.status === 200) {
+          window.location = '/';
+        }
+        return res.json();
+      }).then(json => {
+        console.log(json);
       });
     });
 
@@ -21,13 +52,6 @@ class projectForm {
       if(e.target.tagName === 'LI') {
         this.toggleCategoryClick(e.target);
       }
-    });
-
-    const toolbarOptions = ['bold', 'italic', 'underline', 'strike', 'image', 'video'];
-
-    const editor = new Quill('#editor', {
-      modules: {     toolbar: toolbarOptions },
-      theme: 'snow',
     });
 
     this.projectImagePreview.addEventListener('click', e => {
@@ -60,10 +84,6 @@ class projectForm {
     } else {
       target.classList.add('is-checked');
     }
-  }
-
-  moveNextPage(i) {
-    console.log(i);
   }
 
   resetPageHeight() {
