@@ -2,21 +2,32 @@ package controller;
 
 import dao.UserDao;
 import domain.*;
+import error.PasswordTokenNotFoundException;
+import error.UserNotFoundException;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static domain.User.USER_PROVIDER_EMAIL;
 
@@ -30,6 +41,12 @@ public class ApiUserController {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    @Autowired
+    JavaMailSender javaMailSender;
+
+    @Autowired
+    Configuration configuration;
+
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserCreate> post(@RequestBody UserCreate userRequest) {
@@ -39,17 +56,27 @@ public class ApiUserController {
         if (userList.isEmpty()) {
             User user = userDao.save(User.CreateUser(userRequest, passwordEncoder));
             if (user == null) {
-                return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+                return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
                 return new ResponseEntity<>(User.ResponseUser(user), headers, HttpStatus.OK);
             }
         } else {
-            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    @RequestMapping(value = "/users", method = RequestMethod.PUT)
+    public ResponseEntity<ApiResult> update(@RequestBody UserCreate request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        userDao.updateUserInformation(principal.getId(), request.getNickname());
+        return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/users/auth/email", method = RequestMethod.POST)
-    public AuthenticationToken login(@RequestBody AuthenticationRequest authenticationRequest, HttpSession session) {
+    public AuthenticationToken login(@RequestBody AuthenticationRequest authenticationRequest, HttpSession session, HttpServletRequest request) {
         String email = authenticationRequest.getEmail();
         String password = authenticationRequest.getPassword();
 
@@ -60,7 +87,47 @@ public class ApiUserController {
         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 
         User user = userDao.findByEmail(email);
-        return new AuthenticationToken(user.getEmail(), user.getNickname(), user.getImage(), user.getRole(), session.getId());
+        userDao.updateLoginInformation(user.getId(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), request.getRemoteAddr());
+        AuthenticationToken authenticationToken = new AuthenticationToken(user.getEmail(), user.getNickname(), user.getImage(), user.getRole(), session.getId());
+        return authenticationToken;
     }
 
+    @RequestMapping(value = "/users/password/edit", method = RequestMethod.POST)
+    public ResponseEntity<ApiResult> changePassword(@RequestBody PasswordChangeRequest request) throws Exception {
+        User user = userDao.getUserByPasswordResetToken(request.getToken());
+        if (user == null) {
+            throw new PasswordTokenNotFoundException("유효하지 않은 인증 토큰.");
+        }
+        userDao.changeUserPassword(passwordEncoder.encode(request.getPassword()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), user.getId());
+
+        return new ResponseEntity<>(new ApiResult(true, "Change Password"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/password", method = RequestMethod.POST)
+    public ResponseEntity<ApiResult> password(@RequestBody UserCreate userRequest) throws Exception {
+        User user = userDao.findByEmail(userRequest.getEmail());
+        if (user == null) {
+            throw new UserNotFoundException("등록되지 않은 이메일 주소입니다.");
+        }
+
+        String token = UUID.randomUUID().toString();
+        userDao.createPasswordResetTokenForUser(token, new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), user.getId());
+
+        Map model = new HashMap();
+        model.put("name", user.getNickname());
+        model.put("url", "http://toktok.io/users/password/edit?reset_password_token=" + token);
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        Template template = configuration.getTemplate("reset_password_email_template.ftl");
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, model);
+        helper.setTo(userRequest.getEmail());
+        helper.setSubject("비밀번호 재설정");
+        helper.setText(html, true);
+        helper.setFrom("info@toktok.io");
+
+        javaMailSender.send(message);
+        return new ResponseEntity<>(new ApiResult(true, "Send Email"), HttpStatus.OK);
+    }
 }

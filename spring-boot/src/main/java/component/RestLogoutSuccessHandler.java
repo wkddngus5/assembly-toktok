@@ -1,7 +1,5 @@
 package component;
 
-import com.google.gson.Gson;
-import domain.ApiResult;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -15,7 +13,9 @@ import java.io.IOException;
 public class RestLogoutSuccessHandler implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-        response.setContentType("application/json");
-        response.getWriter().write(new Gson().toJson(new ApiResult(true, "Logged out successfully")));
+//        response.setContentType("application/json");
+        response.sendRedirect("/");
+//        response.getWriter().write("redirect:" + "/");
+//        return "redirect:" + url;
     }
 }

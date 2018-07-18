@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Hello World!</title>
+</head>
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" language="javascript">
+
+    function Logout() {
+        $.ajax({
+            type : "post",
+            url : "/logout",
+            dataType : "json",
+            error : function(){
+                alert('로그아웃 실패!!');
+            },
+            success : function(data){
+                window.location.href = "/loginTest";
+            }
+        });
+    }
+</script>
+
+<body>
+    email: {{this.authenticatedUser.email}}<br/>
+    NickName: {{this.authenticatedUser.nickname}}<br/>
+    Image: {{this.authenticatedUser.image}}<br/>
+    Role: {{this.authenticatedUser.role}}<br/>
+    <button onclick="Logout()">Logout</button>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CongressmenDao;
 import dao.ProjectDao;
 import dao.ProjectJoinDao;
 import domain.*;
@@ -27,6 +28,9 @@ public class ApiProjectController {
 
     @Autowired
     private ProjectJoinDao projectJoinDao;
+
+    @Autowired
+    private CongressmenDao congressmenDao;
 
     @RequestMapping(value = "/projects/{id}/{manId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -65,19 +69,20 @@ public class ApiProjectController {
 
     @RequestMapping(value = "/projects/join", method = RequestMethod.PATCH)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ProjectJoinResponse> join(@RequestBody ProjectJoin projectJoinRequest) {
+    public ResponseEntity<ProjectJoinResponse> join(@RequestBody ProjectJoin reqeust) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        projectJoinRequest.setUser_id(principal.getId());
+        reqeust.setUser_id(principal.getId());
 
-        ProjectJoin projectJoin = projectJoinDao.selectByProjectIdAndUserId(projectJoinRequest.getProject_id(), projectJoinRequest.getUser_id());
+        ProjectJoin projectJoin = projectJoinDao.selectByProjectIdAndUserId(reqeust.getProject_id(), reqeust.getUser_id());
         if (projectJoin == null) {
             String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
-            projectJoinRequest.setCreated_at(createDate);
-            projectJoinRequest.setUpdated_at(createDate);
+            reqeust.setCreated_at(createDate);
+            reqeust.setUpdated_at(createDate);
 
-            projectJoin = projectJoinDao.save(projectJoinRequest);
+            projectJoin = projectJoinDao.save(reqeust);
+            projectDao.addParticipation(reqeust.getProject_id());
             if (projectJoin == null) {
                 return new ResponseEntity<>(new ProjectJoinResponse("", "Fail"), headers, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
@@ -85,6 +90,8 @@ public class ApiProjectController {
             }
         } else {
             projectJoinDao.deleteById(projectJoin.getId());
+            projectDao.removeParticipation(reqeust.getProject_id());
+
             return new ResponseEntity<>(new ProjectJoinResponse("Cancellation", null), headers, HttpStatus.OK);
         }
     }
@@ -130,5 +137,17 @@ public class ApiProjectController {
 
         return new ResponseEntity<>(projectList, headers, HttpStatus.OK);
 
+    }
+
+    @RequestMapping(value = "/projets/committees", method = RequestMethod.GET)
+    public ResponseEntity<List<Congressmen>> post(@RequestParam("name") String name) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        List<Congressmen> congressmen = congressmenDao.findByNameCongressmen(name);
+        if (congressmen == null) {
+            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(congressmen, headers, HttpStatus.OK);
+        }
     }
 }

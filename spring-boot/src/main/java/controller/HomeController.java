@@ -4,7 +4,6 @@ import dao.MainSlideDao;
 import dao.ProjectDao;
 import dao.ProposalDao;
 import dao.QuestionDao;
-import domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 
 @Controller
 public class HomeController {
@@ -53,6 +51,18 @@ public class HomeController {
             modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         }
         modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    @RequestMapping("/loginTest")
+    public ModelAndView loginTest(ModelAndView modelAndView) {
+        modelAndView.setViewName("loginTest");
+        return modelAndView;
+    }
+
+    @RequestMapping("/indexTest")
+    public ModelAndView indexTest(ModelAndView modelAndView) {
+        modelAndView.setViewName("indexTest");
         return modelAndView;
     }
 

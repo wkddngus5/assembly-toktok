@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <title>Login Test</title>
+</head>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" language="javascript">
+
+    function Login() {
+        var email = document.getElementById("email").value
+        var password = document.getElementById("password").value
+        $.ajax({
+            type : "POST",
+            url : "/users/auth/email",
+            dataType : "json",
+            contentType: "application/json",
+            data:"{\"email\": \"" + email + "\", \"password\": \"" + password + "\"}",
+            error : function(){
+                alert('로그인 실패!!');
+            },
+            success : function(data){
+                window.location.href = "/indexTest";
+            }
+        });
+    }
+</script>
+
+<body>
+    {{^authenticatedUser}}
+        ID : <input type="text" id="email" name="email"><br>
+        PW : <input type="password" id="password" name="password"><br>
+        <button onclick="Login()">Login</button>
+    {{/authenticatedUser}}
+    {{#authenticatedUser}}
+        <button onclick="Login()">Logout</button>
+    {{/authenticatedUser}}
+
+
+</body>
+</html>

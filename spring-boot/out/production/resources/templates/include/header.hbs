@@ -1,5 +1,7 @@
 <header class="header">
-    <a href="/"><div class="logo"></div></a>
+    <a href="/">
+        <div class="logo"></div>
+    </a>
     <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
         <i class="material-icons">more_vert</i>
     </button>
@@ -15,10 +17,10 @@
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
         for="demo-menu-lower-right">
         {{^authenticatedUser}}
-            <a href="/login"><li class="mdl-menu__item">로그인</li></a>
+            <li class="mdl-menu__item"><a href="/login">로그인</a></li>
         {{/authenticatedUser}}
         {{#authenticatedUser}}
-            <a href="/logout"><li class="mdl-menu__item">로그아웃</li></a>
+            <li class="mdl-menu__item"><a href="/logout">로그아웃</a></li>
         {{/authenticatedUser}}
         <li class="mdl-menu__item">Another Action</li>
         <li disabled class="mdl-menu__item">Disabled Action</li>

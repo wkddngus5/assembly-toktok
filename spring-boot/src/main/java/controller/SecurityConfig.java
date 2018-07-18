@@ -16,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import service.UserService;
 
+import static domain.User.USER_ROLE_CITIZEN;
+import static domain.User.USER_ROLE_STAFF;
+
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -40,8 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.NEVER)
                 .and()
             .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("staff")
-                .antMatchers("/", "/index", "/users/**", "/login").permitAll()
+                .antMatchers("/admin/**").hasRole(USER_ROLE_STAFF)
+                .antMatchers(HttpMethod.PUT, "/users").hasAnyRole(USER_ROLE_STAFF, USER_ROLE_CITIZEN)
+                .antMatchers("/", "/index", "/users/**", "/login", "/loginTest").permitAll()
                 .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
