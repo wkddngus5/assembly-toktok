@@ -38,25 +38,27 @@
             <li class="share twitter"></li>
             <li class="share kakao"></li>
         </ul>
-        <div class="assembly">
-            <label class="assembly-man-list-label" for="assembly-man-list">참여의원</label>
-            <ul id="assembly-man-list">
-                <li class="assembly-man">
-                    <div class="profile-img"></div>
-                    <p>진선미 의원</p>
-                </li>
-                <li class="assembly-man">
-                    <div class="profile-img"></div>
-                    <p>남인순 의원</p>
-                </li>
-            </ul>
+        {{#project.status}}
+            <div class="assembly">
+                <label class="assembly-man-list-label" for="assembly-man-list">참여의원</label>
+                <ul id="assembly-man-list">
+                    <li class="assembly-man">
+                        <div class="profile-img"></div>
+                        <p>진선미 의원</p>
+                    </li>
+                    <li class="assembly-man">
+                        <div class="profile-img"></div>
+                        <p>남인순 의원</p>
+                    </li>
+                </ul>
 
-            <label for="committee">소관 상임위</label>
-            <ul id="committee">
-                <li>여성가족위원회</li>
-                <li>행정안전위원회</li>
-            </ul>
-        </div>
+                <label for="committee">소관 상임위</label>
+                <ul id="committee">
+                    <li>여성가족위원회</li>
+                    <li>행정안전위원회</li>
+                </ul>
+            </div>
+        {{/project.status}}
     </div>
 
     <nav class="info-subject">
