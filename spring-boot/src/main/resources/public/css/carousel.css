@@ -18,7 +18,6 @@
 .main-carousel .carousel-page {
     width: 100%;
     margin: 0;
-    padding: 0;
     float: left;
     display: inline-block;
     height: 100%;
@@ -26,18 +25,25 @@
     transition: all 800ms;
     -webkit-transition: all 800ms;
     max-width: 1100px;
-    text-align: left;
     box-shadow:
             0 2px 2px 0 rgba(0,0,0,.14),
             0 3px 1px -2px rgba(0,0,0,.2),
             0 1px 5px 0 rgba(0,0,0,.12);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.main-carousel strong {
+    display: inline-block;
+    margin: 10% 0 0 0;
 }
 
 .carousel-page.page-1 {
     background-image: url("/img/carousel1M.png");
     background-repeat: no-repeat;
-    background-size: 135%;
+    background-size: cover;
     background-position: 10% 10%;
+    text-align: left;
 }
 
 .page-1 p {
@@ -71,6 +77,8 @@
             0 1px 5px 0 rgba(0,0,0,.12);
 }
 
+
+
 .carousel-index-list {
     display: inline-block;
     position: absolute;
@@ -102,7 +110,7 @@
 @media screen and (min-width: 500px) {
     .carousel-page.page-1 {
         background-image: url("/img/carousel1.png");
-        background-size: 100%;
+        background-size: cover;
     }
 }
 

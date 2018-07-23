@@ -1,0 +1,53 @@
+a.move-projects {
+    position: absolute;
+    top: 90px;
+    left: 40px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+div.page {
+    background-color: #FFFFFF;
+    margin: 60px 30px;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+    padding: 20px;
+    min-height: 70vh;
+    /*min-height: 500px;*/
+}
+
+div.input-zone {
+    margin: 20px 0;
+}
+
+div.input-zone label {
+    display: inline-block;
+    margin: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+textarea {
+    display: block;
+    width: 85%;
+}
+
+.page-move-btns {
+    text-align: center;
+}
+
+#submit-btn {
+    font-size: 17px;
+    margin: 10px auto;
+    padding: 10px 15px;
+    color: #FFFFFF;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #5d9eee;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}

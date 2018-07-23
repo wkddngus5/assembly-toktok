@@ -1,0 +1,24 @@
+h1 {
+    margin: 20px;
+}
+
+table.project-list {
+    width: 90%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+
+div.comment {
+    display: inline-block;
+    margin: 0 0 0 10px;
+    padding: 0 0 0 25px;
+    background-image: url("/img/comment.svg");
+    background-size: 43%;
+    background-position: left;
+    background-repeat: no-repeat;
+}
+
+td.actives button {
+    margin: 0 3px 0 3px;
+}

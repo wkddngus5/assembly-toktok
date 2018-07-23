@@ -16,17 +16,19 @@
                 직접 국회에 제안해보세요.</h6>
                 <a class="project-form" href="/projectForm">제안하기</a>
             </li>
-            <li class="carousel-page page-2" data-item="2">
-                PAGE2
-            </li>
-            <li class="carousel-page page-3" data-item="3">
-                PAGE3
-            </li>
+            {{#each mainslides}}
+               <a href={{this.url}}>
+                   <li class="carousel-page page-2" data-item={{this.order}}>
+                        {{{this.description}}}
+                   </li>
+               </a>
+            {{/each}}
         </ul>
         <ul class="carousel-index-list">
             <li class="carousel-index is-checked" data-item="1"></li>
-            <li class="carousel-index" data-item="2"></li>
-            <li class="carousel-index" data-item="3"></li>
+            {{#each mainslides}}
+                <li class="carousel-index" data-item={{this.order}}></li>
+            {{/each}}
         </ul>
     </div>
     <div class="main-projects">

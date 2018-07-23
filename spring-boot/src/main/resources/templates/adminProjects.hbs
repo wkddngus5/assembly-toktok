@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>프로젝트 관리</title>
+    <link rel="stylesheet" href="/css/adminProjects.css">
+</head>
+<body>
+{{> include/header}}
+<h1>프로젝트 관리</h1>
+<h6 class="projects-count"></h6>
+<table class="project-list mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+        <tr>
+            <th class="mdl-data-table__cell--non-numeric">#ID</th>
+            <th class="mdl-data-table__cell--non-numeric">제목</th>
+            <th class="mdl-data-table__cell--non-numeric">상태</th>
+            <th class="mdl-data-table__cell--non-numeric">날짜</th>
+            <th class="mdl-data-table__cell--non-numeric">관리</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric id">5</td>
+        <td class="mdl-data-table__cell--non-numeric title">만15세 이하 어린이 병원비 국가가 보장하라!<div class="comment">241</div></td>
+        <td class="mdl-data-table__cell--non-numeric status">입법활동</td>
+        <td class="mdl-data-table__cell--non-numeric date">2016.10.03<br>14:10</td>
+        <td class="mdl-data-table__cell--non-numeric actives">
+            <a href="/administrator/projects/1"><button class="update">수정</button></a>
+            <button class="remove">삭제</button>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+{{> include/footer}}
+<script type="text/javascript" src="/js/adminProjects.js"></script>
+</body>
+</html>
