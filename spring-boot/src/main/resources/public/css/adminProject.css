@@ -1,0 +1,67 @@
+a.move-projects {
+    position: absolute;
+    top: 90px;
+    left: 40px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+div.page {
+    background-color: #FFFFFF;
+    margin: 60px 30px;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+    padding: 20px;
+    min-height: 70vh;
+    /*min-height: 500px;*/
+}
+
+ul {
+    list-style: none;
+}
+
+div.input-zone {
+    margin: 20px 0;
+}
+
+div.committee-zone li p {
+    display: inline-block;
+}
+
+p.participation-status {
+    margin: 0 10px;
+    padding: 2px 5px;
+    border-radius: 5px;
+    background-color: #5d9eee;
+    color: #FFFFFF;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+main button {
+    padding: 5px 10px;
+    font-size: 13px;
+    color: #FFFFFF;
+    font-weight: bold;
+    border-radius: 10px;
+    background-color: #5d9eee;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+div.page-move-btns {
+    display: inline-block;
+    margin: 0 0 0 40%;
+}
+
+div.page-move-btns button {
+    font-size: 17px;
+    margin: 10px;
+    padding: 10px 15px;
+}

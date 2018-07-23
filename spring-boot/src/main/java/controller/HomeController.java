@@ -6,6 +6,7 @@ import dao.ProposalDao;
 import dao.QuestionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,7 +41,7 @@ public class HomeController {
         modelAndView.addObject("projects_best", projectDao.selectByBest());
         modelAndView.addObject("projects_imminent", projectDao.selectByImminent());
         modelAndView.addObject("projects_new", projectDao.selecteByCreateTime());
-        modelAndView.addObject("mainslieds", mainSlideDao.findAll());
+        modelAndView.addObject("mainslides", mainSlideDao.findAll(new Sort("order")));
 
         return modelAndView;
     }

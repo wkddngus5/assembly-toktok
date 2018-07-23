@@ -68,6 +68,9 @@
     </nav>
     <div class="info">
         <div class="info-contents contents is-visible">
+            <h4>제안 요약</h4>
+            {{project.summary}}
+            <h4>제안 내용</h4>
             {{{project.body}}}
         </div>
         <div class="info-contents timeline">
@@ -84,7 +87,6 @@
                 {{/each}}
             </ul>
         </div>
-
 
         <div class="info-contents discussion">
             <ul class="discussion-list best">

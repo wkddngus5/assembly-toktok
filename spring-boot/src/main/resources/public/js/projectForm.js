@@ -54,6 +54,7 @@ class projectForm {
         'proposer_phone': document.querySelector('#phone').value,
         'proposer_description': document.querySelector('#introduce').value,
         'title': document.querySelector('#title').value,
+        'summary': document.querySelector('#desc').value,
         'body': CKEDITOR.instances.editor1.getData()
       };
 
