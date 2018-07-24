@@ -93,4 +93,22 @@ public class HomeController {
         modelAndView.setViewName("editPassword");
         return modelAndView;
     }
+
+    @RequestMapping("/privacy")
+    public ModelAndView privacy(ModelAndView modelAndView, HttpSession session) {
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
+        modelAndView.setViewName("privacy");
+        return modelAndView;
+    }
+
+    @RequestMapping("/userAgreement")
+    public ModelAndView userAgreement(ModelAndView modelAndView, HttpSession session) {
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
+        modelAndView.setViewName("userAgreement");
+        return modelAndView;
+    }
 }
