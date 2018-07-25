@@ -20,8 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -65,13 +63,33 @@ public class ApiUserController {
         }
     }
 
+    @RequestMapping(value = "/users/{provider}", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<UserCreate> joinSocial(@PathVariable("provider") String provider, @RequestBody UserCreate request, HttpSession session, HttpServletRequest httpRequest) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        User user = userDao.findByProviderId(provider, request.getUid());
+        if (user == null) {
+            User joinUser = userDao.save(User.CreateSocialUser(request, provider, passwordEncoder));
+            if (joinUser == null) {
+                return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(joinUser, null, joinUser.getAuthorities()));
+                userDao.updateLoginInformation(joinUser.getId(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), httpRequest.getRemoteAddr());
+                return new ResponseEntity<>(User.ResponseUser(joinUser), headers, HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @RequestMapping(value = "/users", method = RequestMethod.PUT)
     public ResponseEntity<ApiResult> update(@RequestBody UserCreate request) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        userDao.updateUserInformation(principal.getId(), request.getNickname());
+        userDao.updateUserInformation(principal.getId(), request.getNickname(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
         return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
     }
 
@@ -86,7 +104,7 @@ public class ApiUserController {
 
         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
 
-        User user = userDao.findByEmail(email);
+        User user = userDao.findByProviderId(USER_PROVIDER_EMAIL, email);
         userDao.updateLoginInformation(user.getId(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), request.getRemoteAddr());
         AuthenticationToken authenticationToken = new AuthenticationToken(user.getEmail(), user.getNickname(), user.getImage(), user.getRole(), session.getId());
         return authenticationToken;
@@ -101,6 +119,16 @@ public class ApiUserController {
         userDao.changeUserPassword(passwordEncoder.encode(request.getPassword()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), user.getId());
 
         return new ResponseEntity<>(new ApiResult(true, "Change Password"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/password", method = RequestMethod.PUT)
+    public ResponseEntity<ApiResult> updatePassword(@RequestBody UserCreate request) throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        userDao.updateUserPassword(principal.getId(), passwordEncoder.encode(request.getPassword()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        return new ResponseEntity<>(new ApiResult(true, "Update Password"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/password", method = RequestMethod.POST)

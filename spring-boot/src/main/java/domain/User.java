@@ -17,13 +17,11 @@ import java.util.List;
 @Table(name = "users")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class User implements UserDetails {
+    public static String ROLE_PREFIX = "ROLE_";
     public static String USER_ROLE_CITIZEN = "citizen";
     public static String USER_ROLE_STAFF = "staff";
 
     public static String USER_PROVIDER_EMAIL = "email";
-    public static String USER_PROVIDER_TWITTER = "twitter";
-    public static String USER_PROVIDER_FACEBOOK = "facebook";
-    public static String USER_PROVIDER_KAKAO = "kakao";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -231,9 +229,9 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         if (role != null) {
-            authorities.add(new SimpleGrantedAuthority(role));
+            authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + role));
         } else {
-            authorities.add(new SimpleGrantedAuthority(USER_ROLE_CITIZEN));
+            authorities.add(new SimpleGrantedAuthority(ROLE_PREFIX + USER_ROLE_CITIZEN));
         }
 
         return authorities;
@@ -283,10 +281,28 @@ public class User implements UserDetails {
     public static User CreateUser(UserCreate userRequest, PasswordEncoder passwordEncoder) {
         User user = new User();
         user.setEmail(userRequest.getEmail());
+        user.setUid(userRequest.getEmail());
         user.setEncrypted_password(passwordEncoder.encode(userRequest.getPassword()));
         user.setNickname(userRequest.getNickname());
         user.setRole(USER_ROLE_CITIZEN);
         user.setProvider(USER_PROVIDER_EMAIL);
+
+        String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        user.setCreated_at(createDate);
+        user.setUpdated_at(createDate);
+
+        return user;
+    }
+
+    public static User CreateSocialUser(UserCreate request, String provider, PasswordEncoder passwordEncoder) {
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setUid(request.getUid());
+        user.setNickname(request.getNickname());
+        user.setRole(USER_ROLE_CITIZEN);
+        user.setProvider(provider);
+        user.setImage(request.getImage());
+        user.setEncrypted_password(passwordEncoder.encode(request.getUid()));
 
         String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         user.setCreated_at(createDate);

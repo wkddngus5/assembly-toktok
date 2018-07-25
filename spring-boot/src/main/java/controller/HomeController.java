@@ -46,26 +46,6 @@ public class HomeController {
         return modelAndView;
     }
 
-    @RequestMapping("/login")
-    public ModelAndView login(ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        }
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
-
-    @RequestMapping("/loginTest")
-    public ModelAndView loginTest(ModelAndView modelAndView) {
-        modelAndView.setViewName("loginTest");
-        return modelAndView;
-    }
-
-    @RequestMapping("/indexTest")
-    public ModelAndView indexTest(ModelAndView modelAndView) {
-        modelAndView.setViewName("indexTest");
-        return modelAndView;
-    }
 
     @RequestMapping("/users/form")
     public ModelAndView userForm(ModelAndView modelAndView, HttpSession session) {

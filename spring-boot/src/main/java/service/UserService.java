@@ -17,4 +17,12 @@ public class UserService implements UserDetailsService {
     public User loadUserByUsername(String email) throws UsernameNotFoundException {
         return userDao.findByEmail(email);
     }
+
+    public User loadUserByProviderId(String provider, String uid) {
+        return userDao.findByProviderId(provider, uid);
+    }
+
+    public User joinUser(User user) {
+        return userDao.save(user);
+    }
 }

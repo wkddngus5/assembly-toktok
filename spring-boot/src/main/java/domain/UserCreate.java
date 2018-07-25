@@ -2,11 +2,13 @@ package domain;
 
 public class UserCreate {
     private Long id;
+    private String uid;
     private String email;
     private String nickname;
     private String profile_img;
     private String role;
     private String password;
+    private String image;
 
     public Long getId() {
         return id;
@@ -14,6 +16,14 @@ public class UserCreate {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getEmail() {
@@ -54,5 +64,13 @@ public class UserCreate {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
