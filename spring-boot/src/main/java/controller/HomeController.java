@@ -47,32 +47,23 @@ public class HomeController {
     }
 
 
-    @RequestMapping("/users/form")
-    public ModelAndView userForm(ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        }
-        modelAndView.setViewName("userForm");
-        return modelAndView;
-    }
-
-    @RequestMapping("/users/password")
-    public ModelAndView findPassword(ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        }
-        modelAndView.setViewName("findPassword");
-        return modelAndView;
-    }
-
-    @RequestMapping("/users/passwordForm")
-    public ModelAndView editPassword(ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-        }
-        modelAndView.setViewName("editPassword");
-        return modelAndView;
-    }
+//    @RequestMapping("/users/form")
+//    public ModelAndView userForm(ModelAndView modelAndView, HttpSession session) {
+//        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+//            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        }
+//        modelAndView.setViewName("userForm");
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping("/users/passwordForm")
+//    public ModelAndView editPassword(ModelAndView modelAndView, HttpSession session) {
+//        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+//            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        }
+//        modelAndView.setViewName("editPassword");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/privacy")
     public ModelAndView privacy(ModelAndView modelAndView, HttpSession session) {
