@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>프로젝트 타임라인 관리</title>
+    <link rel="stylesheet" href="/css/adminProjectTimelines.css">
+    <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+{{> include/header}}
+<main>
+    <a href="/administrator/projects" class="move-projects"><< 프로젝트 관리로</a>
+    <div class="page">
+        <h1>제안 타임라인 수정</h1>
+        <h2>여기에 프로젝트 이름</h2>
+        <table class="timelines">
+            <thead>
+                <hr>
+                    <th class="date">날짜</th>
+                    <th class="contents">내용</th>
+                    <th class="subject">분류</th>
+                    <th class="act">관리</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2018-02-01</td>
+                    <td>진선미 의원이 대표발의한 ‘위장형카메라의 관리에 대한 법률 제정안’이 2018년 1월 31일 행정안전위원회 전체회의에서 법안심사소위원회로 회부되었습니다. 앞으로 법안심사소위원회에서 이 법안에 대한 세부 심사가 이루어지게 됩니다.</td>
+                    <td>국회 소식</td>
+                    <td>
+                        <button>수정</button>
+                        <button>삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="add-timeline-zone">
+        <h3>새 타임라인 내용 추가</h3>
+        <input type="date" class="input-date">
+        <textarea class="timeline-contents" placeholder="내용을 입력해주세요."></textarea>
+        <select class="subject">
+            <option>소식</option>
+            <option>의원 한 마디</option>
+        </select>
+        <button class="add-timeline-btn">입력</button>
+    </div>
+</main>
+<!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
+<script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
+<script type="text/javascript" src="/js/projectForm.js"></script>
+{{> include/footer}}
+</body>
+</html>
