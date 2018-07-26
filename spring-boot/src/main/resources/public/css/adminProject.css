@@ -25,9 +25,40 @@ ul {
 div.input-zone {
     margin: 20px 0;
 }
+div.each-committee {
+    border: solid 1px;
+    margin: 20px;
+    padding: 20px;
+}
+div.each-committee li {
+    margin: 20px;
+}
+
+div.each-committee textarea.comment {
+    display: block;
+    width: 50%;
+    height: 50px;
+}
 
 div.committee-zone li p {
     display: inline-block;
+}
+
+li p.name {
+    margin: 0 20px 10px 0;
+}
+
+button.remove-committee-btn, button.remove-assemblyman-btn {
+    background-color: #fd515d;
+}
+
+li p.status-label {
+    margin: 0 20px 10px 0;
+}
+
+h5.committee-name {
+    display: inline-block;
+    vertical-align: middle;
 }
 
 p.participation-status {

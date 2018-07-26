@@ -32,17 +32,22 @@
             </div>
 
             <ul class="agree-info-list">
-                <li class="agree-info">이용약관 보기</li>
-                <li class="agree-info">개인정보 취급방침 보기</li>
+                <li class="agree-info userAgreement">이용약관 보기</li>
+                <li class="agree-info privacy">개인정보 취급방침 보기</li>
            </ul>
 
             <div class="input-zone agree">
-                <label class="label-agree" for="agree">이용약관, 개인정보 취급방침에 동의합니다.</label>
+                <label class="label-agree" for="agree">이용약관,&nbsp; 개인정보 취급방침에 동의합니다.</label>
                 <input id="agree" type="checkbox">
             </div>
             <input class="submit-btn" type="submit" value="Sign Up">
         </form>
     </div>
+    <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
+        <div class="mdl-snackbar__text"></div>
+        <button class="mdl-snackbar__action" type="button"></button>
+    </div>
     {{> include/footer}}
+    <script type="text/javascript" src="/js/userForm.js"></script>
 </body>
 </html>
