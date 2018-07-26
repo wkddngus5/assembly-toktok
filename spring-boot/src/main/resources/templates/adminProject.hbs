@@ -2,7 +2,7 @@
 <html>
 <head>
     {{> include/head}}
-    <title>제안 작성</title>
+    <title>프로젝트 관리</title>
     <link rel="stylesheet" href="/css/adminProject.css">
     <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
 </head>
@@ -46,35 +46,77 @@
         <div class="input-zone">
             <form>
                 <label for="platform-uri">의원 목록</label>
-                <a href="#">의원/위원회 관리</a>
+                <h6>의원/위원회 관리</h6>
                 <div class="committee-zone">
-                    <h6>여성가족위원회</h6>
-                    <ul>
-                        <li>
-                            <p class="name">권미혁</p>
-                            <p class="participation-status">참여</p>
-                        </li>
-                        <li>
-                            <p class="name">남인순</p>
-                            <p class="participation-status">참여</p>
-                        </li>
-                        <li>
-                            <p class="name">금태섭</p>
-                            <p class="participation-status">참여</p>
-                        </li>
-                        <li>
-                            <p class="name">김삼화</p>
-                            <p class="participation-status">참여</p>
-                        </li>
-                        <li>
-                            <p class="name">김승희</p>
-                            <p class="participation-status">참여</p>
-                        </li>
-                        <li>
-                            <p class="name">박경미</p>
-                            <p class="participation-status">참여</p>
-                        </li>
-                    </ul>
+                    <div class="each-committee">
+                        <h5 class="committee-name">여성가족위원회</h5>
+                        <button class="remove-committee-btn">상임위 삭제</button>
+                        <ul>
+                            <li>
+                                <p class="name">권미혁</p>
+                                <button class="remove-assemblyman-btn">의원 삭제</button>
+                                <br>
+                                <p class="status-label">응답 상태</p>
+                                <select class="participation-status">
+                                    <option data-item="no-response">무응답</option>
+                                    <option data-item="accept">참여</option>
+                                    <option data-item="reject">거절</option>
+                                </select>
+                                <textarea class="comment" placeholder="의원 한마디"></textarea>
+                            </li>
+                            <li>
+                                <p class="name">남인순</p>
+                                <select class="participation-status">
+                                    <option data-item="no-response">무응답</option>
+                                    <option data-item="accept">참여</option>
+                                    <option data-item="reject">거절</option>
+                                </select>
+                                <textarea class="comment"></textarea>
+                            </li>
+                            <li>
+                                <p class="name">금태섭</p>
+                                <select class="participation-status">
+                                    <option data-item="no-response">무응답</option>
+                                    <option data-item="accept">참여</option>
+                                    <option data-item="reject">거절</option>
+                                </select>
+                                <textarea class="comment"></textarea>
+                            </li>
+                            <li>
+                                <p class="name">김삼화</p>
+                                <select class="participation-status">
+                                    <option data-item="no-response">무응답</option>
+                                    <option data-item="accept">참여</option>
+                                    <option data-item="reject">거절</option>
+                                </select>
+                                <textarea class="comment"></textarea>
+                            </li>
+                            <li>
+                                <p class="name">김승희</p>
+                                <select class="participation-status">
+                                    <option data-item="no-response">무응답</option>
+                                    <option data-item="accept">참여</option>
+                                    <option data-item="reject">거절</option>
+                                </select>
+                                <textarea class="comment"></textarea>
+                            </li>
+                            <li>
+                                <p class="name">박경미</p>
+                                <select class="participation-status">
+                                    <option data-item="no-response">무응답</option>
+                                    <option data-item="accept">참여</option>
+                                    <option data-item="reject">거절</option>
+                                </select>
+                                <textarea class="comment"></textarea>
+                            </li>
+                        </ul>
+                        <input class="add-assemblyman">
+                        <button>의원 추가</button>
+                    </div>
+
+                    <label for="add-committee">상임위 추가하기</label>
+                    <input id="add-committee">
+                    <button id="add-committee-btn">추가</button>
                 </div><!--div.committee-zone-->
             </form>
         </div> <!--div.input-zone-->

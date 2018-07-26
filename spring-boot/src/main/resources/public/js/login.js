@@ -2,6 +2,7 @@ class login {
   constructor() {
     this.inputEmail = document.querySelector('input.input-email');
     this.inputPassword = document.querySelector('input.input-password');
+    this.snackBar = document.querySelector('#demo-snackbar-example');
 
     this.regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
     this.init();
@@ -13,13 +14,11 @@ class login {
       this.login();
     });
 
-    console.log(this.inputEmail);
     this.inputEmail.addEventListener('webkitAnimationEnd', this.removeBlink);
     this.inputEmail.addEventListener('animationend', this.removeBlink);
   }
   
   removeBlink(e) {
-    console.log(e);
     this.classList.remove('blink')
   }
 
@@ -31,6 +30,7 @@ class login {
 
     if(data.email.match(this.regExp) === null) {
       this.inputEmail.classList.add('blink');
+      this.showSnackBar("이메일 형식이 올바르지 않습니다.")
       return;
     }
 
@@ -48,8 +48,23 @@ class login {
       }
       return res.json();
     }).then(json => {
-      console.log(json);
+      this.showSnackBar('잘못된 회원정보입니다.');
     });
+  }
+
+  showSnackBar(message) {
+    const handler = (event) => {
+      showSnackbarButton.style.backgroundColor = '';
+    };
+
+    const data = {
+      message: message,
+      timeout: 2000,
+      actionHandler: handler,
+      actionText: ' '
+    };
+
+    this.snackBar.MaterialSnackbar.showSnackbar(data);
   }
 }
 

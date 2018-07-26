@@ -100,3 +100,8 @@ form.signup-form .submit-btn {
     font-size: 18px;
     font-weight: bold;
 }
+
+.agree-info:hover {
+    cursor: pointer;
+    color: #000000;
+}

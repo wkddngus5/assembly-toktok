@@ -39,6 +39,7 @@ class findPassword {
     }).then(res => {
       if(res.status !== 200) {
         this.showSnackBar('가입되지 않은 이메일입니다.');
+        return;
       }
       this.showSnackBar('입력하신 이메일로 변경 메일을 보냈습니다.');
     });

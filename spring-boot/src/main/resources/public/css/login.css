@@ -65,7 +65,7 @@ form.login-form input {
     text-align: center;
     font-size: 20px;
     margin: 0 0 14px 0;
-    border: solid #b2b2b2 1px;
+    border: solid #b2b2b2 2px;
 }
 
 input.blink {
@@ -74,23 +74,23 @@ input.blink {
 
 @-webkit-keyframes blink {
     0% {
-        border: solid #fd515d 1px;
+        border: solid #fd515d 2px;
     }
 
     25% {
-        border: solid #b2b2b2 1px;
+        border: solid #b2b2b2 2px;
     }
 
     50% {
-        border: solid #fd515d 1px;
+        border: solid #fd515d 2px;
     }
 
     75% {
-        border: solid #b2b2b2 1px;
+        border: solid #b2b2b2 2px;
     }
 
     100% {
-        border: solid #fd515d 1px;
+        border: solid #fd515d 2px;
     }
 }
 
