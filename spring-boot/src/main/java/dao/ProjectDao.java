@@ -32,4 +32,9 @@ public interface ProjectDao extends JpaRepository<Project, Long> {
     @Transactional
     @Query(value = "UPDATE projects SET participations_count = participations_count + 1 WHERE id = ?1", nativeQuery = true)
     void addParticipation(Long id);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE projects SET deleted_at = ?2 WHERE id = ?1", nativeQuery = true)
+    void deleteProject(Long id, String deleteAt);
 }

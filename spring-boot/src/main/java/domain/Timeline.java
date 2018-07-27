@@ -2,10 +2,7 @@ package domain;
 
 import org.springframework.lang.Nullable;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,11 +10,12 @@ import java.util.Date;
 @Table(name = "timelines")
 public class Timeline {
     @Id
-    @GeneratedValue
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String actor;
     private String image;
     private String body;
+    private String subject;
     private Long project_id;
     @Nullable
     private Long congressman_id;
@@ -25,11 +23,16 @@ public class Timeline {
     private String created_at;
     private String updated_at;
 
-    public Integer getId() {
+    @Transient
+    private String contents;
+    @Transient
+    private String date;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -57,6 +60,22 @@ public class Timeline {
         this.body = body;
     }
 
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
     public Long getProject_id() {
         return project_id;
     }
@@ -81,6 +100,14 @@ public class Timeline {
         this.timeline_date = timeline_date;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     public String getCreated_at() {
         return created_at;
     }
@@ -97,13 +124,13 @@ public class Timeline {
         this.updated_at = updated_at;
     }
 
-    public static Timeline createTimeLine(String actor, String image, String body, Long projectId, Long congressmanId, String timeLineDate) {
+    public static Timeline createTimeline(String actor, String image, String body, String subject, Long projectId, String timeLineDate) {
         Timeline timeline = new Timeline();
         timeline.setActor(actor);
         timeline.setImage(image);
         timeline.setBody(body);
+        timeline.setSubject(subject);
         timeline.setProject_id(projectId);
-        timeline.setCongressman_id(congressmanId);
         timeline.setTimeline_date(timeLineDate);
 
         String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
@@ -111,5 +138,28 @@ public class Timeline {
         timeline.setUpdated_at(createDate);
 
         return timeline;
+    }
+
+    public void updateTimeline(Timeline timeline) {
+        image = timeline.getImage();
+        body = timeline.getContents();
+        subject = timeline.getSubject();
+        timeline_date = timeline.getDate();
+        updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+    }
+
+    public static Timeline createTimeline(Timeline timeline) {
+        Timeline createTimeline = new Timeline();
+        createTimeline.setId(timeline.getId());
+        createTimeline.setActor(timeline.getActor());
+        createTimeline.setImage(timeline.getImage());
+        createTimeline.setBody(timeline.getBody());
+        createTimeline.setSubject(timeline.getSubject());
+        createTimeline.setProject_id(timeline.getProject_id());
+        createTimeline.setTimeline_date(timeline.getDate());
+        createTimeline.setCreated_at(timeline.getCreated_at());
+        createTimeline.setUpdated_at(timeline.getUpdated_at());
+
+        return createTimeline;
     }
 }

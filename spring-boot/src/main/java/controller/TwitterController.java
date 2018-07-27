@@ -64,9 +64,11 @@ public class TwitterController {
     }
 
     @GetMapping(value = "/users/auth/twitter/authorize")
-    public String twitterComplete(HttpServletRequest request, @RequestParam(name = "oauth_token") String oauthToken, @RequestParam(name = "oauth_verifier") String oauthVerifier) {
+    public String twitterComplete(HttpServletRequest request, @RequestParam(name = "oauth_token", required = false) String oauthToken, @RequestParam(name = "oauth_verifier", required = false) String oauthVerifier, @RequestParam(name = "denied", required = false) String denied) {
+        if (denied != null) {
+            return "redirect:/";
+        }
         Connection<Twitter> connection = getAccessTokenToConnection(request, oauthVerifier);
-
         User account = userService.loadUserByProviderId(SocialType.TWITTER.getValue(), connection.getKey().getProviderUserId());
         if (account != null) {
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities()));
