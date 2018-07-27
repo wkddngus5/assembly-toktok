@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>국회톡톡</title>
+</head>
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" language="javascript">
+
+    function Join() {
+        var provider = document.getElementById("provider").value
+        var uid = document.getElementById("uid").value
+        var nickname = document.getElementById("nickname").value
+        var email = document.getElementById("email").value
+
+        $.ajax({
+            type : "POST",
+            url : "/users/" + provider,
+            dataType : "json",
+            contentType: "application/json",
+            data:"{\"email\": \"" + email + "\", \"uid\": \"" + uid + "\", \"nickname\": \"" + nickname + "\"}",
+            error : function(){
+                alert('가입 실패!!');
+            },
+            success : function(data){
+                window.location.href = "/indexTest";
+            }
+        });
+    }
+</script>
+<body>
+    provider : <input type="text" id="provider" value={{this.provider}}><br>
+    uid : <input type="text" id="uid" value={{this.uid}}><br>
+    email : <input type="text" id="email" value={{this.email}}><br>
+    nickName : <input type="text" id="nickname" name="nickname"><br>
+    <button onclick="Join()">Join</button>
+</body>
+</html>

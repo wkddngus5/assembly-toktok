@@ -28,6 +28,10 @@
 </script>
 
 <body>
+    <a class="facebook-login-text" href="/users/auth/facebook">facebook으로 로그인</a><br>
+    <a class="facebook-login-text" href="/users/auth/twitter">twitter으로 로그인</a><br>
+    <a class="facebook-login-text" href="/users/auth/kakao">kakao으로 로그인</a><br>
+
     {{^authenticatedUser}}
         ID : <input type="text" id="email" name="email"><br>
         PW : <input type="password" id="password" name="password"><br>
@@ -36,7 +40,6 @@
     {{#authenticatedUser}}
         <button onclick="Login()">Logout</button>
     {{/authenticatedUser}}
-
 
 </body>
 </html>

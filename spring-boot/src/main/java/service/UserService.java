@@ -26,14 +26,22 @@ public class UserService implements UserDetailsService {
     }
 
     public ModelAndView addSessionInfo(ModelAndView modelAndView, HttpSession session) {
-        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-            User sessionedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            User sessionedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             modelAndView.addObject("authenticatedUser", sessionedUser);
-            if(sessionedUser.getRole().toString().equals("staff")) {
+            if (sessionedUser.getRole().toString().equals("staff")) {
                 log.info("staff logined");
                 modelAndView.addObject("staff", sessionedUser.getRole());
             }
         }
         return modelAndView;
+    }
+
+    public User loadUserByProviderId(String provider, String uid) {
+        return userDao.findByProviderId(provider, uid);
+    }
+
+    public User joinUser(User user) {
+        return userDao.save(user);
     }
 }

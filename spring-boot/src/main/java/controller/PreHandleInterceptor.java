@@ -9,8 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PreHandleInterceptor extends HandlerInterceptorAdapter {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-            throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(request.getSession().getAttribute("SPRING_SECURITY_CONTEXT") == null) {
             response.sendRedirect("/");
             return false; 

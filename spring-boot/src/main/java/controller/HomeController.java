@@ -4,13 +4,11 @@ import dao.MainSlideDao;
 import dao.ProjectDao;
 import dao.ProposalDao;
 import dao.QuestionDao;
-import domain.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,45 +48,24 @@ public class HomeController {
         return modelAndView;
     }
 
-    @RequestMapping("/login")
-    public ModelAndView login(ModelAndView modelAndView, HttpSession session) {
-        modelAndView = userService.addSessionInfo(modelAndView, session);
-        modelAndView.setViewName("login");
-        return modelAndView;
-    }
 
-    @RequestMapping("/loginTest")
-    public ModelAndView loginTest(ModelAndView modelAndView) {
-        modelAndView.setViewName("loginTest");
-        return modelAndView;
-    }
-
-    @RequestMapping("/indexTest")
-    public ModelAndView indexTest(ModelAndView modelAndView) {
-        modelAndView.setViewName("indexTest");
-        return modelAndView;
-    }
-
-    @RequestMapping("/users/form")
-    public ModelAndView userForm(ModelAndView modelAndView, HttpSession session) {
-        modelAndView = userService.addSessionInfo(modelAndView, session);
-        modelAndView.setViewName("userForm");
-        return modelAndView;
-    }
-
-    @RequestMapping("/users/password")
-    public ModelAndView findPassword(ModelAndView modelAndView, HttpSession session) {
-        modelAndView = userService.addSessionInfo(modelAndView, session);
-        modelAndView.setViewName("findPassword");
-        return modelAndView;
-    }
-
-    @RequestMapping("/users/passwordForm")
-    public ModelAndView editPassword(ModelAndView modelAndView, HttpSession session) {
-        modelAndView = userService.addSessionInfo(modelAndView, session);
-        modelAndView.setViewName("editPassword");
-        return modelAndView;
-    }
+//    @RequestMapping("/users/form")
+//    public ModelAndView userForm(ModelAndView modelAndView, HttpSession session) {
+//        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+//            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        }
+//        modelAndView.setViewName("userForm");
+//        return modelAndView;
+//    }
+//
+//    @RequestMapping("/users/passwordForm")
+//    public ModelAndView editPassword(ModelAndView modelAndView, HttpSession session) {
+//        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+//            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        }
+//        modelAndView.setViewName("editPassword");
+//        return modelAndView;
+//    }
 
     @RequestMapping("/privacy")
     public ModelAndView privacy(ModelAndView modelAndView, HttpSession session) {

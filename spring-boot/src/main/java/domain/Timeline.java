@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "timelines")
@@ -16,9 +18,9 @@ public class Timeline {
     private String actor;
     private String image;
     private String body;
-    private Integer project_id;
+    private Long project_id;
     @Nullable
-    private Integer congressman_id;
+    private Long congressman_id;
     private String timeline_date;
     private String created_at;
     private String updated_at;
@@ -55,19 +57,19 @@ public class Timeline {
         this.body = body;
     }
 
-    public Integer getProject_id() {
+    public Long getProject_id() {
         return project_id;
     }
 
-    public void setProject_id(Integer project_id) {
+    public void setProject_id(Long project_id) {
         this.project_id = project_id;
     }
 
-    public Integer getCongressman_id() {
+    public Long getCongressman_id() {
         return congressman_id;
     }
 
-    public void setCongressman_id(Integer congressman_id) {
+    public void setCongressman_id(Long congressman_id) {
         this.congressman_id = congressman_id;
     }
 
@@ -93,5 +95,21 @@ public class Timeline {
 
     public void setUpdated_at(String updated_at) {
         this.updated_at = updated_at;
+    }
+
+    public static Timeline createTimeLine(String actor, String image, String body, Long projectId, Long congressmanId, String timeLineDate) {
+        Timeline timeline = new Timeline();
+        timeline.setActor(actor);
+        timeline.setImage(image);
+        timeline.setBody(body);
+        timeline.setProject_id(projectId);
+        timeline.setCongressman_id(congressmanId);
+        timeline.setTimeline_date(timeLineDate);
+
+        String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        timeline.setCreated_at(createDate);
+        timeline.setUpdated_at(createDate);
+
+        return timeline;
     }
 }
