@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>관리자 목록</title>
+    <link rel="stylesheet" href="/css/adminList.css">
+    <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+{{> include/header}}
+<main>
+    <div class="page">
+        <h3>관리자 목록</h3>
+        <table class="administrators">
+            <thead>
+                <tr>
+                    <th class="id">#ID</th>
+                    <th class="image">닉네임</th>
+                    <th class="link-url">관리</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td class="nickname">국회톡톡운영자</td>
+                    <td>
+                        <button>삭제</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <form class="add-administrator-zone">
+            <h3>새 관리자 추가</h3>
+            <label for="input-email">이메일</label>
+            <input type="email" id="input-email">
+            <button class="add-administrator">추가</button>
+        </form>
+    </div>
+</main>
+<!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
+<script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
+<script type="text/javascript" src="/js/projectForm.js"></script>
+{{> include/footer}}
+</body>
+</html>

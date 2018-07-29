@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    {{> include/head}}
+    <title>메인 슬라이드 관리</title>
+    <link rel="stylesheet" href="/css/adminSlides.css">
+    <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+{{> include/header}}
+<main>
+    <div class="page">
+        <h3>메인 슬라이드 관리</h3>
+        <table class="slides">
+            <thead>
+                <tr>
+                    <th class="id">#ID</th>
+                    <th class="image">이미지</th>
+                    <th class="link-url">링크 url</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td class="image">
+                        <input type="file">
+                    </td>
+                    <td>www.naver.com</td>
+                </tr>
+            </tbody>
+        </table>
+        <form class="add-slide-zone">
+            <h3>새 슬라이드 추가</h3>
+            <input type="file">
+            <input type="url" placeholder="url">
+            <button class="add-slide">추가</button>
+        </form>
+    </div>
+</main>
+<!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
+<script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
+<script type="text/javascript" src="/js/projectForm.js"></script>
+{{> include/footer}}
+</body>
+</html>

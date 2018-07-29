@@ -3,15 +3,15 @@
 <head>
     {{> include/head}}
     <title>의원 관리</title>
-    <link rel="stylesheet" href="/css/adminCommittees.css">
+    <link rel="stylesheet" href="/css/adminAssemblyman.css">
     <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
 </head>
 <body>
 {{> include/header}}
 <main>
     <div class="page">
-        <h1>상임위원회 관리</h1>
-        <table class="committees">
+        <h1>의원 관리</h1>
+        <table class="assemblyman">
             <thead>
                 <hr>
                     <th class="id">#ID</th>
@@ -38,10 +38,42 @@
             </tbody>
         </table>
     </div>
-    <div class="add-committee-zone">
-        <h3>새 위원회 추가</h3>
-        <input type="text" class="input-name" placeholder="이름을 입력해주세요">
-        <button class="add-committee-btn">입력</button>
+    <div class="add-assemblyman-zone">
+        <h3>새 의원 추가</h3>
+        <form class="add-assemblyman">
+            <div class="input-zone">
+                <label for="input-name">이름</label>
+                <input type="text" class="name" id="input-name" placeholder="이름을 입력해주세요">
+            </div>
+
+            <div class="input-zone">
+                <label for="select-party">정당</label>
+                <select id="select-party">
+                    <option>더불어민주당</option>
+                    <option>자유한국당</option>
+                </select>
+            </div>
+
+            <div class="input-zone">
+                <label for="select-committee">상임위원회</label>
+                <select id="select-committee">
+                    <option>행정안전위원회</option>
+                </select>
+            </div>
+
+            <div class="input-zone">
+                <label for="input-email">이메일</label>
+                <input type="email" id="input-email">
+            </div>
+
+            <div class="input-zone">
+                <label for="input-profile">프로필 사진</label>
+                <input type="file" id="input-profile">
+            </div>
+
+            <button class="add-assemblyman-btn">입력</button>
+            <br>
+        </form>
     </div>
 </main>
 <!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->

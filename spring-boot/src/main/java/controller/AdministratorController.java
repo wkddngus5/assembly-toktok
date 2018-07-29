@@ -67,4 +67,20 @@ public class AdministratorController {
         modelAndView.setViewName("adminAssemblyman");
         return modelAndView;
     }
+
+    @RequestMapping("/slides")
+    public ModelAndView adminSlides(ModelAndView modelAndView,  HttpSession session) {
+        userService.addSessionInfo(modelAndView, session);
+
+        modelAndView.setViewName("adminSlides");
+        return modelAndView;
+    }
+
+    @RequestMapping("/list")
+    public ModelAndView adminList(ModelAndView modelAndView, HttpSession session) {
+        userService.addSessionInfo(modelAndView, session);
+
+        modelAndView.setViewName("adminList");
+        return modelAndView;
+    }
 }

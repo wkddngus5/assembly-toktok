@@ -1,0 +1,83 @@
+main {
+    margin: 20px;
+}
+
+table.assemblyman {
+    width: 95%;
+    margin: 20px auto;
+    border-spacing: 0;
+    text-align: center;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+table.assemblyman thead th {
+    border: solid 0.5px;
+    background-color: #E8820C;
+}
+
+table.assemblyman td {
+    border: solid 0.5px;
+    padding: 10px;
+}
+
+div.add-assemblyman-zone {
+    margin: 10px;
+    vertical-align: middle;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+div.input-zone {
+    margin: 40px 20px;
+    font-size: 1.4em;
+}
+
+div.input-zone label {
+    display: inline-block;
+    width: 180px;
+    padding: 10px;
+}
+
+div.input-zone input, div.input-zone select {
+    font-size: 1.4em;
+    padding: 10px;
+}
+
+div.add-assemblyman-zone h3 {
+    margin: 10px 0 30px 0;
+    padding: 10px 20px;
+    font-size: 20px;
+    background-color: #FFEC0D;
+}
+
+div.add-assemblyman-zone input.input-name {
+    vertical-align: middle;
+    margin: 10px 20px;
+    font-size: 1.4em;
+}
+
+#input-profile::-webkit-file-upload-button {
+    vertical-align: top;
+    margin: 0 0 20px 0;
+}
+
+button.add-assemblyman-btn {
+    display: block;
+    vertical-align: top;
+    width: 80px;
+    height: 40px;
+    margin: 30px auto;
+    padding: 5px;
+    font-size: 1.2em;
+    border: none;
+    border-radius: 1em;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}

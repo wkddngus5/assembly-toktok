@@ -138,6 +138,10 @@ footer .account-list {
     border-radius: 2em;
 }
 
+footer p {
+    color: #b2b2b2;
+}
+
 .account-list li.facebook {
     background-image: url("/img/facebook-icon.png");
 }
