@@ -43,4 +43,4 @@ class adminProjects {
   }
 }
 
-new adminProjects();
+export default adminProjects;

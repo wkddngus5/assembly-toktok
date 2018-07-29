@@ -1,7 +1,7 @@
-import carousel from '../js/carousel';
 import header from '../js/header';
+import findPassword from '../js/findPassword';
 
 (function () {
-  new carousel();
   new header();
+  new findPassword();
 })();

@@ -41,6 +41,5 @@ class carousel {
   }
 }
 
-new carousel();
-// export default carousel;
+export default carousel;
 

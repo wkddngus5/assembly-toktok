@@ -97,4 +97,4 @@ class userForm {
   }
 }
 
-new userForm();
+export default userForm;

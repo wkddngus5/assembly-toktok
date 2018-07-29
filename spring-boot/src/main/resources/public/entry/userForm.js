@@ -1,7 +1,7 @@
-import carousel from '../js/carousel';
 import header from '../js/header';
+import userForm from '../js/userForm';
 
 (function () {
-  new carousel();
   new header();
+  new userForm();
 })();

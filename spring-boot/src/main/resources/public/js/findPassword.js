@@ -65,4 +65,4 @@ class findPassword {
   }
 }
 
-new findPassword();
+export default findPassword;

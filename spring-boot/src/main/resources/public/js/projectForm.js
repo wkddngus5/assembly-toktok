@@ -125,4 +125,4 @@ class projectForm {
 
 }
 
-new projectForm();
+export default projectForm;

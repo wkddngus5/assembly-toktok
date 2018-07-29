@@ -1,0 +1,186 @@
+h1, h2 {
+    text-align: center;
+    margin: 60px 0 55px 0;
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.demo-card-square.mdl-card {
+    width: 320px;
+}
+
+.demo-card-square > .mdl-card__title {
+    height: 170px;
+    color: #f0d102;
+    background: url("/img/baseline-account_box-24px.svg") no-repeat #ffffff;
+    background-size: contain;
+    background-position: center;
+}
+
+.mdl-card__title.mdl-card--expand:hover {
+    cursor: pointer;
+}
+
+input.profile-img {
+    display: none;
+}
+
+.demo-card-square {
+    margin: 40px auto;
+}
+
+button.change-nav {
+    width: 130px;
+    margin: auto;
+    height: 40px;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+    border: none;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+div.change-nickname-zone, div.change-password-zone {
+    height: 0;
+    overflow: hidden;
+    transition: 1s;
+    -webkit-transition: 1s;
+}
+
+div.change-nickname-zone.is-visible {
+    height: 80px;
+}
+
+div.change-password-zone.is-visible {
+    height: 200px;
+}
+
+div.project-list-zone {
+    width: 90%;
+    margin: auto;
+}
+
+button.mdl-button.mdl-js-button.is-active {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+ul.project-list {
+    display: none;
+}
+
+ul.project-list.is-visible {
+    display: block;
+}
+
+ul.project-list {
+    list-style: none;
+    padding: 0;
+    margin: 30px auto;
+    text-align: center;
+}
+
+li.project {
+    display: inline-block;
+    width: 100%;
+    background-color: #FFFFFF;
+    margin: 0 20px 30px 0;
+    max-width: 380px;
+    vertical-align: middle;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+li.project.long {
+    width: 655px;
+    max-width: 655px;
+}
+
+.project-img {
+    width: 100%;
+    height: 250px;
+    background-color: palevioletred;
+}
+
+.project .status {
+    float: right;
+    background-color: #fbef03;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.status.fail {
+    background-color: #b2b2b2;
+}
+
+.status.running {
+    background-color: #18c3b3;
+}
+
+.project .project-summary {
+    height: 100px;
+}
+
+.project h5 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 20px;
+    text-align: left;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+}
+
+.category {
+    display: inline-block;
+    width: 30px;
+    padding: 5px;
+    background-color: #18c3b3;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.percentage-zone {
+    width: 80%;
+    background-color: #DDDDDD;
+    margin: 15px auto;
+}
+
+.percentage-zone .percentage {
+    height: 7px;
+    width: 0;
+    background-color: #18c3b3;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+}
+
+.count, .percentage-number {
+    width: 60px;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: bold;
+    color: #18c3b3;
+    margin: 0;
+    text-align: left;
+}
+
+.count {
+    float: left;
+    margin: 0 0 0 30px;
+}
+
+.percentage-number {
+    float: right;
+}
+
+div.subject.best {
+    background-color: #fbef03;
+}

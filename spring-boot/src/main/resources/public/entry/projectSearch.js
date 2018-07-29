@@ -1,7 +1,7 @@
-import carousel from '../js/carousel';
 import header from '../js/header';
+import projectSearch from '../js/projectSearch';
 
 (function () {
-  new carousel();
   new header();
+  new projectSearch();
 })();

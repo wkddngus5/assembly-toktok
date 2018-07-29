@@ -1,7 +1,7 @@
-import carousel from '../js/carousel';
+import login from '../js/login';
 import header from '../js/header';
 
 (function () {
-  new carousel();
+  new login();
   new header();
 })();
