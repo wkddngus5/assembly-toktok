@@ -20,14 +20,14 @@
             <a href="/login"><li class="mdl-menu__item">로그인</li></a>
         {{/authenticatedUser}}
         {{#authenticatedUser}}
+            <a href="/login"><li class="mdl-menu__item">마이페이지</li></a>
             <a href="/logout"<li class="mdl-menu__item">로그아웃</li></a>
         {{/authenticatedUser}}
-        <li class="mdl-menu__item">Another Action</li>
-        <li disabled class="mdl-menu__item">Disabled Action</li>
         {{#staff}}
             <a href="/administrator/projects"><li class="mdl-menu__item">프로젝트 관리</li></a>
             <a href="/administrator/committees"><li class="mdl-menu__item">상임위 관리</li></a>
             <a href="/administrator/assemblyman"><li class="mdl-menu__item">의원 관리</li></a>
+            <a href="/administrator/slides"><li class="mdl-menu__item">슬라이드 관리</li></a>
         {{/staff}}
     </ul>
 </header>
