@@ -12,17 +12,20 @@
         <form class="signup-form">
             <div class="input-zone">
                 <label class="label-email" for="email">E-mail</label>
-                <input class="input-email" id="email" type="email" placeholder="이메일을 입력해주세요">
+                <input class="input-email" id="email" type="email"
+                       placeholder="이메일을 입력해주세요" autocomplete="email">
             </div>
 
             <div class="input-zone">
                 <label class="label-password" for="password">Password</label>
-                <input class="input-password" id="password" type="password" placeholder="패스워드를 입력해주세요">
+                <input class="input-password" id="password" type="password"
+                       placeholder="패스워드를 입력해주세요" autocomplete="password">
             </div>
 
             <div class="input-zone">
                 <label class="label-password-confirm" for="password-confirm">Password <br> Confirm</label>
-                <input class="input-password-confirm" id="password-confirm" type="password" placeholder="패스워드를 입력해주세요">
+                <input class="input-password-confirm" id="password-confirm" type="password"
+                       placeholder="패스워드를 입력해주세요" autocomplete="new-password">
             </div>
 
             <div class="input-zone">
@@ -48,6 +51,6 @@
         <button class="mdl-snackbar__action" type="button"></button>
     </div>
     {{> include/footer}}
-    <script type="text/javascript" src="/js/userForm.js"></script>
+    <script type="text/javascript" src="/dist/userForm-bundle.js"></script>
 </body>
 </html>

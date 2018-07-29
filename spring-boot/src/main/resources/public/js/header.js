@@ -28,6 +28,4 @@ class header {
   }
 }
 
-new header();
-
-// export default header;
+export default header;

@@ -1,7 +1,7 @@
-import carousel from '../js/carousel';
 import header from '../js/header';
+import my from '../js/my';
 
 (function () {
-  new carousel();
   new header();
+  new my();
 })();

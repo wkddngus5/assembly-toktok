@@ -20,8 +20,22 @@
         <h2>{{project.title}}</h2>
         <ul class="status-zone" data-item="{{project.status}}">
             <li class="status participation">시민참여</li>
-            <li class="status matching">의원매칭</li>
-            <li class="status lawmaking">입법활동</li>
+            <li class="status matching">
+                의원매칭
+                <div class="matching guide">
+                    <h4>의원매칭단계란?</h4>
+                    '의원 매칭' 단계에서는 시민참여 1,000건이 넘은 제안을 국회의원과 연결합니다.
+                    <img class="guide-image" src="/img/matching.png">
+                </div>
+            </li>
+            <li class="status running">
+                입법활동
+                <div class="running guide">
+                    <h4>입법활동단계란?</h4>
+                    '입법 활동' 단계에서는 시민과 국회의원을 매칭한 '입법 드림팀'의 입법활동을 투명하게 공개합니다.
+                    <img class="guide-image" src="/img/running.png">
+                </div>
+            </li>
         </ul>
         <div class="writer-info">
             <div class="profile"></div>
@@ -225,7 +239,6 @@
     </div>
 </main>
 {{> include/footer}}
-<!--<script type="text/javascript" src="/dist/index-bundle.js"></script>-->
-<script type="text/javascript" src="/entry/project.js"></script>
+<script type="text/javascript" src="/dist/project-bundle.js"></script>
 </body>
 </html>

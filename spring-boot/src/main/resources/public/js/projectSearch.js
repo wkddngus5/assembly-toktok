@@ -14,4 +14,4 @@ class projectSearch {
   }
 }
 
-new projectSearch();
+export default projectSearch;

@@ -17,7 +17,7 @@ class login {
     this.inputEmail.addEventListener('webkitAnimationEnd', this.removeBlink);
     this.inputEmail.addEventListener('animationend', this.removeBlink);
   }
-  
+
   removeBlink(e) {
     this.classList.remove('blink')
   }
@@ -45,10 +45,9 @@ class login {
     }).then(res => {
       if(res.status === 200) {
         window.location = '/';
+      } else {
+        this.showSnackBar('잘못된 회원정보입니다.');
       }
-      return res.json();
-    }).then(json => {
-      this.showSnackBar('잘못된 회원정보입니다.');
     });
   }
 
@@ -68,4 +67,4 @@ class login {
   }
 }
 
-new login();
+export default login;

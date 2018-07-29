@@ -20,6 +20,15 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping("/my")
+    public ModelAndView my(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        }
+        modelAndView.setViewName("my");
+        return modelAndView;
+    }
+
     @RequestMapping("/loginTest")
     public ModelAndView loginTest(ModelAndView modelAndView) {
         modelAndView.setViewName("loginTest");

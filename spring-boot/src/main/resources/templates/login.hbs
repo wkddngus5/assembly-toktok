@@ -16,11 +16,12 @@
     </ul>
 </div>
 
+
 <div class="email-login-zone">
     <h2>E-mail 로그인</h2>
     <form class="login-form">
         <input class="input-email" type="email" placeholder="E-mail">
-        <input class="input-password" type="password" placeholder="password">
+        <input class="input-password" type="password" placeholder="password" autocomplete="password">
         <input class="submit-btn" type="submit" value="Log In">
     </form>
 </div>
@@ -34,6 +35,7 @@
     <button class="mdl-snackbar__action" type="button"></button>
 </div>
 {{> include/footer}}
-<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript" src="https://unpkg.com/default-passive-events"></script>
+<script type="text/javascript" src="/dist/login-bundle.js"></script>
 </body>
 </html>
