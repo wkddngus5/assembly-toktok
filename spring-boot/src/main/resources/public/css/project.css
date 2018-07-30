@@ -235,6 +235,10 @@ h5.writer {
             0 1px 5px 0 rgba(0,0,0,.12);
 }
 
+.join-btn.is-active {
+    background-color: #0000FF;
+}
+
 .join-btn:hover {
     cursor: pointer;
 }

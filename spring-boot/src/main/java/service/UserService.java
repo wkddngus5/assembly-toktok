@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -35,6 +36,15 @@ public class UserService implements UserDetailsService {
             }
         }
         return modelAndView;
+    }
+
+    public User getSessionedUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal == null) {
+            return null;
+        }
+
+        return (User)principal;
     }
 
     public User loadUserByProviderId(String provider, String uid) {

@@ -17,7 +17,7 @@
         <ul class="category-list">
             <li class="category">여성</li>
         </ul>
-        <h2>{{project.title}}</h2>
+        <h2 data-item="{{project.id}}">{{project.title}}</h2>
         <ul class="status-zone" data-item="{{project.status}}">
             <li class="status participation">시민참여</li>
             <li class="status matching">
@@ -46,7 +46,12 @@
         </div>
         <p class="count">{{project.participations_count}}</p>
         <p class="percentage-number" data-item="{{project.participations_goal_count}}">78%</p>
-        <button class="join-btn">참여하기</button>
+        {{#participations}}
+            <button class="join-btn is-active">참여취소</button>
+        {{/participations}}
+        {{^participations}}
+            <button class="join-btn">참여하기</button>
+        {{/participations}}
         <ul class="share-list">
             <li class="share facebook"></li>
             <li class="share twitter"></li>
