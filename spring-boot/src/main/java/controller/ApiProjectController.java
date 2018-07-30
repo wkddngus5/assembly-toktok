@@ -1,6 +1,7 @@
 package controller;
 
 import dao.CongressmenDao;
+import dao.ParticipationsDao;
 import dao.ProjectDao;
 import dao.ProjectJoinDao;
 import domain.*;
@@ -13,7 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import service.UserService;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -23,6 +27,8 @@ import java.util.List;
 public class ApiProjectController {
     private static final long GOAL_COUNT = 1000;
 
+    private UserService userService = new UserService();
+
     @Autowired
     private ProjectDao projectDao;
 
@@ -31,6 +37,9 @@ public class ApiProjectController {
 
     @Autowired
     private CongressmenDao congressmenDao;
+
+    @Autowired
+    private ParticipationsDao participationsDao;
 
     @RequestMapping(value = "/projects/{id}/{manId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -149,5 +158,25 @@ public class ApiProjectController {
         } else {
             return new ResponseEntity<>(congressmen, headers, HttpStatus.OK);
         }
+    }
+
+    @RequestMapping(value = "/projects/{id}/join", method = RequestMethod.PATCH)
+    public ResponseEntity<Participations> projectJoin(@PathVariable("id") final Long id, HttpSession session) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+        User sessionedUser = userService.getSessionedUser();
+        if(sessionedUser == null) {
+            return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
+        }
+        Participations participations = participationsDao.findByUserIdAndProjectId(sessionedUser.getId(), id);
+        if( participations == null) {
+            participationsDao.save(new Participations(sessionedUser.getId(), id));
+            projectDao.addParticipation(id);
+            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+        }
+        participationsDao.delete(participations);
+        projectDao.removeParticipation(id);
+        return new ResponseEntity<>(headers, HttpStatus.ACCEPTED);
     }
 }

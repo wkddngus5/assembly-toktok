@@ -8,6 +8,8 @@ class project {
     this.statusZone = document.querySelector('ul.status-zone');
     this.timelineList = document.querySelectorAll('li.each-timeline');
     this.showingGuide = null;
+    this.id = parseInt(document.querySelector('h2').getAttribute('data-item'));
+    this.countTag = document.querySelector('p.count');
 
     this.toggleGuide = this.toggleGuide.bind(this);
     this.closeGuide = this.closeGuide.bind(this);
@@ -89,7 +91,7 @@ class project {
   }
 
   percentageSet() {
-    const count = document.querySelector('p.count').innerText;
+    const count = this.countTag.innerText;
     const goalCount = document.querySelector('.percentage-number').getAttribute('data-item');
 
     const percentage = (parseInt(count) / parseInt(goalCount) * 100).toFixed(1);
@@ -111,14 +113,25 @@ class project {
   }
 
   join(button) {
-    let text = button.innerText;
-    if(text === '참여하기') {
-      button.innerText = '참여취소';
-      button.style.backgroundColor = '#0000FF';
-    } else {
-      button.innerText = '참여하기';
-      button.style.backgroundColor = '#fbef03';
-    }
+    fetch(`/projects/${this.id}/join`, {
+      method: 'PATCH',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      })
+    }).then(res => {
+      this.countTag = document.querySelector('p.count');
+      if(res.status === 201) {
+        button.innerText = '참여취소';
+        button.classList.add('is-active');
+        this.countTag.innerText = parseInt(this.countTag.innerText) + 1;
+      } else if(res.status === 202) {
+        button.innerText = '참여하기';
+        button.classList.remove('is-active');
+        this.countTag.innerText = parseInt(this.countTag.innerText) - 1;
+      }
+    });
   }
 }
 

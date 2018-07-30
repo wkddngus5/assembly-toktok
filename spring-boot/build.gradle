@@ -52,4 +52,5 @@ dependencies {
     implementation group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: '7.0.19'
 
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.0.3.RELEASE'
+    compile "org.projectlombok:lombok:1.16.6"
 }
