@@ -60,10 +60,11 @@ public class UserController {
     }
 
     @RequestMapping("/users/form/{provider}")
-    public ModelAndView socialLogin(@PathVariable String provider, @RequestParam("uid") String uid, @RequestParam("email") String email, ModelAndView modelAndView) {
+    public ModelAndView socialLogin(@PathVariable String provider, @RequestParam("uid") String uid, @RequestParam("email") String email, @RequestParam("image") String image, ModelAndView modelAndView) {
         modelAndView.addObject("provider", provider);
         modelAndView.addObject("uid", uid);
         modelAndView.addObject("email", email);
+        modelAndView.addObject("image", image);
 
         modelAndView.setViewName("userFormSocial");
         return modelAndView;

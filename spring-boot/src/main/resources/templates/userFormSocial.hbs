@@ -12,13 +12,14 @@
         var uid = document.getElementById("uid").value
         var nickname = document.getElementById("nickname").value
         var email = document.getElementById("email").value
+        var image = document.getElementById("image").value
 
         $.ajax({
             type : "POST",
             url : "/users/" + provider,
             dataType : "json",
             contentType: "application/json",
-            data:"{\"email\": \"" + email + "\", \"uid\": \"" + uid + "\", \"nickname\": \"" + nickname + "\"}",
+            data:"{\"email\": \"" + email + "\", \"uid\": \"" + uid + "\", \"image\": \"" + image + "\", \"nickname\": \"" + nickname + "\"}",
             error : function(){
                 alert('가입 실패!!');
             },
@@ -33,6 +34,8 @@
     uid : <input type="text" id="uid" value={{this.uid}}><br>
     email : <input type="text" id="email" value={{this.email}}><br>
     nickName : <input type="text" id="nickname" name="nickname"><br>
+    image : <input type="text" id="image" name="image" value={{this.image}}><br>
+
     <button onclick="Join()">Join</button>
 </body>
 </html>

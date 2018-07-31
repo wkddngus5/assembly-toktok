@@ -1,5 +1,7 @@
 package controller;
 
+import com.google.common.hash.Hashing;
+import com.google.common.io.Files;
 import domain.User;
 import domain.enums.SocialType;
 import domain.twitter.TwitterResponse;
@@ -7,12 +9,7 @@ import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.oauth1.AuthorizedRequestToken;
 import org.springframework.social.oauth1.OAuth1Operations;
@@ -25,14 +22,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import service.S3Wrapper;
 import service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.nio.file.Paths;
 
 @Controller
 public class TwitterController {
@@ -45,6 +42,9 @@ public class TwitterController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private S3Wrapper s3Wrapper;
 
     @PostConstruct
     private void init() {
@@ -64,20 +64,28 @@ public class TwitterController {
     }
 
     @GetMapping(value = "/users/auth/twitter/authorize")
-    public String twitterComplete(HttpServletRequest request, @RequestParam(name = "oauth_token") String oauthToken, @RequestParam(name = "oauth_verifier") String oauthVerifier) {
+    public String twitterComplete(HttpServletRequest request, @RequestParam(name = "oauth_token", required = false) String oauthToken, @RequestParam(name = "oauth_verifier", required = false) String oauthVerifier, @RequestParam(name = "denied", required = false) String denied) throws IOException {
+        if (denied != null) {
+            return "redirect:/";
+        }
         Connection<Twitter> connection = getAccessTokenToConnection(request, oauthVerifier);
-
         User account = userService.loadUserByProviderId(SocialType.TWITTER.getValue(), connection.getKey().getProviderUserId());
         if (account != null) {
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities()));
             return "redirect:/";
         } else {
             String email = getEmailAddress(connection.createData().getAccessToken(), connection.createData().getSecret());
+            String imageFileName = s3Wrapper.uploadImageUrl(connection.getProfileUrl(), SocialType.TWITTER.getValue() + "_" + connection.getKey().getProviderUserId() + ".jpg");
 
-//            userService.joinUser(User.CreateSocialUser(connection.getKey().getProviderUserId(), "", SocialType.TWITTER.getValue(), connection.getProfileUrl()));
-            return "redirect:/users/form/" + SocialType.TWITTER.getValue() + "?uid=" + connection.getKey().getProviderUserId() + "&email=" + email;
+            return "redirect:/users/form/" + SocialType.TWITTER.getValue() + "?uid=" + connection.getKey().getProviderUserId() + "&email=" + email + "&image=" + imageFileName;
         }
+    }
 
+    @GetMapping(value = "/users/imageTest")
+    public String imageTest() throws IOException {
+        System.out.println(s3Wrapper.uploadImageUrl("https://graph.facebook.com/2046543722086774/picture?type=large", SocialType.TWITTER.getValue() + "_1000051396783418.jpg"));
+
+        return Paths.get("image.jpg").toAbsolutePath().toString();
     }
 
     private String getEmailAddress(String accessToken, String secret) {

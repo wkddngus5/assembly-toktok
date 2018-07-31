@@ -27,6 +27,7 @@ import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilt
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import service.S3Wrapper;
 import service.UserService;
 
 import javax.servlet.Filter;
@@ -46,6 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     RestLogoutSuccessHandler restLogoutSuccessHandler;
     @Autowired
     OAuth2ClientContext oAuth2ClientContext;
+    @Autowired
+    private S3Wrapper s3Wrapper;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -65,6 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.PUT, "/users").hasAnyRole(USER_ROLE_STAFF, USER_ROLE_CITIZEN)
                 .antMatchers("/", "/index", "/users/**", "/login", "/loginTest").permitAll()
                 .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
+                .antMatchers("/aws/**").permitAll()
+                .antMatchers("/api/aws/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .logout()
@@ -89,8 +94,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         OAuth2ClientAuthenticationProcessingFilter facebookFilter = new OAuth2ClientAuthenticationProcessingFilter("/users/auth/facebook");
         facebookFilter.setRestTemplate(new OAuth2RestTemplate(facebook(), oAuth2ClientContext));
         facebookFilter.setTokenServices(new UserInfoTokenServices(facebookResource().getUserInfoUri(), facebook().getClientId()));
-        facebookFilter.setAuthenticationSuccessHandler(new OAuth2SuccessHandler(SocialType.FACEBOOK, userService));
-
+        facebookFilter.setAuthenticationSuccessHandler(new OAuth2SuccessHandler(SocialType.FACEBOOK, userService, s3Wrapper));
+        facebookFilter.setAuthenticationFailureHandler((request, response, exception) -> response.sendRedirect("/"));
         return facebookFilter;
     }
 

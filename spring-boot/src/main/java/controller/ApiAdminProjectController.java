@@ -2,10 +2,7 @@ package controller;
 
 import dao.ProjectDao;
 import dao.TimelineDao;
-import domain.ApiResult;
-import domain.Project;
-import domain.Timeline;
-import domain.User;
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -25,20 +22,33 @@ public class ApiAdminProjectController {
     private TimelineDao timelineDao;
 
     @RequestMapping(value = "/administrator/projects/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<ApiResult> updateProject(@PathVariable Long id, @RequestBody Project project) {
+    public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project project) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
+        Project updateProject = projectDao.getOne(id);
+        updateProject.updateProject(project);
 
-        return new ResponseEntity<>(new ApiResult(true, "Update Project"), HttpStatus.OK);
+        updateProject = projectDao.save(updateProject);
+        if (updateProject == null) {
+            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity<>(updateProject, headers, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/administrator/projects/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<ApiResult> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<Project> deleteProject(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        projectDao.deleteById(id);
+        Project deleteProject = projectDao.getOne(id);
+        deleteProject.setDeleted_at(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
 
-        return new ResponseEntity<>(new ApiResult(true, "Delete Project"), HttpStatus.OK);
+        deleteProject = projectDao.save(deleteProject);
+        if (deleteProject == null) {
+            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        } else {
+            return new ResponseEntity<>(deleteProject, headers, HttpStatus.OK);
+        }
     }
 
     @RequestMapping(value = "/administrator/projects/{id}/timelines", method = RequestMethod.POST)
@@ -46,7 +56,7 @@ public class ApiAdminProjectController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Timeline createTimeLine = timelineDao.save(Timeline.createTimeLine(principal.getNickname(), timeline.getImage(), timeline.getBody(), id, timeline.getCongressman_id(), timeline.getTimeline_date()));
+        Timeline createTimeLine = timelineDao.save(Timeline.createTimeline(principal.getNickname(), timeline.getImage(), timeline.getContents(), timeline.getSubject(), id, timeline.getDate()));
         if (createTimeLine != null) {
             return new ResponseEntity<>(createTimeLine, headers, HttpStatus.OK);
         } else {
@@ -55,20 +65,31 @@ public class ApiAdminProjectController {
     }
 
     @RequestMapping(value = "/administrator/projects/{id}/timelines/{tid}", method = RequestMethod.PUT)
-    public ResponseEntity<ApiResult> updateTimeLines(@PathVariable Long id, @PathVariable Long tid, @RequestBody Timeline timeline) {
+    public ResponseEntity<Timeline> updateTimeLines(@PathVariable Long id, @PathVariable Long tid, @RequestBody Timeline timeline) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        timelineDao.updateTimelinkeById(tid, timeline.getBody(), timeline.getImage(), timeline.getCongressman_id(), timeline.getTimeline_date(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        Timeline updateTimeline = timelineDao.getOne(tid);
+        updateTimeline.updateTimeline(timeline);
 
-        return new ResponseEntity<>(new ApiResult(true, "Update TimeLine"), HttpStatus.OK);
+        updateTimeline = timelineDao.save(updateTimeline);
+        if (updateTimeline != null) {
+            return new ResponseEntity<>(updateTimeline, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping(value = "/administrator/projects/{id}/timelines/{tid}", method = RequestMethod.DELETE)
-    public ResponseEntity<ApiResult> deleteTimeLines(@PathVariable Long id, @PathVariable Long tid) {
+    public ResponseEntity<Timeline> deleteTimeLines(@PathVariable Long id, @PathVariable Long tid) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        timelineDao.deleteById(tid);
+        Timeline deleteTimeline = Timeline.createTimeline(timelineDao.getOne(tid));
 
-        return new ResponseEntity<>(new ApiResult(true, "Delete TimeLine"), HttpStatus.OK);
+        timelineDao.deleteById(tid);
+        if (deleteTimeline != null) {
+            return new ResponseEntity<>(deleteTimeline, headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
