@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import service.S3Wrapper;
 import service.UserService;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
 
 @Controller
 public class KakaoController {
@@ -31,6 +33,9 @@ public class KakaoController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private S3Wrapper s3Wrapper;
 
     private static String clientId;
     private static String accessTokenUri;
@@ -57,7 +62,7 @@ public class KakaoController {
     }
 
     @RequestMapping("/users/auth/kakao/authorize")
-    public String authKakao(@RequestParam("code") String code) {
+    public String authKakao(@RequestParam("code") String code) throws IOException {
         ResponseEntity<KakaoAccessTokenResponse> accessTokenResponse = restTemplate.exchange(accessTokenUri, HttpMethod.POST, new HttpEntity<>(getAccessTokenParameters(code), getAccessTokenHeader()), KakaoAccessTokenResponse.class);
         ResponseEntity<KakaoAccountMeResponse> userMeResponse = restTemplate.exchange(userInfoUri, HttpMethod.GET, new HttpEntity<>(getUserMeHeader(accessTokenResponse.getBody().getTokenType() + " " + accessTokenResponse.getBody().getAccessToken())), KakaoAccountMeResponse.class);
 
@@ -66,8 +71,9 @@ public class KakaoController {
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities()));
             return "redirect:/";
         } else {
-//            userService.joinUser(User.CreateSocialUser(userMeResponse.getBody().getId().toString(), "", SocialType.KAKAO.getValue(), userMeResponse.getBody().getProperties().getProfileImage()));
-            return "redirect:/users/form/" + SocialType.KAKAO.getValue() + "?uid=" + userMeResponse.getBody().getId() + "&email=";
+            String imageFileName = s3Wrapper.uploadImageUrl(userMeResponse.getBody().getProperties().getProfileImage(), SocialType.KAKAO.getValue() + "_" + userMeResponse.getBody().getId() + ".jpg");
+
+            return "redirect:/users/form/" + SocialType.KAKAO.getValue() + "?uid=" + userMeResponse.getBody().getId() + "&email=&image=" + imageFileName;
         }
     }
 

@@ -3,6 +3,8 @@ package domain;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity
 @Table(name = "projects")
@@ -217,5 +219,19 @@ public class Project {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public void updateProject(Project project) {
+        title = project.getTitle();
+        body = project.getBody();
+        image = project.getImage();
+        category = project.getCategory();
+        summary = project.getSummary();
+        proposer = project.getProposer();
+        proposer_email = project.getProposer_email();
+        proposer_phone = project.getProposer_phone();
+        proposer_description = project.getProposer_description();
+        status = project.getStatus();
+        updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
 }

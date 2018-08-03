@@ -25,8 +25,8 @@ public enum SocialType {
     }
 
     public String getProfileImage(String id) {
-        if (name.equals(FACEBOOK)) {
-            return "http://graph.facebook.com/" + id + "/picture?type=square";
+        if (name.equals(FACEBOOK.getValue())) {
+            return "https://graph.facebook.com/" + id + "/picture?type=large";
         }
         return "";
     }

@@ -15,4 +15,18 @@ public class WebController {
         modelAndView.addObject("users", users);
         return modelAndView;
     }
+
+    @GetMapping("/aws")
+    public ModelAndView index() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("aws");
+        return modelAndView;
+    }
+
+    @GetMapping("/aws/test")
+    public ModelAndView testAws() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("awsTest");
+        return modelAndView;
+    }
 }
