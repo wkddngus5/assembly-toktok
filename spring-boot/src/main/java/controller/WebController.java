@@ -22,4 +22,11 @@ public class WebController {
         modelAndView.setViewName("aws");
         return modelAndView;
     }
+
+    @GetMapping("/aws/test")
+    public ModelAndView testAws() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("awsTest");
+        return modelAndView;
+    }
 }

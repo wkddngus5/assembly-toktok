@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/projects/**").permitAll()
                 .antMatchers("/aws/**").permitAll()
                 .antMatchers("/api/aws/**").permitAll()
+                .antMatchers("/images/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .logout()

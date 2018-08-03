@@ -52,17 +52,23 @@ public class S3Wrapper {
         return putObjectResults;
     }
     public ResponseEntity<byte[]> download(String key) throws IOException {
-        GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, key);
-        S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
-        S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
-        byte[] bytes = IOUtils.toByteArray(objectInputStream);
+        byte[] bytes = downloadStream(key);
         String fileName = URLEncoder.encode(key, "UTF-8").replaceAll("\\+", "%20");
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         httpHeaders.setContentLength(bytes.length);
         httpHeaders.setContentDispositionFormData("attachment", fileName);
-        return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(downloadStream(key), httpHeaders, HttpStatus.OK);
     }
+
+    public byte[] downloadStream(String key) throws IOException {
+        GetObjectRequest getObjectRequest = new GetObjectRequest(bucket, key);
+        S3Object s3Object = amazonS3Client.getObject(getObjectRequest);
+        S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+        byte[] bytes = IOUtils.toByteArray(objectInputStream);
+        return bytes;
+    }
+
     public List<S3ObjectSummary> list() {
         ObjectListing objectListing = amazonS3Client.listObjects(new ListObjectsRequest().withBucketName(bucket));
         List<S3ObjectSummary> s3ObjectSummaries = objectListing.getObjectSummaries();
