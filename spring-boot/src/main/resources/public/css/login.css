@@ -16,8 +16,9 @@ li.social-login {
     margin: 0 0 14px 0;
 }
 
-li.social-login a {
-    display: inline-block;
+a li.social-login {
+    display: block;
+    margin: 20px auto;
     width: 250px;
     height: 50px;
     font-size: 16pt;
@@ -31,15 +32,15 @@ li.social-login a {
             0 1px 5px 0 rgba(0,0,0,.12);
 }
 
-li.social-login.facebook a {
+a li.social-login.facebook  {
     background-color: #5d9eee;
 }
 
-li.social-login.twitter a {
+a li.social-login.twitter {
     background-color: #18c3b3;
 }
 
-li.social-login.kakao a {
+a li.social-login.kakao {
     background-color: #fbef03;
 }
 

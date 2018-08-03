@@ -27,7 +27,7 @@ public class UserService implements UserDetailsService {
     }
 
     public ModelAndView addSessionInfo(ModelAndView modelAndView, HttpSession session) {
-        if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
+        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
             User sessionedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             modelAndView.addObject("authenticatedUser", sessionedUser);
             if (sessionedUser.getRole().toString().equals("staff")) {
@@ -40,7 +40,8 @@ public class UserService implements UserDetailsService {
 
     public User getSessionedUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if(principal == null) {
+        System.out.println("PRINCIPAL" + principal);
+        if(principal.equals("anonymousUser")) {
             return null;
         }
 

@@ -6,7 +6,6 @@ import dao.TimelineDao;
 import domain.Project;
 import domain.User;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -60,7 +59,6 @@ public class ProjectController {
 
     @RequestMapping("/projectForm")
     public ModelAndView projectForm(ModelAndView modelAndView, HttpSession session) {
-        System.out.println("PROJECTFORM");
         if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
             modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         }
