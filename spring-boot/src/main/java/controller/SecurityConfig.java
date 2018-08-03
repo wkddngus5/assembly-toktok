@@ -71,6 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/aws/**").permitAll()
                 .antMatchers("/api/aws/**").permitAll()
                 .antMatchers("/images/**").permitAll()
+                .antMatchers("/privacy", "/userAgreement").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .logout()

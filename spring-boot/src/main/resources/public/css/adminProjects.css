@@ -22,3 +22,7 @@ div.comment {
 td.actives button {
     margin: 0 3px 0 3px;
 }
+
+tr.hide {
+    display: none;
+}

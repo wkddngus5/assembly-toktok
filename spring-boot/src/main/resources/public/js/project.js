@@ -130,9 +130,12 @@ class project {
         button.innerText = '참여하기';
         button.classList.remove('is-active');
         this.countTag.innerText = parseInt(this.countTag.innerText) - 1;
+      } else if(res.status === 401) {
+        window.location.href = '/login';
       }
     });
   }
 }
+
 
 export default project;

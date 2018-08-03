@@ -234,4 +234,29 @@ public class Project {
         status = project.getStatus();
         updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
+
+    public void limitTitle() {
+        if(this.title.length() > 30) {
+            this.title = this.title.substring(0, 30);
+        }
+    }
+
+    public void translateStatus() {
+        if(this.status == null) {
+            this.status = "시민참여";
+            return;
+        }
+
+        switch (this.status) {
+            case "running":
+                this.status = "매칭중";
+                break;
+            case "fail":
+                this.status = "매칭실패";
+                break;
+                default:
+                    this.status = "시민참여";
+                    break;
+        }
+    }
 }

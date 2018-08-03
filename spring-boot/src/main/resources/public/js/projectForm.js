@@ -27,18 +27,18 @@ class projectForm {
 
       // Adding drag and drop image upload.
       extraPlugins: 'print,format,font,colorbutton,justify,uploadimage',
-      uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
+      uploadUrl: '/api/aws/s3/upload',
 
-      // Configure your file manager integration. This example uses CKFinder 3 for PHP.
-      filebrowserBrowseUrl: '/ckfinder/ckfinder.html',
-      filebrowserImageBrowseUrl: '/ckfinder/ckfinder.html?type=Images',
-      filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
-      filebrowserImageUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+      filebrowserBrowseUrl: '/api/aws/s3/list',
+      filebrowserImageBrowseUrl: '/api/aws/s3/list',
+      filebrowserUploadUrl: '/api/aws/s3/upload',
+      filebrowserImageUploadUrl: '/api/aws/s3/upload',
 
       height: 560,
 
       removeDialogTabs: 'image:advanced;link:advanced'
     });
+
     document.querySelectorAll('button.next').forEach((button, i) => {
       button.addEventListener('click', e => {
         this.main.style.marginTop = this.pageHeight * i * (-1) + 100 + 'px';
@@ -106,7 +106,19 @@ class projectForm {
       reader.readAsDataURL(file);
     }
 
+    const formData = new FormData();
+    formData.append('file', target.files[0]);
+    const options = {
+      method: 'POST',
+      body: formData
+    };
+
+    fetch('/api/aws/s3/upload', options)
+      .then(res => {
+        console.log(res);
+      });
   }
+
 
   toggleCategoryClick(target) {
     if(target.classList.contains('is-checked')) {

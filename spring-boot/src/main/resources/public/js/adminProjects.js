@@ -1,17 +1,36 @@
 class adminProjects {
   constructor() {
     this.table = document.querySelector('table.project-list');
+    this.projectList = document.querySelectorAll('tr.project');
+    this.filterStatus = document.querySelector('select.filter-status');
     this.init();
   }
 
   init() {
     this.table.addEventListener('click', this.removeProject);
-    this.countProjects();
+    this.filterStatus.addEventListener('change', e => {
+      setTimeout(this.countProjects.bind(this), 2000);
+      if(e.target.value === '전체') {
+        this.projectList.forEach(project => {
+          project.classList.remove('hide');
+        });
+        return;
+      }
 
+      this.projectList.forEach(project => {
+        if(project.querySelector('.status').innerText === e.target.value) {
+          project.classList.remove('hide');
+        } else {
+          project.classList.add('hide');
+        }
+      });
+    });
+    this.countProjects();
   }
 
+
   countProjects() {
-    const count = this.table.querySelectorAll('tr').length - 1;
+    const count = this.projectList.length - document.querySelectorAll('tr.hide').length;
     document.querySelector('h6.projects-count').innerText = `제안 수: ${count}개`;
   }
 

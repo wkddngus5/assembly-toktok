@@ -14,22 +14,34 @@
         <tr>
             <th class="mdl-data-table__cell--non-numeric">#ID</th>
             <th class="mdl-data-table__cell--non-numeric">제목</th>
-            <th class="mdl-data-table__cell--non-numeric">상태</th>
+            <th class="mdl-data-table__cell--non-numeric">
+                상태
+                <select class="filter-status">
+                    <option>전체</option>
+                    <option>시민참여</option>
+                    <option>매칭중</option>
+                    <option>매칭실패</option>
+                </select>
+            </th>
             <th class="mdl-data-table__cell--non-numeric">날짜</th>
+            <th class="mdl-data-table__cell--non-numeric">Email</th>
             <th class="mdl-data-table__cell--non-numeric">관리</th>
         </tr>
     </thead>
     <tbody>
-    <tr>
-        <td class="mdl-data-table__cell--non-numeric id">5</td>
-        <td class="mdl-data-table__cell--non-numeric title">만15세 이하 어린이 병원비 국가가 보장하라!<div class="comment">241</div></td>
-        <td class="mdl-data-table__cell--non-numeric status">입법활동</td>
-        <td class="mdl-data-table__cell--non-numeric date">2016.10.03<br>14:10</td>
-        <td class="mdl-data-table__cell--non-numeric actives">
-            <a href="/administrator/projects/1"><button class="update">수정</button></a>
-            <button class="remove">삭제</button>
-        </td>
-    </tr>
+    {{#each projects}}
+        <tr class="project">
+            <td class="mdl-data-table__cell--non-numeric id">{{this.id}}</td>
+            <td class="mdl-data-table__cell--non-numeric title">{{this.title}}<div class="comment">123</div></td>
+            <td class="mdl-data-table__cell--non-numeric status">{{this.status}}</td>
+            <td class="mdl-data-table__cell--non-numeric date">{{this.created_at}}</td>
+            <td class="mdl-data-table__cell--non-numeric date">{{this.proposer_email}}</td>
+            <td class="mdl-data-table__cell--non-numeric actives">
+                <a href="/administrator/projects/1"><button class="update">수정</button></a>
+                <button class="remove">삭제</button>
+            </td>
+        </tr>
+    {{/each}}
     </tbody>
 
 </table>

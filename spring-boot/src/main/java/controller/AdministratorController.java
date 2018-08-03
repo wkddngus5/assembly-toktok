@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CommitteeDao;
 import dao.ProjectDao;
 import dao.TimelineDao;
 import domain.Project;
@@ -18,13 +19,25 @@ import java.util.Map;
 @Controller
 @RequestMapping("/administrator")
 public class AdministratorController {
+    @Autowired
+    private CommitteeDao committeeDao;
+
+    @Autowired
+    private ProjectDao projectDao;
+
     UserService userService = new UserService();
 
     @RequestMapping("/projects")
     public ModelAndView adminProjects(ModelAndView modelAndView, HttpSession session) {
         userService.addSessionInfo(modelAndView, session);
-
         modelAndView.setViewName("adminProjects");
+        List<Project> projects = projectDao.findAll();
+        for(Project project : projects) {
+            project.limitTitle();
+            project.translateStatus();
+        }
+
+        modelAndView.addObject("projects", projects);
         return modelAndView;
     }
 
@@ -55,6 +68,7 @@ public class AdministratorController {
     @RequestMapping("/committees")
     public ModelAndView adminComittees(ModelAndView modelAndView,  HttpSession session) {
         userService.addSessionInfo(modelAndView, session);
+        modelAndView.addObject("committees", committeeDao.findAll());
 
         modelAndView.setViewName("adminCommittees");
         return modelAndView;
