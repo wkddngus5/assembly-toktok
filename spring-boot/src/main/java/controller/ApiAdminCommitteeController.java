@@ -3,6 +3,7 @@ package controller;
 import dao.CommitteeDao;
 import dao.CongressmenDao;
 import domain.Committee;
+import domain.Congressmen;
 import domain.User;
 import domain.UserCreate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class ApiAdminCommitteeController {
@@ -39,6 +42,19 @@ public class ApiAdminCommitteeController {
         }
     }
 
+    @RequestMapping(value = "/administrator/committees/{name}", method = RequestMethod.GET)
+    public ResponseEntity<List> addCommittees(@PathVariable String name) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+        Committee dbCommittee = committeeDao.findByName(name);
+
+        if(dbCommittee == null) {
+            return new ResponseEntity<>(new ArrayList(), HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List>(congressmenDao.findByCommitteeId(dbCommittee.getId()), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/administrator/committees/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Committee> updateCommittees(@PathVariable Long id, @RequestBody Committee request) {
         HttpHeaders headers = new HttpHeaders();
@@ -58,7 +74,7 @@ public class ApiAdminCommitteeController {
     public ResponseEntity<Committee> deleteCommittees(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        int count = congressmenDao.findByCommitteeId(id);
+        int count = congressmenDao.findByCommitteeId(id).size();
         if (count > 0) {
             return new ResponseEntity<>(Committee.createError("위원회에 소속된 의원이 있습니다. 의원을 모두 지운 후에 위원회를 삭제할 수 있습니다.", count), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {

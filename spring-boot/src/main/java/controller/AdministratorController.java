@@ -25,6 +25,9 @@ public class AdministratorController {
     @Autowired
     private ProjectDao projectDao;
 
+    @Autowired
+    private TimelineDao timelineDao;
+
     UserService userService = new UserService();
 
     @RequestMapping("/projects")
@@ -46,6 +49,7 @@ public class AdministratorController {
         userService.addSessionInfo(modelAndView, session);
 
         modelAndView.setViewName("adminProject");
+        modelAndView.addObject("project", projectDao.findById(id).get());
         return modelAndView;
     }
 
@@ -62,6 +66,8 @@ public class AdministratorController {
         userService.addSessionInfo(modelAndView, session);
 
         modelAndView.setViewName("adminProjectTimelines");
+        modelAndView.addObject("timelines", timelineDao.findByProjectId(id));
+        modelAndView.addObject("project", projectDao.findById(id).get());
         return modelAndView;
     }
 

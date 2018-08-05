@@ -32,13 +32,16 @@
     {{#each projects}}
         <tr class="project">
             <td class="mdl-data-table__cell--non-numeric id">{{this.id}}</td>
-            <td class="mdl-data-table__cell--non-numeric title">{{this.title}}<div class="comment">123</div></td>
+            <td class="mdl-data-table__cell--non-numeric title">
+                <a href="/projects/{{this.id}}">{{this.title}}</a>
+                    <!--<div class="comment">123</div>-->
+            </td>
             <td class="mdl-data-table__cell--non-numeric status">{{this.status}}</td>
             <td class="mdl-data-table__cell--non-numeric date">{{this.created_at}}</td>
             <td class="mdl-data-table__cell--non-numeric date">{{this.proposer_email}}</td>
             <td class="mdl-data-table__cell--non-numeric actives">
-                <a href="/administrator/projects/1"><button class="update">수정</button></a>
-                <button class="remove">삭제</button>
+                <a href="/administrator/projects/{{this.id}}"><button class="update">수정</button></a>
+                <button data-item={{this.id}} class="remove">삭제</button>
             </td>
         </tr>
     {{/each}}
