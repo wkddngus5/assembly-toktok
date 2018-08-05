@@ -16,6 +16,8 @@ module.exports = {
     project: './src/main/resources/public/entry/project.js',
     projectForm: './src/main/resources/public/entry/projectForm.js',
     adminProjects: './src/main/resources/public/entry/adminProjects.js',
+    adminProject: './src/main/resources/public/entry/adminProject.js',
+    adminProjectTimelines: './src/main/resources/public/entry/adminProjectTimelines.js',
   },
   output: {
     path: path.resolve(__dirname, "src/main/resources/public/dist/"),

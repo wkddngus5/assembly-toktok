@@ -83,13 +83,12 @@ public class ApiAdminProjectController {
     public ResponseEntity<Timeline> deleteTimeLines(@PathVariable Long id, @PathVariable Long tid) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        Timeline deleteTimeline = Timeline.createTimeline(timelineDao.getOne(tid));
 
-        timelineDao.deleteById(tid);
-        if (deleteTimeline != null) {
+        Timeline deleteTimeline = timelineDao.getOne(tid);
+        if(deleteTimeline == null) {
             return new ResponseEntity<>(deleteTimeline, headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        timelineDao.deleteById(tid);
+        return new ResponseEntity<>(deleteTimeline, headers, HttpStatus.OK);
     }
 }

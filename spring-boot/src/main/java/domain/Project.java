@@ -1,6 +1,7 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -26,6 +27,8 @@ public class Project {
     private String proposer_description;
     private String deleted_at;
     private String matching_staff_message;
+    private String matching_start_date;
+    private String matching_end_date;
     private String proposer;
     private String running_platform_url;
     private String proposer_email;
@@ -36,6 +39,7 @@ public class Project {
     private String fail_staff_message;
     @Column(length = 20)
     private String category;
+    private String committees;
 
     public long getId() {
         return id;
@@ -221,23 +225,62 @@ public class Project {
         this.category = category;
     }
 
+    public String getCommittees() {
+        return committees;
+    }
+
+    public void setCommittees(String committees) {
+        this.committees = committees;
+    }
+
     public void updateProject(Project project) {
-        title = project.getTitle();
-        body = project.getBody();
-        image = project.getImage();
-        category = project.getCategory();
-        summary = project.getSummary();
-        proposer = project.getProposer();
-        proposer_email = project.getProposer_email();
-        proposer_phone = project.getProposer_phone();
-        proposer_description = project.getProposer_description();
-        status = project.getStatus();
-        updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        if(project.getTitle() != null) {
+            title = project.title;
+        }
+        if(project.getBody() != null) {
+            body = project.getBody();
+        }
+        if(project.getImage() != null) {
+            image = project.getImage();
+        }
+        if(project.getCategory() != null) {
+            category = project.getCategory();
+        }
+        if(project.getSummary() != null) {
+            summary = project.getSummary();
+        }
+        if(project.getProposer() != null) {
+            proposer = project.getProposer();
+        }
+        if(project.getProposer_email() != null) {
+            proposer_email = project.getProposer_email();
+        }
+        if(project.getProposer_phone() != null) {
+            proposer_phone = project.getProposer_phone();
+        }
+        if(project.getProposer_description() != null) {
+            proposer_description = project.getProposer_description();
+        }
+        if(project.getStatus() != null) {
+            status = project.getStatus();
+        }
+        if(project.getUpdated_at() != null) {
+            updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        }
+        if(project.matching_start_date != null) {
+            this.matching_start_date = project.matching_start_date;
+        }
+        if(project.matching_end_date != null) {
+            this.matching_end_date = project.matching_end_date;
+        }
+        if(project.committees != null) {
+            this.committees = project.committees;
+        }
     }
 
     public void limitTitle() {
-        if(this.title.length() > 30) {
-            this.title = this.title.substring(0, 30);
+        if(this.title != null && this.title.length() > 30) {
+            this.title = this.title.substring(0, 30) + "···";
         }
     }
 

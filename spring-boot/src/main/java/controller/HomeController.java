@@ -4,6 +4,7 @@ import dao.MainSlideDao;
 import dao.ProjectDao;
 import dao.ProposalDao;
 import dao.QuestionDao;
+import domain.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -40,9 +42,23 @@ public class HomeController {
 
         modelAndView.addObject("proposals", proposalDao.findAll());
         modelAndView.addObject("questions", questionDao.findAll());
-        modelAndView.addObject("projects_best", projectDao.selectByBest());
-        modelAndView.addObject("projects_imminent", projectDao.selectByImminent());
-        modelAndView.addObject("projects_new", projectDao.selecteByCreateTime());
+        List<Project> projects = projectDao.selectByBest();
+        for(Project project : projects) {
+            project.limitTitle();
+        }
+        modelAndView.addObject("projects_best", projects);
+        projects = projectDao.selectByImminent();
+        for(Project project : projects) {
+            project.limitTitle();
+        }
+
+        modelAndView.addObject("projects_imminent", projects);
+
+        projects = projectDao.selecteByCreateTime();
+        for(Project project : projects) {
+            project.limitTitle();
+        }
+        modelAndView.addObject("projects_new", projects);
         modelAndView.addObject("mainslides", mainSlideDao.findAll(new Sort("order")));
 
         return modelAndView;

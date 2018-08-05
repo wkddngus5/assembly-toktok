@@ -28,7 +28,6 @@ class adminProjects {
     this.countProjects();
   }
 
-
   countProjects() {
     const count = this.projectList.length - document.querySelectorAll('tr.hide').length;
     document.querySelector('h6.projects-count').innerText = `제안 수: ${count}개`;
@@ -47,18 +46,18 @@ class adminProjects {
       return;
     }
 
-    // fetch('/administrator/projects/id', {
-    //   method: 'DELETE',
-    //   credentials: 'same-origin',
-    //   headers: new Headers({
-    //     'accept': 'application/json',
-    //     'content-type': 'application/json',
-    //   })
-    // }).then(res => {
-    //   if(res.status === 200) {
+    fetch(`/administrator/projects/${e.target.getAttribute('data-item')}`, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      })
+    }).then(res => {
+      if(res.status === 200) {
         e.target.closest('tr').remove();
-    //   }
-    // })
+      }
+    })
   }
 }
 
