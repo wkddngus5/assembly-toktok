@@ -56,12 +56,12 @@ public class ApiAdminProjectController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Timeline createTimeLine = timelineDao.save(Timeline.createTimeline(principal.getNickname(), timeline.getImage(), timeline.getContents(), timeline.getSubject(), id, timeline.getDate()));
-        if (createTimeLine != null) {
-            return new ResponseEntity<>(createTimeLine, headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
+        timeline.setCreated_at(createDate);
+        timeline.setUpdated_at(createDate);
+        timeline.setActor(principal.getNickname());
+
+        return new ResponseEntity<>(timelineDao.save(timeline), headers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/administrator/projects/{id}/timelines/{tid}", method = RequestMethod.PUT)
@@ -84,11 +84,8 @@ public class ApiAdminProjectController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
-        Timeline deleteTimeline = timelineDao.getOne(tid);
-        if(deleteTimeline == null) {
-            return new ResponseEntity<>(deleteTimeline, headers, HttpStatus.OK);
-        }
-        timelineDao.deleteById(tid);
+        Timeline deleteTimeline = timelineDao.findById(tid).get();
+        timelineDao.delete(deleteTimeline);
         return new ResponseEntity<>(deleteTimeline, headers, HttpStatus.OK);
     }
 }

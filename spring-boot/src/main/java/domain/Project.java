@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "projects")
@@ -39,7 +40,12 @@ public class Project {
     private String fail_staff_message;
     @Column(length = 20)
     private String category;
+    @Lob
+    @Column(length = 1500)
     private String committees;
+    @OneToMany
+    @JoinColumn(name = "commentable_id")
+    List<Comment> commentList;
 
     public long getId() {
         return id;
@@ -231,6 +237,14 @@ public class Project {
 
     public void setCommittees(String committees) {
         this.committees = committees;
+    }
+
+    public List<Comment> getCommentList() {
+        return commentList;
+    }
+
+    public void setCommentList(List<Comment> commentList) {
+        this.commentList = commentList;
     }
 
     public void updateProject(Project project) {

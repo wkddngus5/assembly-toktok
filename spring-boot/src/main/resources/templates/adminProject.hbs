@@ -21,9 +21,9 @@
         <div class="input-zone">
             <label for="status">프로젝트 상태('매칭실패' 또는 '입법활동' 상태만 선택할 수 있습니다. (나머지 상태는 참여자수에 따라 자동으로 설정됩니다)</label>
             <select id="status" data-item="{{project.status}}">
-                <option>해당사항 없음</option>
-                <option>입법 활동</option>
-                <option>매칭 실패</option>
+                <option id="option-none" value="none">해당사항 없음</option>
+                <option id="option-running" value="running">입법 활동</option>
+                <option id="option-fail" value="fail">매칭 실패</option>
             </select>
         </div>
 
