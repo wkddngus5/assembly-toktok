@@ -23,7 +23,8 @@ class adminProjectTimelines {
     const projectId = document.querySelector('h2').getAttribute('data-item');
     const data = {
       'body': this.inputBody.value,
-      'created_at': this.inputDate.value,
+      'project_id': projectId,
+      'timeline_date': this.inputDate.value,
       'subject': this.subject.value
     };
 
@@ -36,8 +37,22 @@ class adminProjectTimelines {
       }),
       body: JSON.stringify(data)
     }).then(res => {
-      console.log(res);
-    })
+      return res.json();
+    }).then(json => {
+      const timeline = `
+        <tr id="${json.id}">
+            <td>${json.created_at}</td>
+            <td>${json.body}</td>
+            <td>${json.subject}</td>
+            <td>
+                <button class="update-timeline-btn">수정</button>
+                <button class="remove-timeline-btn">삭제</button>
+            </td>
+        </tr>
+      `;
+      document.querySelector('tbody').insertAdjacentHTML('beforeend', timeline);
+      console.log(json);
+    });
   }
 
 
@@ -53,7 +68,7 @@ class adminProjectTimelines {
       })
     }).then(res => {
       console.log(res);
-      if(res !== 200) {
+      if(res.status !== 200) {
         return;
       } else {
         tr.remove();

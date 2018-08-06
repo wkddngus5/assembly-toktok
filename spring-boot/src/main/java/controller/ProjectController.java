@@ -3,6 +3,7 @@ package controller;
 import dao.ParticipationsDao;
 import dao.ProjectDao;
 import dao.TimelineDao;
+import domain.Comment;
 import domain.Project;
 import domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 

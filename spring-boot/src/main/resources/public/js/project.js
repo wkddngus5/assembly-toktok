@@ -19,6 +19,7 @@ class project {
   init() {
     this.percentageSet();
     this.statusSet();
+    this.initCommittees();
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
     });
@@ -33,6 +34,36 @@ class project {
     document.querySelector('ul.status-zone').addEventListener('click', this.toggleGuide);
     document.addEventListener('click', this.closeGuide);
   };
+
+  initCommittees() {
+    const assembly = document.querySelector('div.assembly');
+    if(assembly == null) {
+      return;
+    }
+    const committees = JSON.parse(assembly.getAttribute('data-item')).committeeList;
+    const ul = document.querySelector('#committee');
+    for(let i = 0 ; i < committees.length ; i++) {
+      const committee = `<li>${committees[i].name}</li>`;
+      ul.insertAdjacentHTML('beforeend', committee);
+      this.insertAssemblymen(committees[i].assemblymanList);
+    }
+  }
+
+  insertAssemblymen(assemblymanList) {
+    for(let i = 0 ; i < assemblymanList.length ; i++) {
+      console.log(assemblymanList[i]);
+      const ul = document.querySelector('#assembly-man-list');
+      if(assemblymanList[i].status === '참여') {
+        const assemblymanLi = `
+            <li class="assembly-man">
+                <div class="profile-img"></div>
+                <p>${assemblymanList[i].name} 의원</p>
+            </li>
+        `;
+        ul.insertAdjacentHTML('beforeend', assemblymanLi);
+      }
+    }
+  }
 
   closeGuide(e) {
     if(!this.showingGuide || e.target.tagName === 'LI') {
