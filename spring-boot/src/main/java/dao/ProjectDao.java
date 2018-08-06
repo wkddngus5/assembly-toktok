@@ -26,6 +26,9 @@ public interface ProjectDao extends JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM projects where :where AND deleted_at IS NULL", nativeQuery = true)
     List<Project> sorted(@Param("where") String where, Pageable pageable);
 
+    @Query(value = "SELECT * FROM projects WHERE user_id = ?1", nativeQuery = true)
+    List<Project> findByUser_id(Long id);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE projects SET participations_count = participations_count - 1 WHERE id = ?1", nativeQuery = true)

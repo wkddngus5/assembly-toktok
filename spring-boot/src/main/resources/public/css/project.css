@@ -440,6 +440,10 @@ li.each-discussion td {
     vertical-align: top;
 }
 
+li.each-discussion td.left {
+    width: 150px;
+}
+
 li.each-discussion td.right {
     padding: 10px 10px 20px 10px;
 }
@@ -492,6 +496,29 @@ button.likes {
     background-size: 40%;
     background-repeat: no-repeat;
     background-position: 3px 3px;
+}
+
+@keyframes beat {
+    0% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+
+    50% {
+        transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1.0);
+        -webkit-transform: scale(1.0);
+    }
+}
+
+button.likes.is-active {
+    background-color: #5d9eee;
+    animation: beat 0.5s;
+    -webkit-animation: beat 0.5s;
 }
 
 .discussion-info {
