@@ -2,8 +2,7 @@ package service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
-import com.google.common.hash.Hashing;
-import com.google.common.io.Files;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +21,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class S3Wrapper {
@@ -29,28 +29,34 @@ public class S3Wrapper {
     private AmazonS3Client amazonS3Client;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
+
     private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
-        return upload(new FileInputStream(filePath), uploadKey);
+        return upload(new FileInputStream(filePath), "uploads/" + uploadKey);
     }
+
     private PutObjectResult upload(InputStream inputStream, String uploadKey) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, inputStream, new ObjectMetadata());
         PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
         IOUtils.closeQuietly(inputStream);
         return putObjectResult;
     }
+
     public List<PutObjectResult> upload(MultipartFile[] multipartFiles) {
         List<PutObjectResult> putObjectResults = new ArrayList<>();
         Arrays.stream(multipartFiles)
                 .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
                 .forEach(multipartFile -> {
+                    String ext = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+                    String path = UUID.randomUUID() + "." + ext;
                     try {
-                        putObjectResults.add(upload(multipartFile.getInputStream(), multipartFile.getOriginalFilename()));
+                        putObjectResults.add(upload(multipartFile.getInputStream(), path));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 });
         return putObjectResults;
     }
+
     public ResponseEntity<byte[]> download(String key) throws IOException {
         byte[] bytes = downloadStream(key);
         String fileName = URLEncoder.encode(key, "UTF-8").replaceAll("\\+", "%20");
@@ -77,7 +83,7 @@ public class S3Wrapper {
 
     public String uploadImageUrl(String url, String fileName) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
-        byte [] image = restTemplate.getForObject(url, byte[].class);
+        byte[] image = restTemplate.getForObject(url, byte[].class);
         if (image == null) {
             return null;
         }
@@ -85,11 +91,12 @@ public class S3Wrapper {
 
         java.nio.file.Files.write(Paths.get(fileName), image);
         File downloadFile = new File(filePath);
-
-        String hash = Files.hash(downloadFile, Hashing.md5()).toString() + ".jpg";
-        upload(filePath, hash);
+        String ext = FilenameUtils.getExtension(filePath);
+        String newFileName = UUID.randomUUID().toString();
+        String path = newFileName + "." + ext;
+        upload(filePath, path);
 
         downloadFile.delete();
-        return hash;
+        return newFileName;
     }
 }

@@ -17,10 +17,14 @@ import java.util.List;
 public class UploadController {
     @Autowired
     private S3Wrapper s3Wrapper;
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public List<PutObjectResult> upload(@RequestParam("file") MultipartFile[] multipartFiles) {
         return s3Wrapper.upload(multipartFiles);
     }
+
+
+
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public ResponseEntity<byte[]> download(@RequestParam String key) throws IOException {
         return s3Wrapper.download(key);

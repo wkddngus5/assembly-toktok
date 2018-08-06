@@ -1,7 +1,6 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.google.gson.Gson;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -40,6 +39,16 @@ public class Project {
     @Column(length = 20)
     private String category;
     private String committees;
+
+//    @Formula("'/uploads/project/image/' || id || '/' || image ")
+//    @Formula("'/uploads/project/image/' , id , '/' , image ")
+//    @ColumnTransformer(read = "'/uploads/project/image/' || id || '/' || image ")
+    @Transient
+    private String imageUrl;
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
     public long getId() {
         return id;

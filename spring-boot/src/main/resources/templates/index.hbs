@@ -42,7 +42,7 @@
                 {{#each projects_imminent}}
                 <a href="/projects/{{this.id}}">
                     <li class="project">
-                        <div class="project-img">
+                        <div class="project-img" style="background-image: url({{this.imageUrl}})">
                             <div class="status {{this.status}}">{{this.status}}시민참여</div>
                         </div>
                         <div class="project-summary">
