@@ -3,6 +3,7 @@ div.filler-zone {
 }
 
 select.category-list {
+    display: none;
     width: 150px;
     height: 29px;
     padding: 0 0 0 40px;

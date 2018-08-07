@@ -19,6 +19,10 @@ class mainProjects {
   projectsInit() {
     document.querySelectorAll('li.project').forEach((li, index) => {
       const status = li.querySelector('div.status');
+      const projectImg = li.querySelector('div.project-img');
+      if(projectImg.getAttribute('style').includes('null')) {
+        projectImg.removeAttribute('style');
+      }
       const nowStatus = status.getAttribute('data-item');
       switch (nowStatus) {
         case 'running':

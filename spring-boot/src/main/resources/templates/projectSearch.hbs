@@ -18,19 +18,22 @@
     </form>
 
     <ul class="project-list">
-        <a href="/projects/1">
-            <li class="project">
-                <div class="project-img">
-                    <div class="status">시민참여</div>
-                </div>
-                <div class="project-summary">
-                    <h5>임신중단 전면 합법화를 촉구합니다.</h5>
-                    <div class="percentage-zone"><div class="percentage"></div></div>
-                    <p class="count">1340명</p>
-                    <p class="percentage-number" data-item="1000">78%</p>
-                </div>
-            </li>
-        </a>
+        {{#each projects}}
+            <a href="/projects/{{this.id}}">
+                <li class="project">
+                    <div class="project-img" style="background-image: url({{this.image}})">
+                        <div class="status {{this.status}}">시민참여</div>
+                    </div>
+                    <div class="project-summary">
+                        <h5>{{this.title}}</h5>
+                        <div class="percentage-zone"><div class="percentage"></div></div>
+                        <p class="count" data-item="{{this.participations_count}}">{{this.participations_count}}명</p>
+                        <p class="percentage-number" data-item="{{this.participations_goal_count}}">-</p>
+                    </div>
+                </li>
+            </a>
+        {{/each}}
+
     </ul>
 </main>
 {{> include/footer}}
