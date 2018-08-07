@@ -11,7 +11,6 @@
 <main>
     <div class="page">
         <h1>상임위원회 관리</h1>
-        {{committees}}
         <table class="committees">
             <thead>
                 <hr>
@@ -20,14 +19,16 @@
                     <th class="act">관리</th>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>행정안전위원회</td>
-                    <td>
-                        <button>수정</button>
-                        <button>삭제</button>
-                    </td>
-                </tr>
+                {{#each committees}}
+                    <tr id="committee-{{this.id}}" data-item="{{this.id}}">
+                        <td class="id">{{this.id}}</td>
+                        <td class="name"><input value="{{this.name}}"></td>
+                        <td>
+                            <button class="update">수정</button>
+                            <button class="delete">삭제</button>
+                        </td>
+                    </tr>
+                {{/each}}
             </tbody>
         </table>
     </div>
@@ -39,7 +40,7 @@
 </main>
 <!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
 <script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
-<script type="text/javascript" src="/js/projectForm.js"></script>
+<script type="text/javascript" src="/dist/adminCommittees-bundle.js"></script>
 {{> include/footer}}
 </body>
 </html>

@@ -34,8 +34,6 @@ class mainProjects {
       const goalCount = li.querySelector('.percentage-number').getAttribute('data-item');
       const count = li.querySelector('.count').getAttribute('data-item');
       const percentage = ((count / goalCount * 100).toFixed(1));
-      console.log(goalCount, count, percentage);
-
 
       if(index === 3 && window.innerWidth > 1130) {
         li.classList.add('long');

@@ -490,6 +490,10 @@ div.writer-info-zone .written-date {
     cursor: pointer;
 }
 
+#likes-zone {
+    display: none;
+}
+
 button.likes {
     padding: 5px 0 5px 20px;
     background-image: url("/img/like.png");
