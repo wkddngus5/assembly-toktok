@@ -18,7 +18,7 @@
             <div class="mdl-textfield mdl-js-textfield">
                 <button class="change-nav" id="change-nickname-btn">닉네임 변경</button>
                 <button class="change-nav" id="change-password-btn">비밀번호 변경</button>
-                <div class="change-nickname-zone">
+                <div class="change-nickname-zone" data-item="nickname">
                     <form action="#">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                             <input class="mdl-textfield__input" type="text" id="nickname">
@@ -26,20 +26,20 @@
                         </div>
                     </form>
                 </div>
-                <div class="change-password-zone">
+                <div class="change-password-zone" data-item="password">
                     <form action="#">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="password">
+                            <input class="mdl-textfield__input" type="password" id="password">
                             <label class="mdl-textfield__label" for="password">기존 비밀번호</label>
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="new-password">
+                            <input class="mdl-textfield__input" type="password" id="new-password">
                             <label class="mdl-textfield__label" for="new-password">새로운 비밀번호</label>
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="new-password-confirm">
+                            <input class="mdl-textfield__input" type="password" id="new-password-confirm">
                             <label class="mdl-textfield__label" for="new-password-confirm">새로운 비밀번호 확인</label>
                         </div>
                     </form>
@@ -47,7 +47,7 @@
             </div>
         </div>
         <div class="mdl-card__actions mdl-card--border">
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="update-user-btn">
                 변경 내용 저장
             </a>
         </div>
@@ -99,7 +99,6 @@
             {{/each}}
         </ul>
     </div>
-
 </main>
 
 <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">

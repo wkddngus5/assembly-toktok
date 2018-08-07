@@ -1,8 +1,14 @@
 class my {
   constructor() {
+    this.snackBar = document.querySelector('#demo-snackbar-example');
+
+    this.inputNickname = document.querySelector('#nickname');
+    this.inputPassword = document.querySelector('#password');
+    this.inputNewPassword = document.querySelector('#new-password');
+    this.inputNewPasswordConfirm = document.querySelector('#new-password-confirm');
+
     this.changeNicknameBtn = document.querySelector('#change-nickname-btn');
     this.changePasswordBtn = document.querySelector('#change-password-btn');
-
 
     this.changeNicknameZone = document.querySelector('div.change-nickname-zone');
     this.changePasswordZone = document.querySelector('div.change-password-zone');
@@ -20,10 +26,16 @@ class my {
   }
 
   init() {
+    this.projectsInit();
+    document.querySelector('#update-user-btn').addEventListener('click', e => {
+      this.updateUser();
+    });
+
     this.changeNicknameBtn.addEventListener('click', e => {
       this.changePasswordZone.classList.remove('is-visible');
       this.changeNicknameZone.classList.add('is-visible');
     });
+
 
     this.changePasswordBtn.addEventListener('click', e => {
       this.changeNicknameZone.classList.remove('is-visible');
@@ -31,8 +43,105 @@ class my {
     });
 
     this.profileImg.addEventListener('click', this.changeProfileImg);
-
     this.projectsNav.addEventListener('click', this.changeProjects);
+  }
+
+  updateUser() {
+    const visible = document.querySelector('div.is-visible');
+    if(visible.classList.contains('change-nickname-zone')) {
+      this.updateNickname();
+    } else if(visible.classList.contains('change-password-zone')) {
+      this.updatePassword();
+    }
+
+    if(this.profileImg.classList.contains('is-active')) {
+      this.updateProfileImg();
+    }
+  }
+
+
+  updateNickname() {
+    const data = {
+      'nickname': this.inputNickname.value
+    };
+
+    if(data.nickname.length < 2 || data.nickname.length > 10) {
+      this.showSnackBar('닉네임은 2글자 이상 10글자 미만으로 설정해주세요.');
+      return;
+    }
+
+    fetch('/users/nickname', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      }),
+      body: JSON.stringify(data)
+    }).then(res => {
+      if(res.status === 200) {
+        alert('닉네임이 성공적으로 변경되었습니다.');
+        window.location = '/';
+      }
+    });
+  }
+
+
+  updatePassword() {
+    const REG_PWD = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+    const password = this.inputNewPasswordConfirm.value;
+    if(!REG_PWD.test(password)) {
+      this.showSnackBar('비밀번호는 영문, 숫자를 혼합하여 6~20자리 이내로 설정해주세요.');
+      return;
+    }
+
+    if(this.inputNewPassword.value !== this.inputNewPasswordConfirm.value) {
+      this.showSnackBar('새 비밀번호를 다시 확인해주세요.');
+      return;
+    }
+
+    const data = {
+      'password': this.inputNewPassword.value
+    };
+
+    fetch('/users/password', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      }),
+      body: JSON.stringify(data)
+    }).then(res => {
+      console.log(res);
+    });
+  }
+
+  updateProfileImg() {
+
+  }
+
+  projectsInit() {
+    document.querySelectorAll('li.project').forEach((li, index) => {
+      const status = li.querySelector('div.status');
+      const nowStatus = status.getAttribute('data-item');
+      switch (nowStatus) {
+        case 'running':
+          status.innerText = '입법활동';
+          status.classList.add(nowStatus);
+          break;
+        case 'fail':
+          status.innerText = '매칭실패';
+          status.classList.add(nowStatus);
+          break;
+      }
+      const goalCount = li.querySelector('.percentage-number').getAttribute('data-item');
+      const count = li.querySelector('.count').getAttribute('data-item');
+      const percentage = ((count / goalCount * 100).toFixed(1));
+
+      li.querySelector('.percentage-number').innerText = percentage + '%';
+      li.querySelector('.percentage').style.width = percentage > 100 ? '100%' : percentage + '%';
+    });
   }
 
   changeProjects(e) {
@@ -64,7 +173,23 @@ class my {
 
     if(file) {
       reader.readAsDataURL(file);
+      this.profileImg.classList.add('is-active');
     }
+  }
+
+  showSnackBar(message) {
+    const handler = (event) => {
+      showSnackbarButton.style.backgroundColor = '';
+    };
+
+    const data = {
+      message: message,
+      timeout: 2000,
+      actionHandler: handler,
+      actionText: ' '
+    };
+
+    this.snackBar.MaterialSnackbar.showSnackbar(data);
   }
 }
 

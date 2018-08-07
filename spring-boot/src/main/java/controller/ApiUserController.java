@@ -83,14 +83,24 @@ public class ApiUserController {
         }
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.PUT)
-    public ResponseEntity<ApiResult> update(@RequestBody UserCreate request) {
+    @RequestMapping(value = "/users/nickname", method = RequestMethod.PUT)
+    public ResponseEntity<ApiResult> updateNickname(@RequestBody UserCreate request) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         userDao.updateUserInformation(principal.getId(), request.getNickname(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
         return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/password", method = RequestMethod.PUT)
+    public ResponseEntity<ApiResult> updatePassword(@RequestBody UserCreate request) throws Exception {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        userDao.updateUserPassword(principal.getId(), passwordEncoder.encode(request.getPassword()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        return new ResponseEntity<>(new ApiResult(true, "Update Password"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/auth/email", method = RequestMethod.POST)
@@ -119,16 +129,6 @@ public class ApiUserController {
         userDao.changeUserPassword(passwordEncoder.encode(request.getPassword()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), user.getId());
 
         return new ResponseEntity<>(new ApiResult(true, "Change Password"), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/users/password", method = RequestMethod.PUT)
-    public ResponseEntity<ApiResult> updatePassword(@RequestBody UserCreate request) throws Exception {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        userDao.updateUserPassword(principal.getId(), passwordEncoder.encode(request.getPassword()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
-        return new ResponseEntity<>(new ApiResult(true, "Update Password"), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/users/password", method = RequestMethod.POST)
