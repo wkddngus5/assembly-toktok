@@ -82,6 +82,10 @@ class project {
   }
 
   likeComment(target) {
+    if(!document.querySelector('#likes-zone')) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
     const li = target.closest('.each-discussion');
     const commentId = li.getAttribute('data-item');
 
@@ -93,14 +97,17 @@ class project {
         'content-type': 'application/json',
       })
     }).then(res => {
+      console.log(res);
       if(res.status === 201) {
-        console.log('좋아요');
         target.classList.add('is-active');
-        return;
+        target.innerText = parseInt(target.innerText) + 1;
+        return res.json();
       } else if(res.status === 200) {
         target.classList.remove('is-active');
-        console.log('좋아요 취소 ');
+        target.innerText = parseInt(target.innerText) - 1;
       }
+    }).then(json => {
+      console.log(json);
     });
   }
 

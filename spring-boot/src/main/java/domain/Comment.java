@@ -93,6 +93,14 @@ public class Comment implements Comparable<Comment>{
         this.likes_count = likes_count;
     }
 
+    public void like() {
+        this.likes_count = this.likes_count + 1;
+    }
+
+    public void dislike() {
+        this.likes_count = this.likes_count - 1;
+    }
+
     public int compareTo(Comment comment) {
         return (int)(comment.likes_count - this.likes_count);
     }

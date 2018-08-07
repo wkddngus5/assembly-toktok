@@ -80,7 +80,7 @@ public class ApiProjectCommentsController {
         headers.add("Content-Type", "application/json; charset=utf-8");
         User sessionedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        Likes dbLikes = likesDao.findByLikable_idAndUser_id(id, sessionedUser.getId());
+        Likes dbLikes = likesDao.findByLikable_idAndUser_id(cid, sessionedUser.getId());
         if(dbLikes == null) {
             Likes likes = new Likes();
             String nowDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
@@ -89,11 +89,17 @@ public class ApiProjectCommentsController {
             likes.setUser_id(sessionedUser.getId());
             likes.setCreated_at(nowDate);
             likes.setUpdated_at(nowDate);
-            likesDao.save(likes);
-            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+
+            Comment dbComment = commentDao.findById(cid).get();
+            dbComment.like();
+            commentDao.save(dbComment);
+            return new ResponseEntity<>(likesDao.save(likes), headers, HttpStatus.CREATED);
         }
 
         likesDao.delete(dbLikes);
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        Comment dbComment = commentDao.findById(cid).get();
+        dbComment.dislike();
+        commentDao.save(dbComment);
+        return new ResponseEntity<>(dbLikes, headers, HttpStatus.OK);
     }
 }

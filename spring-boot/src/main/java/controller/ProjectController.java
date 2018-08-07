@@ -60,7 +60,9 @@ public class ProjectController {
         }
 //        Collections.sort(comments);
         modelAndView.addObject("comments", comments);
-        modelAndView.addObject("likes", likesDao.findByUser_id(sessionedUser.getId()));
+        if(sessionedUser != null) {
+            modelAndView.addObject("likes", likesDao.findByUser_id(sessionedUser.getId()));
+        }
         return modelAndView;
     }
 
