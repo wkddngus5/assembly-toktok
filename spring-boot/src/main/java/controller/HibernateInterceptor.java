@@ -22,7 +22,9 @@ public class HibernateInterceptor extends EmptyInterceptor {
             String regex = "([a-z])([A-Z]+)";
             String replacement = "$1_$2";
             int imageIndex = propertyNameList.indexOf("image");
-            state[imageIndex] = AWS_ADDRESS + "/uploads/" + entity.getClass().getSimpleName().replaceAll(regex, replacement).toLowerCase() + "/image/" + id + "/" + state[imageIndex];
+//            String className = entity.getClass().getSimpleName().replaceAll(regex, replacement).toLowerCase();
+            String className = entity.getClass().getSimpleName().toLowerCase();
+            state[imageIndex] = AWS_ADDRESS + "/uploads/" + className + "/image/" + id + "/" + state[imageIndex];
 //            state[imageIndex] = "/uploads/" + state[imageIndex];
         }
         return super.onLoad(entity, id, state, propertyNames, types);
