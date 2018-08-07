@@ -17,7 +17,7 @@
     <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect"
         for="demo-menu-lower-right">
         {{^authenticatedUser}}
-            <a href="/login"><li class="mdl-menu__item">로그인</li></a>
+            <a href="/login" id="login"><li class="mdl-menu__item">로그인</li></a>
         {{/authenticatedUser}}
         {{#authenticatedUser}}
             <a href="/my"><li class="mdl-menu__item">마이페이지</li></a>
