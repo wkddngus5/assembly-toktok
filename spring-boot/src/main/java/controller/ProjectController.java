@@ -9,8 +9,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
 
@@ -66,11 +68,16 @@ public class ProjectController {
         return modelAndView;
     }
 
-    @RequestMapping("/projects/search")
-    public ModelAndView projectSearch(ModelAndView modelAndView, HttpSession session) {
+    @GetMapping("/projects/search")
+    public ModelAndView projectSearch(@RequestParam("keyword") final String keyword,
+                                      ModelAndView modelAndView, HttpSession session) {
+        List<Project> projects = projectDao.search("%" + keyword + "%");
+
         if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
             modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         }
+        modelAndView.addObject("projects", projects);
+
         modelAndView.setViewName("projectSearch");
         return modelAndView;
     }

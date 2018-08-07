@@ -31,7 +31,7 @@ public class S3Wrapper {
     private String bucket;
 
     private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
-        return upload(new FileInputStream(filePath), "uploads/" + uploadKey);
+        return upload(new FileInputStream(filePath), "img/" + uploadKey);
     }
 
     private PutObjectResult upload(InputStream inputStream, String uploadKey) {

@@ -27,8 +27,10 @@ public class ImageController {
     @RequestMapping(value = "uploads/**", method = RequestMethod.GET)
     public ResponseEntity<byte[]> uploadGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String path = request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE).toString();
-        if(path.startsWith("/")) {
+        if(path.startsWith("/uploads")) {
             path = path.substring(1, path.length());
+//            path.replaceFirst("/uploads", "img/");
+
         }
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(s3Wrapper.downloadStream(path));
     }
