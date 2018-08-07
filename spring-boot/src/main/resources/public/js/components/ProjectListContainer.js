@@ -7,10 +7,9 @@ class ProjectListContainer extends Component {
     super();
     this.state = {
       projects: []
-    }
+    };
     this.scrollFlag = true;
   }
-
 
   componentDidMount() {
     this.initProjectList();
@@ -74,10 +73,18 @@ class ProjectListContainer extends Component {
         <div className="filler-zone">
           <select className="category-list">
             <option className="category" data-item="전체">분야별</option>
-            <option className="category" data-item="환경">환경</option>
-            <option className="category" data-item="인권">인권</option>
-            <option className="category" data-item="육아">육아</option>
-            <option className="category" data-item="언론">언론</option>
+            <option className="category" data-item="정치">정치</option>
+            <option className="category" data-item="외교/통일/국방">외교/통일/국방</option>
+            <option className="category" data-item="보건복지">보건복지</option>
+            <option className="category" data-item="환경/생태">환경/생태</option>
+            <option className="category" data-item="육아/교육">육아/교육</option>
+            <option className="category" data-item="동물권">동물권</option>
+            <option className="category" data-item="문화/언론">문화/언론</option>
+            <option className="category" data-item="저출산/고령화대책">저출산/고령화대책</option>
+            <option className="category" data-item="교통/건축/국토">교통/건축/국토</option>
+            <option className="category" data-item="경제민주화">경제민주화</option>
+            <option className="category" data-item="인권/성평등">인권/성평등</option>
+            <option className="category" data-item="기타">기타</option>
           </select>
         </div>
         <ul className="project-list">
@@ -87,6 +94,5 @@ class ProjectListContainer extends Component {
     )
   }
 }
-
 
 export default ProjectListContainer;

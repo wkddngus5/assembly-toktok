@@ -18,7 +18,8 @@
             </li>
             {{#each mainslides}}
                <a href={{this.url}}>
-                   <li class="carousel-page page-2" data-item={{this.order}}>
+                   <li class="carousel-page page-{{this.order}}" data-item={{this.order}}
+                           style="background-image: url({{this.image}})">
                         {{{this.description}}}
                    </li>
                </a>
@@ -42,8 +43,8 @@
                 {{#each projects_imminent}}
                 <a href="/projects/{{this.id}}">
                     <li class="project">
-                        <div class="project-img" style="background-image: url({{this.imageUrl}})">
-                            <div class="status {{this.status}}">{{this.status}}시민참여</div>
+                        <div class="project-img" style="background-image: url({{this.image}})">
+                            <div class="status {{this.status}}">시민참여</div>
                         </div>
                         <div class="project-summary">
                             <h5>{{this.title}}</h5>
@@ -67,7 +68,7 @@
                 {{#each projects_best}}
                 <a href="/projects/{{this.id}}">
                     <li class="project">
-                        <div class="project-img">
+                        <div class="project-img" style="background-image: url({{this.image}})">
                             <div class="status" data-item="{{this.status}}">시민참여</div>
                         </div>
                         <div class="project-summary">
@@ -92,7 +93,7 @@
                 {{#each projects_new}}
                 <a href="/projects/{{this.id}}">
                     <li class="project">
-                        <div class="project-img">
+                        <div class="project-img" style="background-image: url({{this.image}})">
                             <div class="status" data-item="{{this.status}}">시민참여</div>
                         </div>
                         <div class="project-summary">
