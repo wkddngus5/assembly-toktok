@@ -550,6 +550,12 @@ button.likes.is-active {
     border-radius: 10px;
 }
 
+@media screen and (min-width: 400px) {
+    img.main-img {
+        height: 400px;
+    }
+}
+
 @media screen and (min-width: 900px) {
     .step {
         margin: 30px 0 0 0;

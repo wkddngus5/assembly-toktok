@@ -10,6 +10,14 @@ class ProjectList extends Component {
     const { projects } = this.props;
 
     const projectList = projects.map((project, i) => {
+      let projectImgStyle = {};
+
+      if(!project.image.includes('null')) {
+        projectImgStyle = {
+          backgroundImage: `url(${project.image})`
+        };
+      }
+
       const countByGoal = (project.participations_count / project.participations_goal_count * 100).toFixed(2);
 
       let percentageNumber =
@@ -28,7 +36,7 @@ class ProjectList extends Component {
       return (
         <a href={'/projects/' + project.id}>
           <li key={i} className="project">
-            <div className="project-img">
+            <div className="project-img" style={projectImgStyle}>
               <div className={"status " + project.status} data-item={project.status}>{statusText}</div>
             </div>
             <div className="project-summary">
