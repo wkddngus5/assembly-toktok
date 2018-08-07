@@ -38,7 +38,7 @@ public class ApiAdminCommitteeController {
         if (committee == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(committee, headers, HttpStatus.OK);
+            return new ResponseEntity<>(committee, headers, HttpStatus.CREATED);
         }
     }
 
@@ -70,6 +70,7 @@ public class ApiAdminCommitteeController {
         }
     }
 
+
     @RequestMapping(value = "/administrator/committees/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Committee> deleteCommittees(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
@@ -89,3 +90,4 @@ public class ApiAdminCommitteeController {
         }
     }
 }
+

@@ -44,6 +44,10 @@ class adminProject {
   }
 
   initCommittees() {
+    const committeeData = document.querySelector('#admin-committees').getAttribute('data-item');
+    if(committeeData === '') {
+      return;
+    }
     const committeessJson = JSON.parse(document.querySelector('#admin-committees').getAttribute('data-item'));
     const committeeList = committeessJson.committeeList;
     document.querySelector('#committee-date').value = committeessJson.date;
@@ -51,7 +55,6 @@ class adminProject {
       this.initCommittee(committeeList[i]);
     }
   }
-
 
   initCommittee(committee) {
     let eachCommittee = `
@@ -174,7 +177,7 @@ class adminProject {
       date: document.querySelector('#committee-date').value
     };
 
-    const data = {
+    let data = {
       'matching_start_date': this.matchingPeriod.value,
       'matching_end_date': this.matchingPeriodEnd.value,
       'participations_goal_count': this.goalCount.value,
@@ -182,6 +185,12 @@ class adminProject {
       'committees': JSON.stringify(committeesJson)
     };
 
+    if(this.status.value !== 'none') {
+     data.status = this.status.value;
+    }
+
+
+    console.log(data);
     const id = document.querySelector('h3').id;
     fetch(`/administrator/projects/${id}`, {
       method: 'PUT',

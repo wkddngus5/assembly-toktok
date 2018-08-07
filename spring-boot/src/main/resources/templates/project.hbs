@@ -15,7 +15,9 @@
     <img class="main-img" src="/img/sub_02.png">
     <div class="desc">
         <ul class="category-list">
-            <li class="category">여성</li>
+            {{#project.subject}}
+                <li class="category">{{project.subject}}</li>
+            {{/project.subject}}
         </ul>
         <h2 data-item="{{project.id}}">{{project.title}}</h2>
         <ul class="status-zone" data-item="{{project.status}}">
@@ -58,23 +60,12 @@
             <li class="share kakao"></li>
         </ul>
         {{#project.status}}
-            <div class="assembly">
+            <div class="assembly" data-item="{{project.committees}}">
                 <label class="assembly-man-list-label" for="assembly-man-list">참여의원</label>
                 <ul id="assembly-man-list">
-                    <li class="assembly-man">
-                        <div class="profile-img"></div>
-                        <p>진선미 의원</p>
-                    </li>
-                    <li class="assembly-man">
-                        <div class="profile-img"></div>
-                        <p>남인순 의원</p>
-                    </li>
                 </ul>
-
                 <label for="committee">소관 상임위</label>
                 <ul id="committee">
-                    <li>여성가족위원회</li>
-                    <li>행정안전위원회</li>
                 </ul>
             </div>
         {{/project.status}}
@@ -88,7 +79,7 @@
     <div class="info">
         <div class="info-contents contents is-visible">
             <h4>제안 요약</h4>
-            {{project.summary}}
+            {{{project.summary}}}
             <h4>제안 내용</h4>
             {{{project.body}}}
         </div>
@@ -108,133 +99,65 @@
         </div>
 
         <div class="info-contents discussion">
-            <ul class="discussion-list best">
-                <li class="each-discussion">
-                    <table>
-                       <tr>
-                           <div class="best-tag">BEST</div><br>
-                           <td class="left">
-                               <div class="writer-info-zone">
-                                   <div class="profile"></div>
-                                   <p class="nickname">Marriott82</p>
-                                   <p class="written-date">2017.04.06</p>
-                               </div><br>
-                               <div class="discussion-info">
-                                   <button class="reply">답글 6</button>
-                                   <button class="likes">234</button>
-                               </div>
-                           </td>
-                           <td class="right">
-                               <p class="discussion-contents">
-                                   진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
-                                   '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
-                                   여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
-                               </p>
-                           </td>
-                       </tr>
-                    </table>
-                </li>
-                <li class="each-discussion">
-                    <table>
-                       <tr>
-                           <div class="best-tag">BEST</div><br>
-                           <td class="left">
-                               <div class="writer-info-zone">
-                                   <div class="profile"></div>
-                                   <p class="nickname">Marriott82</p>
-                                   <p class="written-date">2017.04.06</p>
-                               </div><br>
-                               <div class="discussion-info">
-                                   <button class="reply">답글 6</button>
-                                   <button class="likes">234</button>
-                               </div>
-                           </td>
-                           <td class="right">
-                               <p class="discussion-contents">
-                                   진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
-                                   '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
-                                   여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
-                               </p>
-                           </td>
-                       </tr>
-                    </table>
-                </li>
-                <li class="each-discussion">
-                    <table>
-                       <tr>
-                           <div class="best-tag">BEST</div><br>
-                           <td class="left">
-                               <div class="writer-info-zone">
-                                   <div class="profile"></div>
-                                   <p class="nickname">Marriott82</p>
-                                   <p class="written-date">2017.04.06</p>
-                               </div><br>
-                               <div class="discussion-info">
-                                   <button class="reply">답글 6</button>
-                                   <button class="likes">234</button>
-                               </div>
-                           </td>
-                           <td class="right">
-                               <p class="discussion-contents">
-                                   진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
-                                   '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
-                                   여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
-                               </p>
-                           </td>
-                       </tr>
-                    </table>
-                </li>
-            </ul>
+            <!--<ul class="discussion-list best">-->
+                <!--<li class="each-discussion">-->
+                    <!--<table>-->
+                       <!--<tr>-->
+                           <!--<div class="best-tag">BEST</div><br>-->
+                           <!--<td class="left">-->
+                               <!--<div class="writer-info-zone">-->
+                                   <!--<div class="profile"></div>-->
+                                   <!--<p class="nickname">Marriott82</p>-->
+                                   <!--<p class="written-date">2017.04.06</p>-->
+                               <!--</div><br>-->
+                               <!--<div class="discussion-info">-->
+                                   <!--<button class="reply">답글 6</button>-->
+                                   <!--<button class="likes">234</button>-->
+                               <!--</div>-->
+                           <!--</td>-->
+                           <!--<td class="right">-->
+                               <!--<p class="discussion-contents">-->
+                                   <!--진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과-->
+                                   <!--'성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와-->
+                                   <!--여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한-->
+                               <!--</p>-->
+                           <!--</td>-->
+                       <!--</tr>-->
+                    <!--</table>-->
+                <!--</li>-->
+            <!--</ul>-->
 
             <ul class="discussion-list new">
-                <li class="each-discussion">
-                    <table>
-                        <tr>
-                            <td class="left">
-                                <div class="writer-info-zone">
-                                    <div class="profile"></div>
-                                    <p class="nickname">Marriott82</p>
-                                    <p class="written-date">2017.04.06</p>
-                                </div><br>
-                                <div class="discussion-info">
-                                    <button class="reply">답글 6</button>
-                                    <button class="likes">234</button>
-                                </div>
-                            </td>
-                            <td class="right">
-                                <p class="discussion-contents">
-                                    진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
-                                    '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
-                                    여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </li>
-                <li class="each-discussion">
-                    <table>
-                        <tr>
-                            <td class="left">
-                                <div class="writer-info-zone">
-                                    <div class="profile"></div>
-                                    <p class="nickname">Marriott82</p>
-                                    <p class="written-date">2017.04.06</p>
-                                </div><br>
-                                <div class="discussion-info">
-                                    <button class="reply">답글 6</button>
-                                    <button class="likes">234</button>
-                                </div>
-                            </td>
-                            <td class="right">
-                                <p class="discussion-contents">
-                                    진선미 의원님이 지난 7월 발의한 '공중화장실 등에 관한 법률 일부개정법률안'과
-                                    '성폭력범죄의 처벌 등에 관한 특례법 일부개정법률안'이 각각 행정안전위원회 법안심사소위원회(11월 24일)와
-                                    여성가족위원회 법안심사소위원회(11월 23일)로 회부되었습니다. 앞으로 법안심사소위원회에서는 해당 법안에 대한
-                                </p>
-                            </td>
-                        </tr>
-                    </table>
-                </li>
+                <div id="likes-zone">
+                    {{#each likes}}
+                        <p>{{this.likable_id}}</p>
+                    {{/each}}
+                </div>
+                {{#each comments}}
+                    <li class="each-discussion" data-item="{{this.id}}">
+                        <table>
+                            <tr>
+                                <td class="left">
+                                    <div class="writer-info-zone">
+                                        <div class="profile"></div><br>
+                                        <p class="nickname">{{this.writer.nickname}}</p>
+                                        <p class="written-date">{{this.created_at}}</p>
+                                    </div><br>
+                                    <div class="discussion-info">
+                                        <!--<button class="reply">답글 6</button>-->
+                                        <button class="likes" id="like-{{this.id}}">{{this.likes_count}}</button>
+                                        <button class="delete">삭제</button>
+                                    </div>
+                                </td>
+                                <td class="right">
+                                    <p class="discussion-contents">
+                                        {{this.body}}
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                {{/each}}
             </ul>
             <div id="write-comment-zone">
                 <textarea class="input-comment" rows="5" placeholder="댓글을 입력해주세요"></textarea>

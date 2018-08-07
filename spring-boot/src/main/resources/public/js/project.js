@@ -19,6 +19,7 @@ class project {
   init() {
     this.percentageSet();
     this.statusSet();
+    this.initCommittees();
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
     });
@@ -29,10 +30,154 @@ class project {
       }
     });
 
+    document.querySelector('.submit-comment-btn').addEventListener('click', e => {
+      this.postComment();
+    });
+
+    document.querySelector('ul.discussion-list.new').addEventListener('click', e => {
+      const target = e.target;
+      if(target.classList.contains('delete')) {
+        this.deleteComment(target);
+      } else if(target.classList.contains('likes')) {
+        this.likeComment(target);
+      }
+    });
+
     this.hideLastTimelineOuter();
     document.querySelector('ul.status-zone').addEventListener('click', this.toggleGuide);
     document.addEventListener('click', this.closeGuide);
+    this.initLikes();
   };
+
+  initLikes() {
+    const likes = document.querySelectorAll('#likes-zone p');
+    for(let i = 0 ; i < likes.length ; i++) {
+      const id = likes[i].innerText;
+      console.log('id', id);
+      const like = document.querySelector(`#like-${id}`);
+      if(like !== null) {
+        like.classList.add('is-active');
+      }
+    }
+  }
+
+  deleteComment(target) {
+    const li = target.closest('.each-discussion');
+    const commentId = li.getAttribute('data-item');
+    fetch(`/projects/${this.id}/comments/${commentId}`, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      })
+    }).then(res => {
+      if(res.status === 406) {
+        alert('본인이 작성한 댓글만 삭제할 수 있습니다.');
+        return;
+      } else if(res.status === 200) {
+        li.remove();
+      }
+    });
+  }
+
+  likeComment(target) {
+    const li = target.closest('.each-discussion');
+    const commentId = li.getAttribute('data-item');
+
+    fetch(`/projects/${this.id}/comments/${commentId}/likes`, {
+      method: 'PATCH',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      })
+    }).then(res => {
+      if(res.status === 201) {
+        console.log('좋아요');
+        target.classList.add('is-active');
+        return;
+      } else if(res.status === 200) {
+        target.classList.remove('is-active');
+        console.log('좋아요 취소 ');
+      }
+    });
+  }
+
+  postComment() {
+    const data =  {
+      'commentable_id': document.querySelector('h2').getAttribute('data-item'),
+      'body': document.querySelector('.input-comment').value
+    };
+
+    fetch(`/projects/${this.id}/comments`, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      }),
+      body: JSON.stringify(data)
+    }).then(res => {
+      if(res.status === 201) {
+        return res.json();
+      }
+    }).then(json => {
+      const newComment = `
+            <li class="each-discussion" data-item="{{this.id}}">
+                <table>
+                    <tr>
+                        <td class="left">
+                            <div class="writer-info-zone">
+                              <div class="profile"></div><br>
+                                <p class="nickname">${json.writer.nickname}</p>
+                                <p class="written-date">${json.created_at}</p>
+                              </div><br>
+                              <div class="discussion-info">
+                                <!--<button class="reply">답글 6</button>-->
+                                <button class="likes">${json.likes_count}</button>
+                              </div>
+                        </td>
+                        <td class="right">
+                            <p class="discussion-contents">
+                                ${json.body}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </li>`
+      document.querySelector('ul.discussion-list.new').insertAdjacentHTML('beforeend', newComment);
+    });
+  }
+
+  initCommittees() {
+    const assembly = document.querySelector('div.assembly');
+    if(assembly == null) {
+      return;
+    }
+    const committees = JSON.parse(assembly.getAttribute('data-item')).committeeList;
+    const ul = document.querySelector('#committee');
+    for(let i = 0 ; i < committees.length ; i++) {
+      const committee = `<li>${committees[i].name}</li>`;
+      ul.insertAdjacentHTML('beforeend', committee);
+      this.insertAssemblymen(committees[i].assemblymanList);
+    }
+  }
+
+  insertAssemblymen(assemblymanList) {
+    for(let i = 0 ; i < assemblymanList.length ; i++) {
+      const ul = document.querySelector('#assembly-man-list');
+      if(assemblymanList[i].status === '참여') {
+        const assemblymanLi = `
+            <li class="assembly-man">
+                <div class="profile-img"></div>
+                <p>${assemblymanList[i].name} 의원</p>
+            </li>
+        `;
+        ul.insertAdjacentHTML('beforeend', assemblymanLi);
+      }
+    }
+  }
 
   closeGuide(e) {
     if(!this.showingGuide || e.target.tagName === 'LI') {
@@ -136,6 +281,5 @@ class project {
     });
   }
 }
-
 
 export default project;

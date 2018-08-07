@@ -1,16 +1,32 @@
 package controller;
 
+import dao.ParticipationsDao;
+import dao.ProjectDao;
+import domain.Participations;
+import domain.Project;
+import domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
+    @Autowired
+    private ProjectDao projectDao;
+    @Autowired
+    private ParticipationsDao participationsDao;
+
+    private UserService userService;
+
     @RequestMapping("/login")
     public ModelAndView login(ModelAndView modelAndView, HttpSession session) {
         if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
@@ -25,7 +41,16 @@ public class UserController {
         if (session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
             modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         }
+        User sessionedUser = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         modelAndView.setViewName("my");
+        modelAndView.addObject("proposals", projectDao.findByUser_id(sessionedUser.getId()));
+        List<Project> participations = new ArrayList<>();
+        List<Participations> participationsList = participationsDao.findByUserId(sessionedUser.getId());
+        for(Participations participation : participationsList) {
+            participations.add(projectDao.findById(participation.getProject_id()).get());
+        }
+        modelAndView.addObject("participations", participations);
         return modelAndView;
     }
 

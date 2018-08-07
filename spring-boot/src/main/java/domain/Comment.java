@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Comparator;
 
 @Entity
 @Table(name = "comments")
@@ -11,18 +12,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Comment {
+public class Comment implements Comparable<Comment>{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String commentable_type;
     private long commentable_id;
-
-    @Setter
     private long user_id;
-
-    @OneToOne
-    @JoinColumn(name = "id")
     private User writer;
     private String body;
     private String created_at;
@@ -95,5 +91,9 @@ public class Comment {
 
     public void setLikes_count(long likes_count) {
         this.likes_count = likes_count;
+    }
+
+    public int compareTo(Comment comment) {
+        return (int)(comment.likes_count - this.likes_count);
     }
 }

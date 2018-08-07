@@ -29,6 +29,9 @@ public interface ProjectDao extends JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM projects where title like :keyword  or body like :keyword ", nativeQuery = true)
     List<Project> search(@Param("keyword") String keyword);
 
+    @Query(value = "SELECT * FROM projects WHERE user_id = ?1", nativeQuery = true)
+    List<Project> findByUser_id(Long id);
+
     @Modifying
     @Transactional
     @Query(value = "UPDATE projects SET participations_count = participations_count - 1 WHERE id = ?1", nativeQuery = true)

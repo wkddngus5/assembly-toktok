@@ -1,8 +1,7 @@
 package controller;
 
-import dao.ParticipationsDao;
-import dao.ProjectDao;
-import dao.TimelineDao;
+import dao.*;
+import domain.Comment;
 import domain.Project;
 import domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -24,13 +25,18 @@ import java.util.Map;
 @Controller
 public class ProjectController {
     private UserService userService = new UserService();
-
+    @Autowired
+    private UserDao userDao;
     @Autowired
     private ProjectDao projectDao;
     @Autowired
     private TimelineDao timelineDao;
     @Autowired
     private ParticipationsDao participationsDao;
+    @Autowired
+    private CommentDao commentDao;
+    @Autowired
+    private LikesDao likesDao;
 
     @RequestMapping("/projects/{id}")
     public ModelAndView get(ModelAndView modelAndView, @PathVariable("id") final Long id, HttpSession session) {
@@ -47,6 +53,14 @@ public class ProjectController {
 
         List<Map<String, Object>> timelineList = timelineDao.findByProjectId(project.getId());
         modelAndView.addObject("timelines", timelineList);
+
+        List<Comment> comments = commentDao.findByProjectId(project.getId());
+        for(Comment comment : comments) {
+            comment.setWriter(userDao.findById(comment.getUser_id()).get());
+        }
+//        Collections.sort(comments);
+        modelAndView.addObject("comments", comments);
+        modelAndView.addObject("likes", likesDao.findByUser_id(sessionedUser.getId()));
         return modelAndView;
     }
 

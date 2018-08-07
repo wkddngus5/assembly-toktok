@@ -47,7 +47,7 @@ div.add-timeline-zone h3 {
     background-color: #FFEC0D;
 }
 
-div.add-timeline-zone input.input-date {
+#input-date {
     vertical-align: top;
     margin: 0 20px;
 }
@@ -58,7 +58,7 @@ div.add-timeline-zone textarea {
     margin: 0 0 20px 0;
 }
 
-div.add-timeline-zone select.subject {
+#subject {
     vertical-align: top;
     margin: 0 20px;
     font-size: 1em;

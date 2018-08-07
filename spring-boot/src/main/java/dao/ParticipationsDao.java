@@ -9,4 +9,8 @@ import java.util.List;
 public interface ParticipationsDao extends JpaRepository<Participations, Long> {
     @Query(value = "SELECT * FROM participations WHERE user_id = ?1 AND project_id = ?2 LIMIT 1", nativeQuery = true)
     Participations findByUserIdAndProjectId(Long userId, Long projectId);
+
+    @Query(value = "SELECT * FROM participations WHERE user_id = ?1", nativeQuery = true)
+    List<Participations> findByUserId(Long userId);
+
 }
