@@ -17,7 +17,7 @@ public interface ProjectDao extends JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL order by participations_count desc LIMIT 0, 3", nativeQuery = true)
     List<Project> selectByBest();
 
-    @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL order by deleted_at desc LIMIT 0, 5", nativeQuery = true)
+    @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL AND status IS NULL order by created_at asc LIMIT 0, 5", nativeQuery = true)
     List<Project> selectByImminent();
 
     @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL order by created_at desc LIMIT 0, 3", nativeQuery = true)

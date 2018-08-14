@@ -32,7 +32,7 @@ public class ApiAdminAssemblymanController {
         if (congressmen == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<>(congressmen, headers, HttpStatus.OK);
+            return new ResponseEntity<>(congressmen, headers, HttpStatus.CREATED);
         }
     }
 

@@ -55,7 +55,8 @@ class projectForm {
         'proposer_description': document.querySelector('#introduce').value,
         'title': document.querySelector('#title').value,
         'summary': document.querySelector('#desc').value,
-        'body': CKEDITOR.instances.editor1.getData()
+        'body': CKEDITOR.instances.editor1.getData(),
+        'category': document.querySelector('ul.category-list .is-checked').innerText
       };
 
       console.log('data: ', data);
@@ -119,11 +120,14 @@ class projectForm {
       });
   }
 
-
   toggleCategoryClick(target) {
     if(target.classList.contains('is-checked')) {
       target.classList.remove('is-checked');
     } else {
+      const preChekced = document.querySelector('ul.category-list .is-checked');
+      if(preChekced) {
+        preChekced.classList.remove('is-checked');
+      }
       target.classList.add('is-checked');
     }
   }
@@ -134,7 +138,6 @@ class projectForm {
       page.style.height = this.pageHeight + 'px';
     });
   }
-
 }
 
 export default projectForm;

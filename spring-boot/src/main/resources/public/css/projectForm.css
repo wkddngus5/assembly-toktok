@@ -97,12 +97,12 @@ div.input-zone {
     background-color: #e6e6e6;
     border-radius: 1em;
     height: 27px;
-    width: 80px;
+    width: 110px;
     text-align: center;
     vertical-align: center;
     color: #999999;
     padding: 3px 0 0 0;
-    margin: 0 5px;
+    margin: 10px 5px;
     box-shadow:
             0 2px 2px 0 rgba(0,0,0,.14),
             0 3px 1px -2px rgba(0,0,0,.2),
