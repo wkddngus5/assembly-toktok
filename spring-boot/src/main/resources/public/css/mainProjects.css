@@ -31,6 +31,10 @@ label.subject-name {
     font-weight: bold;
 }
 
+label.subject-name:hover {
+    cursor: pointer;
+}
+
 p.subject-desc {
     margin: 6px 0 0 0;
     font-size: 15px;
