@@ -1,6 +1,5 @@
 package controller;
 
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,8 +18,9 @@ public class UploadController {
     private S3Wrapper s3Wrapper;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public List<PutObjectResult> upload(@RequestParam("file") MultipartFile[] multipartFiles) {
-        return s3Wrapper.upload(multipartFiles);
+    public List<String> upload(@RequestParam("file") MultipartFile[] multipartFiles) {
+        List<String> results = s3Wrapper.upload(multipartFiles);
+        return results;
     }
 
 

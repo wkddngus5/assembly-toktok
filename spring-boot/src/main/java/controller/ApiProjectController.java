@@ -5,6 +5,7 @@ import dao.ParticipationsDao;
 import dao.ProjectDao;
 import dao.ProjectJoinDao;
 import domain.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import service.S3Wrapper;
 import service.UserService;
 
 import javax.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -40,6 +43,9 @@ public class ApiProjectController {
 
     @Autowired
     private ParticipationsDao participationsDao;
+
+    @Autowired
+    private S3Wrapper s3Wrapper;
 
     @RequestMapping(value = "/projects/{id}/{manId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -69,9 +75,18 @@ public class ApiProjectController {
         projectRequest.setParticipations_goal_count(GOAL_COUNT);
 
         Project project = projectDao.save(projectRequest);
+
         if (project == null) {
             return new ResponseEntity<>(new ProjectResponse("Fail"), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
+            if(!StringUtils.isEmpty(project.getImage())){
+                try {
+                    byte[] bytes= s3Wrapper.downloadStream(project.getImage());
+                    s3Wrapper.upload(new ByteArrayInputStream(bytes), "uploads/project/image/" + project.getId() + "/" + project.getImage());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             return new ResponseEntity<>(new ProjectResponse(project.getId()), headers, HttpStatus.OK);
         }
     }

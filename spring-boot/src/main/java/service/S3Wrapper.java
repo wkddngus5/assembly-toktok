@@ -30,26 +30,34 @@ public class S3Wrapper {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
-    private PutObjectResult upload(String filePath, String uploadKey) throws FileNotFoundException {
-        return upload(new FileInputStream(filePath), "img/" + uploadKey);
+    public String upload(String filePath, String uploadKey) throws FileNotFoundException {
+        return upload(new FileInputStream(filePath), uploadKey);
     }
 
-    private PutObjectResult upload(InputStream inputStream, String uploadKey) {
+//    private PutObjectResult upload(InputStream inputStream, String uploadKey) {
+//        PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, inputStream, new ObjectMetadata());
+//        PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
+//        IOUtils.closeQuietly(inputStream);
+//        return putObjectResult;
+//    }
+
+    public String upload(InputStream inputStream, String uploadKey) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(bucket, uploadKey, inputStream, new ObjectMetadata());
         PutObjectResult putObjectResult = amazonS3Client.putObject(putObjectRequest);
         IOUtils.closeQuietly(inputStream);
-        return putObjectResult;
+        return uploadKey;
     }
 
-    public List<PutObjectResult> upload(MultipartFile[] multipartFiles) {
-        List<PutObjectResult> putObjectResults = new ArrayList<>();
+    public List<String> upload(MultipartFile[] multipartFiles) {
+        List<String> putObjectResults = new ArrayList<>();
         Arrays.stream(multipartFiles)
                 .filter(multipartFile -> !StringUtils.isEmpty(multipartFile.getOriginalFilename()))
                 .forEach(multipartFile -> {
                     String ext = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-                    String path = UUID.randomUUID() + "." + ext;
+                    String newFilename = Utils.getMd5(System.currentTimeMillis() + multipartFile.getOriginalFilename());
+                    newFilename = newFilename + "." + ext;
                     try {
-                        putObjectResults.add(upload(multipartFile.getInputStream(), path));
+                        putObjectResults.add(upload(multipartFile.getInputStream(), newFilename));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
