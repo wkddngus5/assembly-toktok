@@ -1,9 +1,6 @@
 package controller;
 
-import dao.CommitteeDao;
-import dao.CongressmenDao;
-import dao.ProjectDao;
-import dao.TimelineDao;
+import dao.*;
 import domain.Congressmen;
 import domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,9 @@ public class AdministratorController {
 
     @Autowired
     private CongressmenDao congressmenDao;
+
+    @Autowired
+    private UserDao userDao;
 
     UserService userService = new UserService();
 
@@ -108,6 +108,7 @@ public class AdministratorController {
         userService.addSessionInfo(modelAndView, session);
 
         modelAndView.setViewName("adminList");
+        modelAndView.addObject("users", userDao.findStaff());
         return modelAndView;
     }
 }

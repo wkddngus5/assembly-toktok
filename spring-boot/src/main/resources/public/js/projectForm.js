@@ -5,6 +5,7 @@ class projectForm {
     this.projectImageInput = document.querySelector('input.project-img');
     this.projectImagePreview = document.querySelector('div.image-preview');
     this.completeBtn = document.querySelector('button.complete');
+    this.inputImg = document.querySelector('input.project-img');
     this.init();
   }
 
@@ -56,10 +57,12 @@ class projectForm {
         'title': document.querySelector('#title').value,
         'summary': document.querySelector('#desc').value,
         'body': CKEDITOR.instances.editor1.getData(),
-        'category': document.querySelector('ul.category-list .is-checked').innerText
+        'category': document.querySelector('ul.category-list .is-checked').innerText,
       };
 
-      console.log('data: ', data);
+      if(this.inputImg.getAttribute('data-item')) {
+        data.image = this.inputImg.getAttribute('data-item');
+      }
 
       fetch('/projects', {
         method: 'POST',
@@ -116,9 +119,14 @@ class projectForm {
 
     fetch('/api/aws/s3/upload', options)
       .then(res => {
-        console.log(res);
-      });
+        if(res.status === 200) {
+          return res.json();
+        }
+      }).then(json => {
+        document.querySelector('input.project-img').setAttribute('data-item', json[0]);
+    })
   }
+
 
   toggleCategoryClick(target) {
     if(target.classList.contains('is-checked')) {

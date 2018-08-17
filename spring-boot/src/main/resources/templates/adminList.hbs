@@ -15,18 +15,22 @@
             <thead>
                 <tr>
                     <th class="id">#ID</th>
-                    <th class="image">닉네임</th>
+                    <th class="nickname">닉네임</th>
+                    <th class="email">이메일</th>
                     <th class="link-url">관리</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td class="nickname">국회톡톡운영자</td>
-                    <td>
-                        <button>삭제</button>
-                    </td>
-                </tr>
+                {{#each users}}
+                    <tr data-item="{{this.id}}">
+                        <td>{{this.id}}</td>
+                        <td class="nickname">{{this.nickname}}</td>
+                        <td class="email">{{this.email}}</td>
+                        <td>
+                            <button class="delete-btn">삭제</button>
+                        </td>
+                    </tr>
+                {{/each}}
             </tbody>
         </table>
         <form class="add-administrator-zone">
@@ -39,7 +43,7 @@
 </main>
 <!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
 <script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
-<script type="text/javascript" src="/js/projectForm.js"></script>
+<script type="text/javascript" src="/dist/adminList-bundle.js"></script>
 {{> include/footer}}
 </body>
 </html>
