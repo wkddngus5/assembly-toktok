@@ -18,7 +18,8 @@ module.exports = {
     adminProjects: './src/main/resources/public/entry/adminProjects.js',
     adminProject: './src/main/resources/public/entry/adminProject.js',
     adminProjectTimelines: './src/main/resources/public/entry/adminProjectTimelines.js',
-    adminCommittees: './src/main/resources/public/entry/adminCommittees.js'
+    adminCommittees: './src/main/resources/public/entry/adminCommittees.js',
+    adminAssemblyman: './src/main/resources/public/entry/adminAssemblyman.js'
   },
   output: {
     path: path.resolve(__dirname, "src/main/resources/public/dist/"),

@@ -1,8 +1,10 @@
 package controller;
 
 import dao.CommitteeDao;
+import dao.CongressmenDao;
 import dao.ProjectDao;
 import dao.TimelineDao;
+import domain.Congressmen;
 import domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +29,9 @@ public class AdministratorController {
 
     @Autowired
     private TimelineDao timelineDao;
+
+    @Autowired
+    private CongressmenDao congressmenDao;
 
     UserService userService = new UserService();
 
@@ -85,6 +90,8 @@ public class AdministratorController {
         userService.addSessionInfo(modelAndView, session);
 
         modelAndView.setViewName("adminAssemblyman");
+        modelAndView.addObject("assemblymen", congressmenDao.findAll());
+        modelAndView.addObject("committees", committeeDao.findAll());
         return modelAndView;
     }
 
