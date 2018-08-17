@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface UserDao extends JpaRepository<User, Long> {
-    @Query(value = "SELECT * FROM users WHERE uid = ?1", nativeQuery = true)
+    @Query(value = "SELECT * FROM users WHERE email = ?1", nativeQuery = true)
     User findByEmail(String email);
 
     @Query(value = "SELECT * FROM users WHERE email = ?1 AND provider = ?2", nativeQuery = true)
@@ -20,6 +20,9 @@ public interface UserDao extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM users WHERE provider = ?1 AND uid = ?2", nativeQuery = true)
     User findByProviderId(String provider, String uid);
+
+    @Query(value = "SELECT * FROM users WHERE role = 'staff'", nativeQuery = true)
+    List<User> findStaff();
 
     @Modifying
     @Transactional
