@@ -43,6 +43,7 @@ class login {
       }),
       body: JSON.stringify(data)
     }).then(res => {
+      console.log(data);
       if(res.status === 200) {
         window.location = '/';
       } else {
@@ -50,6 +51,7 @@ class login {
       }
     });
   }
+
 
   showSnackBar(message) {
     const handler = (event) => {

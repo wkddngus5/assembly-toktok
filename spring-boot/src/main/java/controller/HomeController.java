@@ -4,6 +4,7 @@ import dao.MainSlideDao;
 import dao.ProjectDao;
 import dao.ProposalDao;
 import dao.QuestionDao;
+import domain.MainSlide;
 import domain.Project;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,8 @@ import java.util.List;
 
 @Controller
 public class HomeController {
+    private static final int MAIN_SLIDE_ORDER_START  = 2;
+
     private final Logger log = LoggerFactory.getLogger(this.getClass());
     private UserService userService = new UserService();
 
@@ -59,29 +62,18 @@ public class HomeController {
             project.limitTitle();
         }
         modelAndView.addObject("projects_new", projects);
-        modelAndView.addObject("mainslides", mainSlideDao.findAll(new Sort("order")));
+
+        int order = MAIN_SLIDE_ORDER_START;
+
+        List<MainSlide> slides = mainSlideDao.findAllOrOrderByOrderAsc();
+        for(MainSlide slide : slides) {
+            slide.setOrder(order++);
+        }
+
+        modelAndView.addObject("mainslides", slides);
 
         return modelAndView;
     }
-
-
-//    @RequestMapping("/users/form")
-//    public ModelAndView userForm(ModelAndView modelAndView, HttpSession session) {
-//        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-//            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//        }
-//        modelAndView.setViewName("userForm");
-//        return modelAndView;
-//    }
-//
-//    @RequestMapping("/users/passwordForm")
-//    public ModelAndView editPassword(ModelAndView modelAndView, HttpSession session) {
-//        if(session.getAttribute("SPRING_SECURITY_CONTEXT") != null) {
-//            modelAndView.addObject("authenticatedUser", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-//        }
-//        modelAndView.setViewName("editPassword");
-//        return modelAndView;
-//    }
 
     @RequestMapping("/privacy")
     public ModelAndView privacy(ModelAndView modelAndView, HttpSession session) {

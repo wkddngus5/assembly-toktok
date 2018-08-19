@@ -113,7 +113,6 @@ public class ApiUserController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, SecurityContextHolder.getContext());
-
         User user = userDao.findByProviderId(USER_PROVIDER_EMAIL, email);
         userDao.updateLoginInformation(user.getId(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), request.getRemoteAddr());
         AuthenticationToken authenticationToken = new AuthenticationToken(user.getEmail(), user.getNickname(), user.getImage(), user.getRole(), session.getId());

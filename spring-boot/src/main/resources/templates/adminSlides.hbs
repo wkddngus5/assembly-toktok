@@ -11,35 +11,46 @@
 <main>
     <div class="page">
         <h3>메인 슬라이드 관리</h3>
+        <p>두번째 슬라이드부터 관리가 가능합니다.</p>
         <table class="slides">
             <thead>
                 <tr>
                     <th class="id">#ID</th>
+                    <th class="order">순서</th>
                     <th class="image">이미지</th>
                     <th class="link-url">링크 url</th>
+                    <th class="manage">관리</th>
                 </tr>
             </thead>
             <tbody>
+            {{#each slides}}
                 <tr>
-                    <td>1</td>
-                    <td class="image">
+                    <td>{{this.id}}</td>
+                    <td><input value="{{this.order}}"></td>
+                    <td class="image" style="background-image: url({{this.image}})">
                         <input type="file">
                     </td>
-                    <td>www.naver.com</td>
+                    <td><input value="{{this.url}}"></td>
+                    <td>
+                        <button class="update-btn">수정하기</button>
+                        <button class="delete-btn">삭제하기</button>
+                    </td>
                 </tr>
+            {{/each}}
             </tbody>
         </table>
         <form class="add-slide-zone">
             <h3>새 슬라이드 추가</h3>
-            <input type="file">
-            <input type="url" placeholder="url">
-            <button class="add-slide">추가</button>
+            <input id="input-order" type="number" placeholder="순서">
+            <input id="input-image" type="file">
+            <input id="input-url" type="url" placeholder="url">
+            <button class="add-slide-btn">추가</button>
         </form>
     </div>
 </main>
 <!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
 <script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
-<script type="text/javascript" src="/js/projectForm.js"></script>
+<script type="text/javascript" src="/dist/adminSlides-bundle.js"></script>
 {{> include/footer}}
 </body>
 </html>

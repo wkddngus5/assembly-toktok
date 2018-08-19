@@ -39,6 +39,7 @@ table.slides th {
 td.image {
     height: 100px;
     width: 60%;
+    background-size: cover;
 }
 
 td.image input {

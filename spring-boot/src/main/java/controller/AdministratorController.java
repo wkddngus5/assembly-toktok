@@ -2,6 +2,7 @@ package controller;
 
 import dao.*;
 import domain.Congressmen;
+import domain.MainSlide;
 import domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,6 +33,9 @@ public class AdministratorController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private MainSlideDao mainSlideDao;
 
     UserService userService = new UserService();
 
@@ -98,8 +102,8 @@ public class AdministratorController {
     @RequestMapping("/slides")
     public ModelAndView adminSlides(ModelAndView modelAndView,  HttpSession session) {
         userService.addSessionInfo(modelAndView, session);
-
         modelAndView.setViewName("adminSlides");
+        modelAndView.addObject("slides", mainSlideDao.findAllOrOrderByOrderAsc());
         return modelAndView;
     }
 
