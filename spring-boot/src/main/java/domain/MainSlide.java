@@ -79,9 +79,17 @@ public class MainSlide {
     }
 
     public void updateSlide(MainSlide slide) {
-        this.order = slide.order;
-        this.image = slide.image;
-        this.url = slide.url;
+        if (slide.order != 0) {
+            this.order = slide.order;
+        }
+
+        if (slide.image != null) {
+            this.image = slide.image;
+        }
+
+        if (slide.url != null) {
+            this.url = slide.url;
+        }
         this.updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
 
