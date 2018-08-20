@@ -83,6 +83,17 @@ public class ApiUserController {
         }
     }
 
+    @RequestMapping(value = "/users/image", method = RequestMethod.PUT)
+    public ResponseEntity<ApiResult> updateImage(@RequestBody UserCreate request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        principal.setImage(request.getImage());
+        principal.setUpdated_at(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        userDao.save(principal);
+        return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/users/nickname", method = RequestMethod.PUT)
     public ResponseEntity<ApiResult> updateNickname(@RequestBody UserCreate request) {
         HttpHeaders headers = new HttpHeaders();

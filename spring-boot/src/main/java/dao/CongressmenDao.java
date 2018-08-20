@@ -12,4 +12,7 @@ public interface CongressmenDao extends JpaRepository<Congressmen, Long> {
 
     @Query(value = "SELECT * FROM congressmen WHERE committee_id = ?1", nativeQuery = true)
     List<Congressmen> findByCommitteeId(Long id);
+
+    @Query(value = "SELECT * FROM congressmen WHERE name = ?1", nativeQuery = true)
+    List<Congressmen> findByName(String name);
 }

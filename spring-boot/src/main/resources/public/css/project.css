@@ -299,7 +299,8 @@ ul#assembly-man-list li {
     width: 50px;
     height: 50px;
     border-radius: 2em;
-    background-color: #18c3b3;
+    background-image: url("/img/assembly.png");
+    background-size: cover;
     box-shadow:
             0 2px 2px 0 rgba(0,0,0,.14),
             0 3px 1px -2px rgba(0,0,0,.2),

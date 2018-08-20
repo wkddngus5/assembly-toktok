@@ -45,6 +45,7 @@ public class UserController {
 
         modelAndView.setViewName("my");
         modelAndView.addObject("proposals", projectDao.findByUser_id(sessionedUser.getId()));
+        modelAndView.addObject("user", sessionedUser);
         List<Project> participations = new ArrayList<>();
         List<Participations> participationsList = participationsDao.findByUserId(sessionedUser.getId());
         for(Participations participation : participationsList) {

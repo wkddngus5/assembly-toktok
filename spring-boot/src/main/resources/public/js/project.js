@@ -33,7 +33,7 @@ class project {
     });
 
     document.querySelector('nav.info-subject').addEventListener('click', e => {
-      if(e.target.tagName === 'BUTTON'){
+      if (e.target.tagName === 'BUTTON') {
         this.switchInfo(e.target);
       }
     });
@@ -44,16 +44,15 @@ class project {
 
     document.querySelector('ul.discussion-list.new').addEventListener('click', e => {
       const target = e.target;
-      if(target.classList.contains('delete')) {
+      if (target.classList.contains('delete')) {
         this.deleteComment(target);
-      } else if(target.classList.contains('likes')) {
+      } else if (target.classList.contains('likes')) {
         this.likeComment(target);
       }
     });
 
     this.loadAllComments();
   };
-
 
   loadAllComments() {
     fetch(`/projects/${this.id}/comments`, {
@@ -68,7 +67,7 @@ class project {
     }).then(json => {
       const commentList = document.querySelector('.discussion-list.new');
       commentList.innerHTML = '';
-      for(let i = 0 ; i < json.length ; i++) {
+      for (let i = 0; i < json.length; i++) {
         const comment = json[i];
         const commentLi = `
             <li class="each-discussion" data-item="${comment.id}">
@@ -99,11 +98,11 @@ class project {
         commentList.insertAdjacentHTML('beforeend', commentLi);
 
         const likes = document.querySelectorAll('#likes-zone p');
-        for(let i = 0 ; i < likes.length ; i++) {
+        for (let i = 0; i < likes.length; i++) {
           const id = likes[i].innerText;
           console.log('id', id);
           const like = document.querySelector(`#like-${id}`);
-          if(like !== null) {
+          if (like !== null) {
             like.classList.add('is-active');
           }
         }
@@ -112,25 +111,25 @@ class project {
   }
 
   initImage() {
-    if(this.mainImg.src.includes('null')) {
+    if (this.mainImg.src.includes('null')) {
       this.mainImg.src = '/img/logo-icon.png';
     }
   }
 
   initLikes() {
     const likes = document.querySelectorAll('#likes-zone p');
-    for(let i = 0 ; i < likes.length ; i++) {
+    for (let i = 0; i < likes.length; i++) {
       const id = likes[i].innerText;
       console.log('id', id);
       const like = document.querySelector(`#like-${id}`);
-      if(like !== null) {
+      if (like !== null) {
         like.classList.add('is-active');
       }
     }
   }
 
   deleteComment(target) {
-    if(document.querySelector('#login') !== null) {
+    if (document.querySelector('#login') !== null) {
       alert('로그인이 필요합니다.');
       return;
     }
@@ -146,22 +145,22 @@ class project {
         'content-type': 'application/json',
       })
     }).then(res => {
-      if(res.status === 406) {
+      if (res.status === 406) {
         alert('본인이 작성한 댓글만 삭제할 수 있습니다.');
         return;
-      } else if(res.status === 200) {
+      } else if (res.status === 200) {
         li.remove();
       }
     });
   }
 
   likeComment(target) {
-    if(document.querySelector('#login') !== null) {
+    if (document.querySelector('#login') !== null) {
       alert('로그인이 필요합니다.');
       return;
     }
 
-    if(!document.querySelector('#likes-zone')) {
+    if (!document.querySelector('#likes-zone')) {
       alert('로그인이 필요합니다.');
       return;
     }
@@ -177,11 +176,11 @@ class project {
       })
     }).then(res => {
       console.log(res);
-      if(res.status === 201) {
+      if (res.status === 201) {
         target.classList.add('is-active');
         target.innerText = parseInt(target.innerText) + 1;
         return res.json();
-      } else if(res.status === 200) {
+      } else if (res.status === 200) {
         target.classList.remove('is-active');
         target.innerText = parseInt(target.innerText) - 1;
       }
@@ -191,7 +190,7 @@ class project {
   }
 
   postComment() {
-    const data =  {
+    const data = {
       'commentable_id': document.querySelector('h2').getAttribute('data-item'),
       'body': document.querySelector('.input-comment').value
     };
@@ -205,7 +204,7 @@ class project {
       }),
       body: JSON.stringify(data)
     }).then(res => {
-      if(res.status === 201) {
+      if (res.status === 201) {
         return res.json();
       }
     }).then(json => {
@@ -238,39 +237,53 @@ class project {
 
   initCommittees() {
     const assembly = document.querySelector('div.assembly');
-    if(assembly == null) {
+    if (assembly == null) {
       return;
     }
-    if(assembly.getAttribute('data-item') === '') {
+    if (assembly.getAttribute('data-item') === '') {
       return
-    };
+    }
+    ;
     const committees = JSON.parse(assembly.getAttribute('data-item')).committeeList;
     const ul = document.querySelector('#committee');
-    for(let i = 0 ; i < committees.length ; i++) {
+    for (let i = 0; i < committees.length; i++) {
       const committee = `<li>${committees[i].name}</li>`;
       ul.insertAdjacentHTML('beforeend', committee);
       this.insertAssemblymen(committees[i].assemblymanList);
     }
   }
 
-
   insertAssemblymen(assemblymanList) {
-    for(let i = 0 ; i < assemblymanList.length ; i++) {
+    for (let i = 0; i < assemblymanList.length; i++) {
       const ul = document.querySelector('#assembly-man-list');
-      if(assemblymanList[i].status === '참여') {
-        const assemblymanLi = `
+
+      if (assemblymanList[i].status === '참여') {
+        fetch(`/congressmen/${assemblymanList[i].name}`, {
+          method: 'GET',
+          credentials: 'same-origin',
+          headers: new Headers({
+            'accept': 'application/json',
+            'content-type': 'application/json',
+          })
+        }).then(res => {
+          if (res.status === 200) {
+            return res.json();
+          }
+        }).then(json => {
+          const assemblymanLi = `
             <li class="assembly-man">
-                <div class="profile-img"></div>
-                <p>${assemblymanList[i].name} 의원</p>
+                <div class="profile-img" style="background-image: url(${json.image})"></div>
+                <p>${json.name} 의원</p>
             </li>
-        `;
-        ul.insertAdjacentHTML('beforeend', assemblymanLi);
+            `;
+          ul.insertAdjacentHTML('beforeend', assemblymanLi);
+        });
       }
     }
   }
 
   closeGuide(e) {
-    if(!this.showingGuide || e.target.tagName === 'LI') {
+    if (!this.showingGuide || e.target.tagName === 'LI') {
       return;
     }
 
@@ -280,12 +293,12 @@ class project {
   }
 
   toggleGuide(e) {
-    if(e.target.classList.contains('active')) {
+    if (e.target.classList.contains('active')) {
       return;
     }
 
     e.target.querySelector('div.guide').classList.add('is-visible');
-    if(this.showingGuide) {
+    if (this.showingGuide) {
       this.showingGuide.classList.remove('is-visible');
     }
 
@@ -293,7 +306,7 @@ class project {
   }
 
   hideLastTimelineOuter() {
-    if(this.timelineList.length < 1) {
+    if (this.timelineList.length < 1) {
       return;
     }
     this.timelineList[this.timelineList.length - 1].querySelector('.outer-border').classList.add('white');
@@ -357,15 +370,15 @@ class project {
       })
     }).then(res => {
       this.countTag = document.querySelector('p.count');
-      if(res.status === 201) {
+      if (res.status === 201) {
         button.innerText = '참여취소';
         button.classList.add('is-active');
         this.countTag.innerText = parseInt(this.countTag.innerText) + 1;
-      } else if(res.status === 202) {
+      } else if (res.status === 202) {
         button.innerText = '참여하기';
         button.classList.remove('is-active');
         this.countTag.innerText = parseInt(this.countTag.innerText) - 1;
-      } else if(res.status === 401) {
+      } else if (res.status === 401) {
         window.location.href = '/login';
       }
     });

@@ -27,6 +27,7 @@ class my {
 
   init() {
     this.projectsInit();
+    this.initProfileImg();
     document.querySelector('#update-user-btn').addEventListener('click', e => {
       this.updateUser();
     });
@@ -36,29 +37,64 @@ class my {
       this.changeNicknameZone.classList.add('is-visible');
     });
 
-
     this.changePasswordBtn.addEventListener('click', e => {
       this.changeNicknameZone.classList.remove('is-visible');
       this.changePasswordZone.classList.add('is-visible');
     });
 
-    this.profileImg.addEventListener('click', this.changeProfileImg);
+    this.profileImg.addEventListener('click', e => {
+      this.inputProfileImg.click();
+    });
+    this.inputProfileImg.addEventListener('change', this.changeProfileImg);
     this.projectsNav.addEventListener('click', this.changeProjects);
+  }
+
+
+  initProfileImg() {
+    const imageZone = document.querySelector('.mdl-card__title.mdl-card--expand');
+    if(imageZone.getAttribute('style').includes('null')) {
+      imageZone.removeAttribute('style');
+    }
   }
 
   updateUser() {
     const visible = document.querySelector('div.is-visible');
+    this.updateImage();
+    if(!visible) {
+      return;
+    }
     if(visible.classList.contains('change-nickname-zone')) {
       this.updateNickname();
     } else if(visible.classList.contains('change-password-zone')) {
       this.updatePassword();
     }
-
-    if(this.profileImg.classList.contains('is-active')) {
-      this.updateProfileImg();
-    }
   }
 
+  updateImage() {
+    const image = document.querySelector('input.profile-img').getAttribute('data-item');
+    if(!image) {
+      return;
+    }
+
+    const data = {
+      'image': image
+    };
+
+    fetch('/users/image', {
+      method: 'PUT',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      }),
+      body: JSON.stringify(data)
+    }).then(res => {
+      if(res.status === 200) {
+        alert('프로필 이미지가 성공적으로 변경되었습니다.');
+        window.location = '/my';
+      }
+    });
+  }
 
   updateNickname() {
     const data = {
@@ -81,11 +117,10 @@ class my {
     }).then(res => {
       if(res.status === 200) {
         alert('닉네임이 성공적으로 변경되었습니다.');
-        window.location = '/';
+        window.location = '/my';
       }
     });
   }
-
 
   updatePassword() {
     const REG_PWD = /^.*(?=.{6,20})(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
@@ -104,6 +139,11 @@ class my {
       'password': this.inputNewPassword.value
     };
 
+    const image = document.querySelector('input.profile-img').getAttribute('data-item');
+    if(image) {
+      data.image = image
+    }
+
     fetch('/users/password', {
       method: 'PUT',
       credentials: 'same-origin',
@@ -115,10 +155,6 @@ class my {
     }).then(res => {
       console.log(res);
     });
-  }
-
-  updateProfileImg() {
-
   }
 
   projectsInit() {
@@ -165,16 +201,32 @@ class my {
     let file = this.inputProfileImg.files[0];
     let reader = new FileReader();
 
-    this.inputProfileImg.click();
-
     reader.addEventListener('load', () => {
+      console.log("CHANGE");
       this.profileImg.style.backgroundImage = 'url(' + reader.result + ')';
     }, false);
+
 
     if(file) {
       reader.readAsDataURL(file);
       this.profileImg.classList.add('is-active');
     }
+
+    const formData = new FormData();
+    formData.append('file', this.inputProfileImg.files[0]);
+    const options = {
+      method: 'POST',
+      body: formData
+    };
+
+    fetch('/api/aws/s3/upload', options)
+      .then(res => {
+        if(res.status === 200) {
+          return res.json();
+        }
+      }).then(json => {
+      document.querySelector('input.profile-img').setAttribute('data-item', json[0]);
+    })
   }
 
   showSnackBar(message) {
