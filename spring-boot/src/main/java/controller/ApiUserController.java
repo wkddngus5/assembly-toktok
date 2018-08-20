@@ -88,7 +88,9 @@ public class ApiUserController {
                 if (!StringUtils.isEmpty(joinUser.getImage())) {
                     s3Wrapper.updateImage(joinUser.getImage(), "uploads/user/image/" + joinUser.getId() + "/" + joinUser.getImage());
                 }
-                return new ResponseEntity<>(User.ResponseUser(joinUser), headers, HttpStatus.OK);
+
+                User loginUser = userDao.save(User.CreateSocialUser(request, provider, passwordEncoder));
+                return new ResponseEntity<>(User.ResponseUser(loginUser), headers, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
