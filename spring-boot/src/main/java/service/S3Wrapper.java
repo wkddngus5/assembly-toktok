@@ -107,4 +107,13 @@ public class S3Wrapper {
         downloadFile.delete();
         return newFileName;
     }
+
+    public void updateImage(String tempImage, String imagePath) {
+        try {
+            byte[] bytes= downloadStream(tempImage);
+            upload(new ByteArrayInputStream(bytes), imagePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -65,7 +65,7 @@ public class ApiProjectController {
     public ResponseEntity<ProjectResponse> insert(@RequestBody Project projectRequest) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         projectRequest.setUser_id(principal.getId());
 
         String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
@@ -79,13 +79,8 @@ public class ApiProjectController {
         if (project == null) {
             return new ResponseEntity<>(new ProjectResponse("Fail"), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
-            if(!StringUtils.isEmpty(project.getImage())){
-                try {
-                    byte[] bytes= s3Wrapper.downloadStream(project.getImage());
-                    s3Wrapper.upload(new ByteArrayInputStream(bytes), "uploads/project/image/" + project.getId() + "/" + project.getImage());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (!StringUtils.isEmpty(project.getImage())) {
+                s3Wrapper.updateImage(project.getImage(), "uploads/project/image/" + project.getId() + "/" + project.getImage());
             }
             return new ResponseEntity<>(new ProjectResponse(project.getId()), headers, HttpStatus.OK);
         }
@@ -96,7 +91,7 @@ public class ApiProjectController {
     public ResponseEntity<ProjectJoinResponse> join(@RequestBody ProjectJoin reqeust) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         reqeust.setUser_id(principal.getId());
 
         ProjectJoin projectJoin = projectJoinDao.selectByProjectIdAndUserId(reqeust.getProject_id(), reqeust.getUser_id());
@@ -181,11 +176,11 @@ public class ApiProjectController {
         headers.add("Content-Type", "application/json; charset=utf-8");
 
         User sessionedUser = userService.getSessionedUser();
-        if(sessionedUser == null) {
+        if (sessionedUser == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         }
         Participations participations = participationsDao.findByUserIdAndProjectId(sessionedUser.getId(), id);
-        if( participations == null) {
+        if (participations == null) {
             participationsDao.save(new Participations(sessionedUser.getId(), id));
             projectDao.addParticipation(id);
             return new ResponseEntity<>(headers, HttpStatus.CREATED);

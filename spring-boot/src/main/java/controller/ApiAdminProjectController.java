@@ -3,12 +3,14 @@ package controller;
 import dao.ProjectDao;
 import dao.TimelineDao;
 import domain.*;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import service.S3Wrapper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,6 +23,9 @@ public class ApiAdminProjectController {
     @Autowired
     private TimelineDao timelineDao;
 
+    @Autowired
+    private S3Wrapper s3Wrapper;
+
     @RequestMapping(value = "/administrator/projects/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Project> updateProject(@PathVariable Long id, @RequestBody Project project) {
         HttpHeaders headers = new HttpHeaders();
@@ -32,6 +37,9 @@ public class ApiAdminProjectController {
         if (updateProject == null) {
             return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
+            if (!StringUtils.isEmpty(project.getImage())) {
+                s3Wrapper.updateImage(project.getImage(), "uploads/project/image/" + project.getId() + "/" + project.getImage());
+            }
             return new ResponseEntity<>(updateProject, headers, HttpStatus.OK);
         }
     }
@@ -55,7 +63,7 @@ public class ApiAdminProjectController {
     public ResponseEntity<Timeline> insertTimeLines(@PathVariable Long id, @RequestBody Timeline timeline) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         timeline.setCreated_at(createDate);
         timeline.setUpdated_at(createDate);
