@@ -89,7 +89,7 @@ public class ApiUserController {
                     s3Wrapper.updateImage(joinUser.getImage(), "uploads/user/image/" + joinUser.getId() + "/" + joinUser.getImage());
                 }
 
-                User loginUser = userDao.save(User.CreateSocialUser(request, provider, passwordEncoder));
+                User loginUser = userDao.findByProviderId(provider, request.getUid());
                 return new ResponseEntity<>(User.ResponseUser(loginUser), headers, HttpStatus.OK);
             }
         } else {
