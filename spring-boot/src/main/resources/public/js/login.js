@@ -52,7 +52,6 @@ class login {
     });
   }
 
-
   showSnackBar(message) {
     const handler = (event) => {
       showSnackbarButton.style.backgroundColor = '';

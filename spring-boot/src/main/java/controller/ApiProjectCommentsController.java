@@ -44,6 +44,23 @@ public class ApiProjectCommentsController {
     @Autowired
     private LikesDao likesDao;
 
+    @Autowired
+    private UserDao userDao;
+
+    @RequestMapping(value = "/projects/{id}/comments", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> getComments(@PathVariable("id") final Long id) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+        List<Comment> comments = commentDao.findByProjectId(id);
+        for(Comment comment : comments) {
+            comment.setWriter(userDao.findById(comment.getUser_id()).get());
+        }
+
+        return new ResponseEntity<>(comments, headers, HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/projects/{id}/comments", method = RequestMethod.POST)
     public ResponseEntity<Comment> post(@PathVariable("id") final Long id, @RequestBody Comment comment) {
         HttpHeaders headers = new HttpHeaders();
