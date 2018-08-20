@@ -1,27 +1,26 @@
 package domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
 @Table(name = "mainslides")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MainSlide {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column(name = "seq")
     private long order;
     private String image;
     private String url;
     private String created_at;
     private String updated_at;
     private String description;
-
-    public MainSlide() {
-    }
 
     public long getId() {
         return id;
@@ -76,15 +75,6 @@ public class MainSlide {
     }
 
     public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public MainSlide(long order, String image, String url, String created_at, String updated_at, String description) {
-        this.order = order;
-        this.image = image;
-        this.url = url;
-        this.created_at = created_at;
-        this.updated_at = updated_at;
         this.description = description;
     }
 
