@@ -106,7 +106,7 @@ public class S3Wrapper {
         upload(filePath, path);
 
         downloadFile.delete();
-        return newFileName;
+        return path;
     }
 
     public void updateImage(String tempImage, String imagePath) {
