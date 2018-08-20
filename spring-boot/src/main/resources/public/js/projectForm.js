@@ -127,7 +127,6 @@ class projectForm {
     })
   }
 
-
   toggleCategoryClick(target) {
     if(target.classList.contains('is-checked')) {
       target.classList.remove('is-checked');

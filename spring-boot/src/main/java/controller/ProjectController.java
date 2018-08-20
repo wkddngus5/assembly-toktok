@@ -2,6 +2,7 @@ package controller;
 
 import dao.*;
 import domain.Comment;
+import domain.Committee;
 import domain.Project;
 import domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -43,6 +44,7 @@ public class ProjectController {
 
         modelAndView.setViewName("project");
         Project project = projectDao.findById(id).orElse(null);
+
         modelAndView.addObject("project", project);
         if(sessionedUser != null) {
             modelAndView.addObject("participations",

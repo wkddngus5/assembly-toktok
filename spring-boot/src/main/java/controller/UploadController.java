@@ -23,8 +23,6 @@ public class UploadController {
         return results;
     }
 
-
-
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public ResponseEntity<byte[]> download(@RequestParam String key) throws IOException {
         return s3Wrapper.download(key);
