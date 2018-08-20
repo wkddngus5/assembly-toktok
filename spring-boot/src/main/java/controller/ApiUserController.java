@@ -22,6 +22,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.*;
 import service.S3Wrapper;
+import utils.ImageUploadUtil;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -86,11 +87,11 @@ public class ApiUserController {
                 userDao.updateLoginInformation(joinUser.getId(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), httpRequest.getRemoteAddr());
 
                 if (!StringUtils.isEmpty(joinUser.getImage())) {
-                    s3Wrapper.updateImage(joinUser.getImage(), "uploads/user/image/" + joinUser.getId() + "/" + joinUser.getImage());
+                    s3Wrapper.updateImage(joinUser.getImage(), ImageUploadUtil.saveImagePath(User.class.getSimpleName(), String.valueOf(joinUser.getId()), joinUser.getImage()));
+                    joinUser.setImage(ImageUploadUtil.getImagePath(User.class.getSimpleName(), String.valueOf(joinUser.getId()), joinUser.getImage()));
                 }
 
-                User loginUser = userDao.findByProviderId(provider, request.getUid());
-                return new ResponseEntity<>(User.ResponseUser(loginUser), headers, HttpStatus.OK);
+                return new ResponseEntity<>(User.ResponseUser(joinUser), headers, HttpStatus.OK);
             }
         } else {
             return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -105,9 +106,11 @@ public class ApiUserController {
 
         if (!StringUtils.isEmpty(request.getProfile_img())) {
             principal.setImage(request.getProfile_img());
-            s3Wrapper.updateImage(request.getProfile_img(), "uploads/user/image/" + principal.getId() + "/" + request.getProfile_img());
+            s3Wrapper.updateImage(request.getProfile_img(), ImageUploadUtil.saveImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
         }
         userDao.updateUserInformation(principal.getId(), request.getNickname(), principal.getImage(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        principal.setImage(ImageUploadUtil.getImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
+        System.out.println("user : " + principal.getImage());
         return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
     }
 

@@ -17,10 +17,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.S3Wrapper;
 import service.UserService;
+import utils.ImageUploadUtil;
 
 import javax.servlet.http.HttpSession;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -80,7 +79,7 @@ public class ApiProjectController {
             return new ResponseEntity<>(new ProjectResponse("Fail"), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             if (!StringUtils.isEmpty(project.getImage())) {
-                s3Wrapper.updateImage(project.getImage(), "uploads/project/image/" + project.getId() + "/" + project.getImage());
+                s3Wrapper.updateImage(project.getImage(), ImageUploadUtil.saveImagePath(Project.class.getSimpleName(), String.valueOf(project.getId()), project.getImage()));
             }
             return new ResponseEntity<>(new ProjectResponse(project.getId()), headers, HttpStatus.OK);
         }

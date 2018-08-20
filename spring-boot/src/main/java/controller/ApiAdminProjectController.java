@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.S3Wrapper;
+import utils.ImageUploadUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,8 @@ public class ApiAdminProjectController {
             return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
             if (!StringUtils.isEmpty(project.getImage())) {
-                s3Wrapper.updateImage(project.getImage(), "uploads/project/image/" + project.getId() + "/" + project.getImage());
+                s3Wrapper.updateImage(updateProject.getImage(), ImageUploadUtil.saveImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
+                updateProject.setImage(ImageUploadUtil.getImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
             }
             return new ResponseEntity<>(updateProject, headers, HttpStatus.OK);
         }
