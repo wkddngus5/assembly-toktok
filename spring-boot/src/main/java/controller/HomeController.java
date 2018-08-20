@@ -88,4 +88,10 @@ public class HomeController {
         modelAndView.setViewName("userAgreement");
         return modelAndView;
     }
+
+    @RequestMapping("/checking")
+    public ModelAndView checking(ModelAndView modelAndView) {
+        modelAndView.setViewName("checking");
+        return modelAndView;
+    }
 }

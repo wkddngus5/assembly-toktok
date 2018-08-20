@@ -1,5 +1,6 @@
 class project {
   constructor() {
+    this.mainImg = document.querySelector('img.main-img');
     this.infoList = document.querySelectorAll('nav.info-subject button');
     this.nowActiveInfo = document.querySelector('nav.info-subject button.active');
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
@@ -16,10 +17,17 @@ class project {
     this.init();
   };
 
+
   init() {
     this.percentageSet();
     this.statusSet();
     this.initCommittees();
+    this.initImage();
+    this.hideLastTimelineOuter();
+
+    document.querySelector('ul.status-zone').addEventListener('click', this.toggleGuide);
+    document.addEventListener('click', this.closeGuide);
+
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
     });
@@ -43,11 +51,71 @@ class project {
       }
     });
 
-    this.hideLastTimelineOuter();
-    document.querySelector('ul.status-zone').addEventListener('click', this.toggleGuide);
-    document.addEventListener('click', this.closeGuide);
-    this.initLikes();
+    this.loadAllComments();
   };
+
+
+  loadAllComments() {
+    fetch(`/projects/${this.id}/comments`, {
+      method: 'GET',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      })
+    }).then(res => {
+      return res.json();
+    }).then(json => {
+      const commentList = document.querySelector('.discussion-list.new');
+      commentList.innerHTML = '';
+      for(let i = 0 ; i < json.length ; i++) {
+        const comment = json[i];
+        const commentLi = `
+            <li class="each-discussion" data-item="${comment.id}">
+                <table>
+                    <tr>
+                        <td class="left">
+                            <div class="writer-info-zone">
+                                <div class="profile"></div>
+                                  <br>
+                                  <p class="nickname">${comment.writer.nickname}</p>
+                                  <p class="written-date">${comment.created_at}</p>
+                            </div>
+                            <br>
+                            <div class="discussion-info">
+                                <!--<button class="reply">답글 6</button>-->
+                                <button class="likes" id="like-{{this.id}}">${comment.likes_count}</button>
+                                <button class="delete">삭제</button>
+                            </div>
+                        </td>
+                        <td class="right">
+                            <p class="discussion-contents">
+                                ${comment.body}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </li>`;
+        commentList.insertAdjacentHTML('beforeend', commentLi);
+
+        const likes = document.querySelectorAll('#likes-zone p');
+        for(let i = 0 ; i < likes.length ; i++) {
+          const id = likes[i].innerText;
+          console.log('id', id);
+          const like = document.querySelector(`#like-${id}`);
+          if(like !== null) {
+            like.classList.add('is-active');
+          }
+        }
+      }
+    });
+  }
+
+  initImage() {
+    if(this.mainImg.src.includes('null')) {
+      this.mainImg.src = '/img/logo-icon.png';
+    }
+  }
 
   initLikes() {
     const likes = document.querySelectorAll('#likes-zone p');
@@ -62,6 +130,12 @@ class project {
   }
 
   deleteComment(target) {
+    if(document.querySelector('#login') !== null) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
+
     const li = target.closest('.each-discussion');
     const commentId = li.getAttribute('data-item');
     fetch(`/projects/${this.id}/comments/${commentId}`, {
@@ -82,6 +156,11 @@ class project {
   }
 
   likeComment(target) {
+    if(document.querySelector('#login') !== null) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
+
     if(!document.querySelector('#likes-zone')) {
       alert('로그인이 필요합니다.');
       return;
@@ -162,6 +241,9 @@ class project {
     if(assembly == null) {
       return;
     }
+    if(assembly.getAttribute('data-item') === '') {
+      return
+    };
     const committees = JSON.parse(assembly.getAttribute('data-item')).committeeList;
     const ul = document.querySelector('#committee');
     for(let i = 0 ; i < committees.length ; i++) {
@@ -170,6 +252,7 @@ class project {
       this.insertAssemblymen(committees[i].assemblymanList);
     }
   }
+
 
   insertAssemblymen(assemblymanList) {
     for(let i = 0 ; i < assemblymanList.length ; i++) {

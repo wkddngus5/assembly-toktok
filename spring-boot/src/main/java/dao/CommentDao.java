@@ -11,4 +11,7 @@ import java.util.Map;
 public interface CommentDao extends JpaRepository<Comment, Long> {
     @Query(value = "SELECT * FROM comments where commentable_id = :projectId", nativeQuery = true)
     List<Comment> findByProjectId(@Param("projectId") Long projectId);
+
+    @Query(value = "SELECT * FROM comments where commentable_id = :projectId LIMIT 20", nativeQuery = true)
+    List<Comment> findByProjectId20(@Param("projectId") Long projectId);
 }

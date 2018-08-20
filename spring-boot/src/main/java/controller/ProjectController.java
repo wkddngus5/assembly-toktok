@@ -52,12 +52,6 @@ public class ProjectController {
         List<Map<String, Object>> timelineList = timelineDao.findByProjectId(project.getId());
         modelAndView.addObject("timelines", timelineList);
 
-        List<Comment> comments = commentDao.findByProjectId(project.getId());
-        for(Comment comment : comments) {
-            comment.setWriter(userDao.findById(comment.getUser_id()).get());
-        }
-//        Collections.sort(comments);
-        modelAndView.addObject("comments", comments);
         if(sessionedUser != null) {
             modelAndView.addObject("likes", likesDao.findByUser_id(sessionedUser.getId()));
         }
