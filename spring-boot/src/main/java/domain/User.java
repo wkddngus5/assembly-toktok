@@ -285,6 +285,7 @@ public class User implements UserDetails {
         user.setEncrypted_password(passwordEncoder.encode(userRequest.getPassword()));
         user.setNickname(userRequest.getNickname());
         user.setRole(USER_ROLE_CITIZEN);
+        user.setImage(userRequest.getProfile_img());
         user.setProvider(USER_PROVIDER_EMAIL);
 
         String createDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
@@ -310,5 +311,4 @@ public class User implements UserDetails {
 
         return user;
     }
-
 }

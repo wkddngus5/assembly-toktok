@@ -71,7 +71,7 @@ public class TwitterController {
             return "redirect:/";
         } else {
             String email = getEmailAddress(connection.createData().getAccessToken(), connection.createData().getSecret());
-            String imageFileName = s3Wrapper.uploadImageUrl(connection.getProfileUrl(), SocialType.TWITTER.getValue() + "_" + connection.getKey().getProviderUserId() + ".jpg");
+            String imageFileName = s3Wrapper.uploadProfileImage(connection.getProfileUrl(), SocialType.TWITTER.getValue() + "_" + connection.getKey().getProviderUserId() + ".jpg");
 
             return "redirect:/users/form/" + SocialType.TWITTER.getValue() + "?uid=" + connection.getKey().getProviderUserId() + "&email=" + email + "&image=" + imageFileName;
         }

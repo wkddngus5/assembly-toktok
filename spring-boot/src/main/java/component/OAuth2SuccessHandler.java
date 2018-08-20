@@ -2,7 +2,6 @@ package component;
 
 import domain.User;
 import domain.enums.SocialType;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,7 +38,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         } else {
             OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) SecurityContextHolder.getContext().getAuthentication();
             Map<String, String> map = (HashMap<String, String>) oAuth2Authentication.getUserAuthentication().getDetails();
-            String imageFileName = s3Wrapper.uploadImageUrl(provider.getProfileImage(authentication.getName()), provider.getValue() + "_" + authentication.getName() + ".jpg");
+            String imageFileName = s3Wrapper.uploadProfileImage(provider.getProfileImage(authentication.getName()), provider.getValue() + "_" + authentication.getName() + ".jpg");
 
             response.sendRedirect("/users/form/" + provider.getValue() + "?uid=" + authentication.getName() + "&email=" + map.get("email") + "&image=" + imageFileName);
         }

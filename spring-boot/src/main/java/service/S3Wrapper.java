@@ -2,6 +2,7 @@ package service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.*;
+import com.google.gson.Gson;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -89,7 +90,7 @@ public class S3Wrapper {
         return s3ObjectSummaries;
     }
 
-    public String uploadImageUrl(String url, String fileName) throws IOException {
+    public String uploadProfileImage(String url, String fileName) throws IOException {
         RestTemplate restTemplate = new RestTemplate();
         byte[] image = restTemplate.getForObject(url, byte[].class);
         if (image == null) {
@@ -110,9 +111,18 @@ public class S3Wrapper {
 
     public void updateImage(String tempImage, String imagePath) {
         try {
-            byte[] bytes= downloadStream(tempImage);
+            byte[] bytes = downloadStream(tempImage);
             upload(new ByteArrayInputStream(bytes), imagePath);
+            delete(tempImage);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(String key) {
+        try {
+            amazonS3Client.deleteObject(new DeleteObjectRequest(bucket, key));
+        }catch (Exception e) {
             e.printStackTrace();
         }
     }

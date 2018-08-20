@@ -6,6 +6,7 @@ import error.PasswordTokenNotFoundException;
 import error.UserNotFoundException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.*;
+import service.S3Wrapper;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +47,9 @@ public class ApiUserController {
     @Autowired
     Configuration configuration;
 
+    @Autowired
+    private S3Wrapper s3Wrapper;
+
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserCreate> post(@RequestBody UserCreate userRequest) {
@@ -56,6 +61,9 @@ public class ApiUserController {
             if (user == null) {
                 return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
             } else {
+                if (!StringUtils.isEmpty(user.getImage())) {
+                    s3Wrapper.updateImage(user.getImage(), "uploads/users/image/" + user.getId() + "/" + user.getImage());
+                }
                 return new ResponseEntity<>(User.ResponseUser(user), headers, HttpStatus.OK);
             }
         } else {
@@ -76,6 +84,10 @@ public class ApiUserController {
             } else {
                 SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(joinUser, null, joinUser.getAuthorities()));
                 userDao.updateLoginInformation(joinUser.getId(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()), httpRequest.getRemoteAddr());
+
+                if (!StringUtils.isEmpty(joinUser.getImage())) {
+                    s3Wrapper.updateImage(joinUser.getImage(), "uploads/user/image/" + joinUser.getId() + "/" + joinUser.getImage());
+                }
                 return new ResponseEntity<>(User.ResponseUser(joinUser), headers, HttpStatus.OK);
             }
         } else {
@@ -89,7 +101,11 @@ public class ApiUserController {
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        userDao.updateUserInformation(principal.getId(), request.getNickname(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        if (!StringUtils.isEmpty(request.getProfile_img())) {
+            principal.setImage(request.getProfile_img());
+            s3Wrapper.updateImage(request.getProfile_img(), "uploads/user/image/" + principal.getId() + "/" + request.getProfile_img());
+        }
+        userDao.updateUserInformation(principal.getId(), request.getNickname(), principal.getImage(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
         return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
     }
 
