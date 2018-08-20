@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.CongressmenDao;
 import domain.Congressmen;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +13,7 @@ import service.S3Wrapper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 public class ApiAdminAssemblymanController {
@@ -37,7 +39,7 @@ public class ApiAdminAssemblymanController {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
             if (!StringUtils.isEmpty(congressmen.getImage())) {
-                s3Wrapper.updateImage(congressmen.getImage(), "uploads/assemblyman/image/" + congressmen.getId() + "/" + congressmen.getImage());
+                s3Wrapper.updateImage(congressmen.getImage(), "uploads/congressmen/image/" + congressmen.getId() + "/" + congressmen.getImage());
             }
             return new ResponseEntity<>(congressmen, headers, HttpStatus.CREATED);
         }
@@ -55,7 +57,7 @@ public class ApiAdminAssemblymanController {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
             if (!StringUtils.isEmpty(request.getProfile())) {
-                s3Wrapper.updateImage(request.getProfile(), "uploads/assemblyman/image/" + updateCongressmen.getId() + "/" + request.getProfile());
+                s3Wrapper.updateImage(request.getProfile(), "uploads/congressmen/image/" + updateCongressmen.getId() + "/" + request.getProfile());
             }
             return new ResponseEntity<>(updateCongressmen, headers, HttpStatus.OK);
         }
