@@ -14,7 +14,7 @@ public class MainSlide {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "seq")
+    @Column(name = "order")
     private long order;
     private String image;
     private String url;
