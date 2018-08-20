@@ -1,7 +1,9 @@
 package controller;
 
 import com.amazonaws.services.s3.model.S3ObjectSummary;
+import domain.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +25,17 @@ public class UploadController {
         return results;
     }
 
-
-
     @RequestMapping(value = "/download", method = RequestMethod.GET)
     public ResponseEntity<byte[]> download(@RequestParam String key) throws IOException {
         return s3Wrapper.download(key);
     }
+
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<ApiResult> delete(@RequestParam String key) {
+        s3Wrapper.delete(key);
+        return new ResponseEntity<>(new ApiResult(true, ""), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public List<S3ObjectSummary> list() throws IOException {
         return s3Wrapper.list();
