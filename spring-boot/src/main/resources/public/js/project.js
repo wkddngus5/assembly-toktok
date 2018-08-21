@@ -133,7 +133,9 @@ class project {
       alert('로그인이 필요합니다.');
       return;
     }
-
+    if(!confirm('해당 댓글을 삭제하시겠습니까?')) {
+      return;
+    }
 
     const li = target.closest('.each-discussion');
     const commentId = li.getAttribute('data-item');

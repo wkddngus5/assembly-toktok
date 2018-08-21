@@ -126,15 +126,15 @@
             <!--</table>-->
             <!--</li>-->
             <!--</ul>-->
-
+            {{#authenticatedUser}}
+                <div id="likes-zone">
+                    {{#each likes}}
+                        <p>{{this.likable_id}}</p>
+                    {{/each}}
+                </div>
+            {{/authenticatedUser}}
             <ul class="discussion-list new">
-                {{#authenticatedUser}}
-                    <div id="likes-zone">
-                        {{#each likes}}
-                            <p>{{this.likable_id}}</p>
-                        {{/each}}
-                    </div>
-                {{/authenticatedUser}}
+
             </ul>
             <div id="write-comment-zone">
                 <textarea class="input-comment" rows="5" placeholder="댓글을 입력해주세요"></textarea>
