@@ -94,6 +94,10 @@ li.project.long {
     font-weight: bold;
 }
 
+.status.matching {
+    background-color: #ff962e;
+}
+
 .status.fail {
     background-color: #b2b2b2;
 }
