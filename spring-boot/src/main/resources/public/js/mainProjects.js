@@ -6,27 +6,34 @@ class mainProjects {
   init() {
     this.projectsInit();
 
-    window.onresize = () => {
+    window.addEventListener("optimizedResize", () => {
       const long = document.querySelector('li.long');
-      if(window.innerWidth < 1130 && long) {
+      if (window.innerWidth < 1130 && long) {
         long.classList.remove('long');
-      } else if(window.innerWidth > 1130) {
-        document.querySelectorAll('li.project')[3].classList.add('long');
+      } else if (window.innerWidth > 1130) {
+        const fourthProject = document.querySelectorAll('li.project')[3];
+        if (fourthProject.closest('#imminent')) {
+          fourthProject.classList.add('long');
+        }
       }
-    }
+    });
   }
 
   projectsInit() {
     document.querySelectorAll('li.project').forEach((li, index) => {
       const status = li.querySelector('div.status');
       const projectImg = li.querySelector('div.project-img');
-      if(projectImg.getAttribute('style').includes('null')) {
+      if (projectImg.getAttribute('style').includes('null')) {
         projectImg.removeAttribute('style');
       }
       const nowStatus = status.getAttribute('data-item');
       switch (nowStatus) {
         case 'running':
           status.innerText = '입법활동';
+          status.classList.add(nowStatus);
+          break;
+        case 'matching':
+          status.innerText = '매칭중';
           status.classList.add(nowStatus);
           break;
         case 'fail':
@@ -39,7 +46,7 @@ class mainProjects {
       const count = li.querySelector('.count').getAttribute('data-item');
       const percentage = ((count / goalCount * 100).toFixed(1));
 
-      if(index === 3 && window.innerWidth > 1130) {
+      if (index === 3 && window.innerWidth > 1130 && li.closest('#imminent')) {
         li.classList.add('long');
       }
 
@@ -49,4 +56,4 @@ class mainProjects {
   }
 }
 
-new mainProjects();
+export default mainProjects;
