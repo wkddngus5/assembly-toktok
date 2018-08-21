@@ -106,6 +106,10 @@ public class ApiUserController {
         principal.setImage(request.getImage());
         principal.setUpdated_at(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
         userDao.save(principal);
+
+        s3Wrapper.updateImage(principal.getImage(), ImageUploadUtil.saveImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
+        principal.setImage(ImageUploadUtil.getImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
+
         return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
     }
 
