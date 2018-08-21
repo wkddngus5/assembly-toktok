@@ -100,7 +100,6 @@ class project {
         const likes = document.querySelectorAll('#likes-zone p');
         for (let i = 0; i < likes.length; i++) {
           const id = likes[i].innerText;
-          console.log('id', id);
           const like = document.querySelector(`#like-${id}`);
           if (like !== null) {
             like.classList.add('is-active');
@@ -120,7 +119,6 @@ class project {
     const likes = document.querySelectorAll('#likes-zone p');
     for (let i = 0; i < likes.length; i++) {
       const id = likes[i].innerText;
-      console.log('id', id);
       const like = document.querySelector(`#like-${id}`);
       if (like !== null) {
         like.classList.add('is-active');
