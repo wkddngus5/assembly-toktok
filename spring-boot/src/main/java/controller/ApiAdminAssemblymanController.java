@@ -58,8 +58,8 @@ public class ApiAdminAssemblymanController {
         } else {
             if (!StringUtils.isEmpty(request.getProfile())) {
                 s3Wrapper.updateImage(request.getProfile(), ImageUploadUtil.saveImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
-                updateCongressmen.setImage(ImageUploadUtil.getImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
             }
+            updateCongressmen.setImage(ImageUploadUtil.getImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
             return new ResponseEntity<>(updateCongressmen, headers, HttpStatus.OK);
         }
     }

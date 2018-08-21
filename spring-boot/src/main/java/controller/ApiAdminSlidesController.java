@@ -57,9 +57,8 @@ public class ApiAdminSlidesController {
         dbSlide = mainSlideDao.save(dbSlide);
         if (!StringUtils.isEmpty(slide.getImage())) {
             s3Wrapper.updateImage(dbSlide.getImage(), ImageUploadUtil.saveImagePath(MainSlide.class.getSimpleName(), String.valueOf(dbSlide.getId()), dbSlide.getImage()));
-            dbSlide.setImage(ImageUploadUtil.getImagePath(MainSlide.class.getSimpleName(), String.valueOf(dbSlide.getId()), dbSlide.getImage()));
         }
-
+        dbSlide.setImage(ImageUploadUtil.getImagePath(MainSlide.class.getSimpleName(), String.valueOf(dbSlide.getId()), dbSlide.getImage()));
         return new ResponseEntity<>(dbSlide, headers, HttpStatus.OK);
     }
 

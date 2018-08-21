@@ -108,9 +108,10 @@ public class ApiUserController {
             principal.setImage(request.getProfile_img());
             s3Wrapper.updateImage(request.getProfile_img(), ImageUploadUtil.saveImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
         }
-        userDao.updateUserInformation(principal.getId(), request.getNickname(), principal.getImage(), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
-        principal.setImage(ImageUploadUtil.getImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
-        System.out.println("user : " + principal.getImage());
+        userDao.updateUserInformation(principal.getId(), request.getNickname(), ImageUploadUtil.replaceImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()), new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+        if (!StringUtils.isEmpty(request.getProfile_img())) {
+            principal.setImage(ImageUploadUtil.getImagePath(User.class.getSimpleName(), String.valueOf(principal.getId()), principal.getImage()));
+        }
         return new ResponseEntity<>(new ApiResult(true, "Update UserInformation"), HttpStatus.OK);
     }
 

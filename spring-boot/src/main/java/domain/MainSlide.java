@@ -1,6 +1,7 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import utils.ImageUploadUtil;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -85,10 +86,16 @@ public class MainSlide {
 
         if (slide.image != null) {
             this.image = slide.image;
+        } else {
+            this.image = ImageUploadUtil.replaceImagePath(MainSlide.class.getSimpleName(), String.valueOf(id), image);
         }
 
         if (slide.url != null) {
             this.url = slide.url;
+        }
+
+        if (slide.description != null) {
+            this.description = slide.description;
         }
         this.updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
