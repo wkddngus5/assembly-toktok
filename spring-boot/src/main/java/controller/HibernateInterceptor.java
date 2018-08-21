@@ -2,6 +2,7 @@ package controller;
 
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
+import utils.ImageUploadUtil;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -24,7 +25,7 @@ public class HibernateInterceptor extends EmptyInterceptor {
             int imageIndex = propertyNameList.indexOf("image");
 //            String className = entity.getClass().getSimpleName().replaceAll(regex, replacement).toLowerCase();
             String className = entity.getClass().getSimpleName().toLowerCase();
-            state[imageIndex] = AWS_ADDRESS + "/uploads/" + className + "/image/" + id + "/" + state[imageIndex];
+            state[imageIndex] = ImageUploadUtil.getImagePath(className, String.valueOf(id), String.valueOf(state[imageIndex]));
 //            state[imageIndex] = "/uploads/" + state[imageIndex];
         }
         return super.onLoad(entity, id, state, propertyNames, types);

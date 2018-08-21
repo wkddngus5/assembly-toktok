@@ -1,7 +1,5 @@
 package controller;
 
-import com.google.common.hash.Hashing;
-import com.google.common.io.Files;
 import domain.User;
 import domain.enums.SocialType;
 import domain.twitter.TwitterResponse;
@@ -27,9 +25,7 @@ import service.UserService;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 
 @Controller
 public class TwitterController {
@@ -75,17 +71,10 @@ public class TwitterController {
             return "redirect:/";
         } else {
             String email = getEmailAddress(connection.createData().getAccessToken(), connection.createData().getSecret());
-            String imageFileName = s3Wrapper.uploadImageUrl(connection.getProfileUrl(), SocialType.TWITTER.getValue() + "_" + connection.getKey().getProviderUserId() + ".jpg");
+            String imageFileName = s3Wrapper.uploadProfileImage(connection.getProfileUrl(), SocialType.TWITTER.getValue() + "_" + connection.getKey().getProviderUserId() + ".jpg");
 
             return "redirect:/users/form/" + SocialType.TWITTER.getValue() + "?uid=" + connection.getKey().getProviderUserId() + "&email=" + email + "&image=" + imageFileName;
         }
-    }
-
-    @GetMapping(value = "/users/imageTest")
-    public String imageTest() throws IOException {
-        System.out.println(s3Wrapper.uploadImageUrl("https://graph.facebook.com/2046543722086774/picture?type=large", SocialType.TWITTER.getValue() + "_1000051396783418.jpg"));
-
-        return Paths.get("image.jpg").toAbsolutePath().toString();
     }
 
     private String getEmailAddress(String accessToken, String secret) {

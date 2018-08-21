@@ -71,7 +71,7 @@ public class KakaoController {
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(account, null, account.getAuthorities()));
             return "redirect:/";
         } else {
-            String imageFileName = s3Wrapper.uploadImageUrl(userMeResponse.getBody().getProperties().getProfileImage(), SocialType.KAKAO.getValue() + "_" + userMeResponse.getBody().getId() + ".jpg");
+            String imageFileName = s3Wrapper.uploadProfileImage(userMeResponse.getBody().getProperties().getProfileImage(), SocialType.KAKAO.getValue() + "_" + userMeResponse.getBody().getId() + ".jpg");
 
             return "redirect:/users/form/" + SocialType.KAKAO.getValue() + "?uid=" + userMeResponse.getBody().getId() + "&email=&image=" + imageFileName;
         }

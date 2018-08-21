@@ -1,6 +1,7 @@
 package domain;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import utils.ImageUploadUtil;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
@@ -161,15 +162,43 @@ public class Congressmen {
     }
 
     public void updateCongressmen(Congressmen request) {
-        this.name = request.getName();
-        this.description = request.getDescription();
-        this.party = request.getParty();
-        this.committee_id = request.committee;
-        this.image = request.getProfile();
-        this.facebook_url = request.getFacebook_url();
-        this.twitter_url = request.getTwitter_url();
-        this.email = request.getEmail();
-        this.homepage_url = request.getHomepage_url();
+        if (request.getName() != null) {
+            this.name = request.getName();
+        }
+
+        if (request.getDescription() != null) {
+            this.description = request.getDescription();
+        }
+
+        if (request.getParty() != null) {
+            this.party = request.getParty();
+        }
+
+        if (request.committee != null) {
+            this.committee_id = request.committee;
+        }
+
+        if (request.getProfile() != null) {
+            this.image = request.getProfile();
+        } else {
+            this.image = ImageUploadUtil.replaceImagePath(Congressmen.class.getSimpleName(), String.valueOf(id), image);
+        }
+
+        if (request.getFacebook_url() != null) {
+            this.facebook_url = request.getFacebook_url();
+        }
+
+        if (request.getTwitter_url() != null) {
+            this.twitter_url = request.getTwitter_url();
+        }
+
+        if (request.getEmail() != null) {
+            this.email = request.getEmail();
+        }
+
+        if (request.getHomepage_url() != null) {
+            this.homepage_url = request.getHomepage_url();
+        }
         this.updated_at = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
     }
 }

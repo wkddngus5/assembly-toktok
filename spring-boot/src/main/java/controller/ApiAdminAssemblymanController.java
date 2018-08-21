@@ -2,11 +2,14 @@ package controller;
 
 import dao.CongressmenDao;
 import domain.Congressmen;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import service.S3Wrapper;
+import utils.ImageUploadUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,6 +19,8 @@ public class ApiAdminAssemblymanController {
 
     @Autowired
     private CongressmenDao congressmenDao;
+    @Autowired
+    private S3Wrapper s3Wrapper;
 
     @RequestMapping(value = "/administrator/assemblyman", method = RequestMethod.POST)
     public ResponseEntity<Congressmen> addAssemblyman(@RequestBody Congressmen request) {
@@ -32,6 +37,10 @@ public class ApiAdminAssemblymanController {
         if (congressmen == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
+            if (!StringUtils.isEmpty(request.getProfile())) {
+                s3Wrapper.updateImage(congressmen.getImage(), ImageUploadUtil.saveImagePath(Congressmen.class.getSimpleName(), String.valueOf(congressmen.getId()), congressmen.getImage()));
+                congressmen.setImage(ImageUploadUtil.getImagePath(Congressmen.class.getSimpleName(), String.valueOf(congressmen.getId()), congressmen.getImage()));
+            }
             return new ResponseEntity<>(congressmen, headers, HttpStatus.CREATED);
         }
     }
@@ -47,6 +56,10 @@ public class ApiAdminAssemblymanController {
         if (updateCongressmen == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
+            if (!StringUtils.isEmpty(request.getProfile())) {
+                s3Wrapper.updateImage(request.getProfile(), ImageUploadUtil.saveImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
+            }
+            updateCongressmen.setImage(ImageUploadUtil.getImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
             return new ResponseEntity<>(updateCongressmen, headers, HttpStatus.OK);
         }
     }
