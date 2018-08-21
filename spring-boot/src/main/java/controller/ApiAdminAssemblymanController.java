@@ -1,7 +1,7 @@
 package controller;
 
-import dao.CongressmenDao;
-import domain.Congressmen;
+import dao.CongressmanDao;
+import domain.Congressman;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,12 +18,12 @@ import java.util.Date;
 public class ApiAdminAssemblymanController {
 
     @Autowired
-    private CongressmenDao congressmenDao;
+    private CongressmanDao congressmanDao;
     @Autowired
     private S3Wrapper s3Wrapper;
 
     @RequestMapping(value = "/administrator/assemblyman", method = RequestMethod.POST)
-    public ResponseEntity<Congressmen> addAssemblyman(@RequestBody Congressmen request) {
+    public ResponseEntity<Congressman> addAssemblyman(@RequestBody Congressman request) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
@@ -33,43 +33,43 @@ public class ApiAdminAssemblymanController {
         request.setCommittee_id(request.getCommittee());
         request.setImage(request.getProfile());
 
-        Congressmen congressmen = congressmenDao.save(request);
-        if (congressmen == null) {
+        Congressman congressman = congressmanDao.save(request);
+        if (congressman == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
             if (!StringUtils.isEmpty(request.getProfile())) {
-                s3Wrapper.updateImage(congressmen.getImage(), ImageUploadUtil.saveImagePath(Congressmen.class.getSimpleName(), String.valueOf(congressmen.getId()), congressmen.getImage()));
-                congressmen.setImage(ImageUploadUtil.getImagePath(Congressmen.class.getSimpleName(), String.valueOf(congressmen.getId()), congressmen.getImage()));
+                s3Wrapper.updateImage(congressman.getImage(), ImageUploadUtil.saveImagePath(Congressman.class.getSimpleName(), String.valueOf(congressman.getId()), congressman.getImage()));
+                congressman.setImage(ImageUploadUtil.getImagePath(Congressman.class.getSimpleName(), String.valueOf(congressman.getId()), congressman.getImage()));
             }
-            return new ResponseEntity<>(congressmen, headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(congressman, headers, HttpStatus.CREATED);
         }
     }
 
     @RequestMapping(value = "/administrator/assemblyman/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Congressmen> updateAssemblyman(@PathVariable Long id, @RequestBody Congressmen request) {
+    public ResponseEntity<Congressman> updateAssemblyman(@PathVariable Long id, @RequestBody Congressman request) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        Congressmen updateCongressmen = congressmenDao.getOne(id);
-        updateCongressmen.updateCongressmen(request);
-        updateCongressmen = congressmenDao.save(updateCongressmen);
+        Congressman updateCongressman = congressmanDao.getOne(id);
+        updateCongressman.updateCongressmen(request);
+        updateCongressman = congressmanDao.save(updateCongressman);
 
-        if (updateCongressmen == null) {
+        if (updateCongressman == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {
             if (!StringUtils.isEmpty(request.getProfile())) {
-                s3Wrapper.updateImage(request.getProfile(), ImageUploadUtil.saveImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
+                s3Wrapper.updateImage(request.getProfile(), ImageUploadUtil.saveImagePath(Congressman.class.getSimpleName(), String.valueOf(updateCongressman.getId()), updateCongressman.getImage()));
             }
-            updateCongressmen.setImage(ImageUploadUtil.getImagePath(Congressmen.class.getSimpleName(), String.valueOf(updateCongressmen.getId()), updateCongressmen.getImage()));
-            return new ResponseEntity<>(updateCongressmen, headers, HttpStatus.OK);
+            updateCongressman.setImage(ImageUploadUtil.getImagePath(Congressman.class.getSimpleName(), String.valueOf(updateCongressman.getId()), updateCongressman.getImage()));
+            return new ResponseEntity<>(updateCongressman, headers, HttpStatus.OK);
         }
     }
 
     @RequestMapping(value = "/administrator/assemblyman/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Congressmen> deleteAssemblyman(@PathVariable Long id) {
+    public ResponseEntity<Congressman> deleteAssemblyman(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        Congressmen deleteCommittee = Congressmen.createCommittee(congressmenDao.getOne(id));
-        congressmenDao.deleteById(id);
+        Congressman deleteCommittee = Congressman.createCommittee(congressmanDao.getOne(id));
+        congressmanDao.deleteById(id);
 
         if (deleteCommittee == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);

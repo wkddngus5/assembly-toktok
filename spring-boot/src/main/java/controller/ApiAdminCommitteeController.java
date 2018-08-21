@@ -1,11 +1,8 @@
 package controller;
 
 import dao.CommitteeDao;
-import dao.CongressmenDao;
+import dao.CongressmanDao;
 import domain.Committee;
-import domain.Congressmen;
-import domain.User;
-import domain.UserCreate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,7 +20,7 @@ public class ApiAdminCommitteeController {
     private CommitteeDao committeeDao;
 
     @Autowired
-    private CongressmenDao congressmenDao;
+    private CongressmanDao congressmanDao;
 
     @RequestMapping(value = "/administrator/committees", method = RequestMethod.POST)
     public ResponseEntity<Committee> addCommittees(@RequestBody Committee request) {
@@ -52,7 +49,7 @@ public class ApiAdminCommitteeController {
         if(dbCommittee == null) {
             return new ResponseEntity<>(new ArrayList(), HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List>(congressmenDao.findByCommitteeId(dbCommittee.getId()), HttpStatus.OK);
+        return new ResponseEntity<List>(congressmanDao.findByCommitteeId(dbCommittee.getId()), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/administrator/committees/{id}", method = RequestMethod.PUT)
@@ -75,7 +72,7 @@ public class ApiAdminCommitteeController {
     public ResponseEntity<Committee> deleteCommittees(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        int count = congressmenDao.findByCommitteeId(id).size();
+        int count = congressmanDao.findByCommitteeId(id).size();
         if (count > 0) {
             return new ResponseEntity<>(Committee.createError("위원회에 소속된 의원이 있습니다. 의원을 모두 지운 후에 위원회를 삭제할 수 있습니다.", count), headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {

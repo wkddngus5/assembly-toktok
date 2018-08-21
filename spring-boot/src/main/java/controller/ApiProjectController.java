@@ -1,6 +1,6 @@
 package controller;
 
-import dao.CongressmenDao;
+import dao.CongressmanDao;
 import dao.ParticipationsDao;
 import dao.ProjectDao;
 import dao.ProjectJoinDao;
@@ -38,7 +38,7 @@ public class ApiProjectController {
     private ProjectJoinDao projectJoinDao;
 
     @Autowired
-    private CongressmenDao congressmenDao;
+    private CongressmanDao congressmanDao;
 
     @Autowired
     private ParticipationsDao participationsDao;
@@ -158,10 +158,10 @@ public class ApiProjectController {
     }
 
     @RequestMapping(value = "/projets/committees", method = RequestMethod.GET)
-    public ResponseEntity<List<Congressmen>> post(@RequestParam("name") String name) {
+    public ResponseEntity<List<Congressman>> post(@RequestParam("name") String name) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
-        List<Congressmen> congressmen = congressmenDao.findByNameCongressmen(name);
+        List<Congressman> congressmen = congressmanDao.findByNameCongressmen(name);
         if (congressmen == null) {
             return new ResponseEntity<>(headers, HttpStatus.NO_CONTENT);
         } else {

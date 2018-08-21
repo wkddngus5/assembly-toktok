@@ -3,20 +3,14 @@ package controller;
 import dao.*;
 import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import service.UserService;
 
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +27,7 @@ public class ApiProjectCommentsController {
     private ProjectJoinDao projectJoinDao;
 
     @Autowired
-    private CongressmenDao congressmenDao;
+    private CongressmanDao congressmanDao;
 
     @Autowired
     private ParticipationsDao participationsDao;

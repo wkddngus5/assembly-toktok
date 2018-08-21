@@ -2,7 +2,6 @@ package controller;
 
 import com.google.gson.Gson;
 import dao.MainSlideDao;
-import domain.Congressmen;
 import domain.MainSlide;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
