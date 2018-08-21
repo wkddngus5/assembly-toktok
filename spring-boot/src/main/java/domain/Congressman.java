@@ -10,7 +10,7 @@ import java.util.Date;
 @Entity
 @Table(name = "congressmen")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Congressmen {
+public class Congressman {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -142,26 +142,26 @@ public class Congressmen {
         this.profile = profile;
     }
 
-    public static Congressmen createCommittee(Congressmen congressmen) {
-        Congressmen createCongressmen = new Congressmen();
-        createCongressmen.setId(congressmen.getId());
-        createCongressmen.setName(congressmen.getName());
-        createCongressmen.setDescription(congressmen.getDescription());
-        createCongressmen.setParty(congressmen.getParty());
-        createCongressmen.setCommittee_id(congressmen.getCommittee());
-        createCongressmen.setImage(congressmen.getProfile());
-        createCongressmen.setFacebook_url(congressmen.getFacebook_url());
-        createCongressmen.setTwitter_url(congressmen.getTwitter_url());
-        createCongressmen.setEmail(congressmen.getEmail());
-        createCongressmen.setHomepage_url(congressmen.getHomepage_url());
+    public static Congressman createCommittee(Congressman congressman) {
+        Congressman createCongressman = new Congressman();
+        createCongressman.setId(congressman.getId());
+        createCongressman.setName(congressman.getName());
+        createCongressman.setDescription(congressman.getDescription());
+        createCongressman.setParty(congressman.getParty());
+        createCongressman.setCommittee_id(congressman.getCommittee());
+        createCongressman.setImage(congressman.getProfile());
+        createCongressman.setFacebook_url(congressman.getFacebook_url());
+        createCongressman.setTwitter_url(congressman.getTwitter_url());
+        createCongressman.setEmail(congressman.getEmail());
+        createCongressman.setHomepage_url(congressman.getHomepage_url());
 
-        createCongressmen.setCreated_at(congressmen.getCreated_at());
-        createCongressmen.setUpdated_at(congressmen.getUpdated_at());
+        createCongressman.setCreated_at(congressman.getCreated_at());
+        createCongressman.setUpdated_at(congressman.getUpdated_at());
 
-        return createCongressmen;
+        return createCongressman;
     }
 
-    public void updateCongressmen(Congressmen request) {
+    public void updateCongressmen(Congressman request) {
         if (request.getName() != null) {
             this.name = request.getName();
         }
@@ -181,7 +181,7 @@ public class Congressmen {
         if (request.getProfile() != null) {
             this.image = request.getProfile();
         } else {
-            this.image = ImageUploadUtil.replaceImagePath(Congressmen.class.getSimpleName(), String.valueOf(id), image);
+            this.image = ImageUploadUtil.replaceImagePath(Congressman.class.getSimpleName(), String.valueOf(id), image);
         }
 
         if (request.getFacebook_url() != null) {

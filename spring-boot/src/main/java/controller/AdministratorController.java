@@ -1,11 +1,8 @@
 package controller;
 
 import dao.*;
-import domain.Congressmen;
-import domain.MainSlide;
 import domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +11,6 @@ import service.UserService;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/administrator")
@@ -29,7 +25,7 @@ public class AdministratorController {
     private TimelineDao timelineDao;
 
     @Autowired
-    private CongressmenDao congressmenDao;
+    private CongressmanDao congressmanDao;
 
     @Autowired
     private UserDao userDao;
@@ -94,7 +90,7 @@ public class AdministratorController {
         userService.addSessionInfo(modelAndView, session);
 
         modelAndView.setViewName("adminAssemblyman");
-        modelAndView.addObject("assemblymen", congressmenDao.findAll());
+        modelAndView.addObject("assemblymen", congressmanDao.findAll());
         modelAndView.addObject("committees", committeeDao.findAll());
         return modelAndView;
     }
