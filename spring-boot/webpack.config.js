@@ -17,6 +17,7 @@ module.exports = {
     projectForm: './src/main/resources/public/entry/projectForm.js',
     adminProjects: './src/main/resources/public/entry/adminProjects.js',
     adminProject: './src/main/resources/public/entry/adminProject.js',
+    adminProjectForm: './src/main/resources/public/entry/adminProjectForm.js',
     adminProjectTimelines: './src/main/resources/public/entry/adminProjectTimelines.js',
     adminCommittees: './src/main/resources/public/entry/adminCommittees.js',
     adminAssemblyman: './src/main/resources/public/entry/adminAssemblyman.js',

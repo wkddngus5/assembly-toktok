@@ -38,6 +38,9 @@ public class ApiAdminProjectController {
         if (updateProject == null) {
             return new ResponseEntity<>(headers, HttpStatus.INTERNAL_SERVER_ERROR);
         } else {
+            if(project.getImage().contains("s3")) {
+                return new ResponseEntity<>(updateProject, headers, HttpStatus.OK);
+            }
             if (!StringUtils.isEmpty(project.getImage())) {
                 s3Wrapper.updateImage(updateProject.getImage(), ImageUploadUtil.saveImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
                 updateProject.setImage(ImageUploadUtil.getImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));

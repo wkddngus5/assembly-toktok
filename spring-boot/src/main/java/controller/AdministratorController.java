@@ -63,6 +63,8 @@ public class AdministratorController {
         userService.addSessionInfo(modelAndView, session);
 
         modelAndView.setViewName("adminProjectForm");
+        modelAndView.addObject("project", projectDao.findById(id).get());
+        modelAndView.addObject("user", userService.getSessionedUser());
         return modelAndView;
     }
 
