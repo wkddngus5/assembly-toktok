@@ -8,47 +8,68 @@
 </head>
 <body>
 {{> include/header}}
-<main>
-    <a href="/administrator/projects/1" class="move-projects"><< 제안 상태 관리</a>
+<main data-item="{{project.id}}">
+    <a href="/administrator/projects/{{project.id}}" class="move-projects"><< 제안 상태 관리</a>
     <div class="page">
         <div class="input-zone">
             <label for="title">제목</label>
-            <input id="title">
+            <input id="title" value="{{project.title}}">
         </div>
 
         <div class="input-zone">
             <label for="name">제안자 이름</label>
-            <input type="text" id="name">
+            <input type="text" id="name" value="{{project.proposer}}">
         </div>
 
         <div class="input-zone">
-            <label for="email">제안자 이름</label>
-            <input type="text" id="email">
+            <label for="email">제안자 이메일</label>
+            <input type="text" id="email" value="{{project.proposer_email}}">
         </div>
 
         <div class="input-zone">
             <label for="phone">제안자 휴대폰</label>
-            <input id="phone">
+            <input id="phone" value="{{project.proposer_phone}}">
         </div>
 
         <div class="input-zone">
+            <label for="phone">제안 카테고리</label>
+            <select class="category" data-item="{{project.category}}">
+                <option value="">없음</option>
+                <option value="정치">정치</option>
+                <option value="경제/일자리">경제/일자리</option>
+                <option value="외교/통일/국방">외교/통일/국방</option>
+                <option value="보건복지">보건복지</option>
+                <option value="환경/생태">환경/생태</option>
+                <option value="육아/교육">육아/교육</option>
+                <option value="동물권">동물권</option>
+                <option value="문화/언론">문화/언론</option>
+                <option value="저출산/고령화대책">저출산/고령화대책</option>
+                <option value="교통/건축/국토">교통/건축/국토</option>
+                <option value="경제민주화">경제민주화</option>
+                <option value="인권/성평등">인권/성평등</option>
+                <option value="기타">기타</option>
+            </select>
+        </div>
+
+
+        <div class="input-zone">
             <label for= "editor">제안 내용</label>
-            <textarea name="editor1" id="editor"></textarea>
+            <textarea name="editor1" id="editor">{{project.body}}</textarea>
         </div>
 
         <div class="input-zone">
             <label for= "summary">제안 내용 요약</label>
-            <textarea id="summary" rows="10"></textarea>
+            <textarea id="summary" rows="10">{{project.summary}}</textarea>
         </div>
 
         <div class="input-zone">
             <label for= "introduce">제안자 설명</label>
-            <textarea id="introduce" rows="10"></textarea>
+            <textarea id="description" rows="10">{{project.proposer_description}}</textarea>
         </div>
 
         <div class="input-zone">
             <label for= "profile-img">제안 대표이미지</label>
-            <input type="file" id="profile-img" rows="10"></input>
+            <input type="file" id="image" data-item="{{project.image}}">
         </div>
 
         <div class="page-move-btns">
@@ -58,7 +79,7 @@
 </main>
 <!--<script src="https://cdn.quilljs.com/1.0.0/quill.js"></script>-->
 <script src="https://cdn.ckeditor.com/4.10.0/standard-all/ckeditor.js"></script>
-<script type="text/javascript" src="/js/projectForm.js"></script>
+<script type="text/javascript" src="/dist/adminProjectForm-bundle.js"></script>
 {{> include/footer}}
 </body>
 </html>
