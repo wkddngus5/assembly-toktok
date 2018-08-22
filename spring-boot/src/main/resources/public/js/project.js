@@ -373,16 +373,19 @@ class project {
       if (res.status === 201) {
         button.innerText = '참여취소';
         button.classList.add('is-active');
-        this.countTag.innerText = parseInt(this.countTag.innerText) + 1;
+        this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) + 1);
+        this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
       } else if (res.status === 202) {
         button.innerText = '참여하기';
         button.classList.remove('is-active');
-        this.countTag.innerText = parseInt(this.countTag.innerText) - 1;
+        this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) - 1);
+        this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
       } else if (res.status === 401) {
         window.location.href = '/login';
       }
     });
   }
 }
+
 
 export default project;
