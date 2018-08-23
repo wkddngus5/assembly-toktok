@@ -218,6 +218,7 @@ class project {
     });
   }
 
+
   postComment() {
     const data = {
       'commentable_id': document.querySelector('h2').getAttribute('data-item'),
@@ -353,13 +354,20 @@ class project {
     let nowStatus = this.statusZone.getAttribute('data-item');
     switch (nowStatus) {
       case 'running':
-        this.statusZone.querySelector('.lawmaking').classList.add('active');
+        this.statusZone.querySelector('.running').classList.add('active');
+        this.statusZone.querySelector('.matching').classList.add('past');
+        this.statusZone.querySelector('.participation').classList.add('past');
         break;
       case 'fail':
         let step = this.statusZone.querySelector('.matching');
         step.classList.add('active');
         step.innerText = '매칭실패';
+        step.style.backgroundColor = '#fd515d';
+        this.statusZone.querySelector('.participation').classList.add('past');
         break;
+      case 'matching':
+        this.statusZone.querySelector('.matching').classList.add('active');
+        this.statusZone.querySelector('.running').classList.add('past');
       default:
         this.statusZone.querySelector('.participation').classList.add('active');
     }
