@@ -398,6 +398,19 @@ class project {
   }
 
   join(button) {
+    this.countTag = document.querySelector('p.count');
+
+    if(button.innerText === '참여하기') {
+      button.innerText = '참여취소';
+      button.classList.add('is-active');
+      this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) + 1);
+      this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
+    } else {
+      button.innerText = '참여하기';
+      button.classList.remove('is-active');
+      this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) - 1);
+      this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
+    }
     fetch(`/projects/${this.id}/join`, {
       method: 'PATCH',
       credentials: 'same-origin',
@@ -406,23 +419,13 @@ class project {
         'content-type': 'application/json',
       })
     }).then(res => {
-      this.countTag = document.querySelector('p.count');
-      if (res.status === 201) {
-        button.innerText = '참여취소';
-        button.classList.add('is-active');
-        this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) + 1);
-        this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
-      } else if (res.status === 202) {
-        button.innerText = '참여하기';
-        button.classList.remove('is-active');
-        this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) - 1);
-        this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
-      } else if (res.status === 401) {
+      if (res.status === 401) {
         window.location.href = '/login';
+      } else if(res.status !== 201 && res.status !== 202) {
+        location.reload();
       }
     });
   }
 }
-
 
 export default project;

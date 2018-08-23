@@ -5,6 +5,8 @@ import dao.ParticipationsDao;
 import dao.ProjectDao;
 import dao.ProjectJoinDao;
 import domain.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -13,12 +15,16 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.*;
 import service.S3Wrapper;
 import service.UserService;
 import utils.ImageUploadUtil;
 
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -45,6 +51,12 @@ public class ApiProjectController {
 
     @Autowired
     private S3Wrapper s3Wrapper;
+
+    @Autowired
+    JavaMailSender javaMailSender;
+
+    @Autowired
+    Configuration configuration;
 
     @RequestMapping(value = "/projects/{id}/{manId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -87,7 +99,7 @@ public class ApiProjectController {
 
     @RequestMapping(value = "/projects/join", method = RequestMethod.PATCH)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ProjectJoinResponse> join(@RequestBody ProjectJoin reqeust) {
+    public ResponseEntity<ProjectJoinResponse> join(@RequestBody ProjectJoin reqeust) throws Exception {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -101,11 +113,13 @@ public class ApiProjectController {
 
             projectJoin = projectJoinDao.save(reqeust);
             projectDao.addParticipation(reqeust.getProject_id());
+
+
             if (projectJoin == null) {
                 return new ResponseEntity<>(new ProjectJoinResponse("", "Fail"), headers, HttpStatus.INTERNAL_SERVER_ERROR);
-            } else {
-                return new ResponseEntity<>(new ProjectJoinResponse("Participation", null), headers, HttpStatus.OK);
             }
+            return new ResponseEntity<>(new ProjectJoinResponse("Participation", null), headers, HttpStatus.OK);
+
         } else {
             projectJoinDao.deleteById(projectJoin.getId());
             projectDao.removeParticipation(reqeust.getProject_id());
@@ -154,7 +168,6 @@ public class ApiProjectController {
         List<Project> projectList = projectDao.sorted(where, pq);
 
         return new ResponseEntity<>(projectList, headers, HttpStatus.OK);
-
     }
 
     @RequestMapping(value = "/projets/committees", method = RequestMethod.GET)
@@ -170,7 +183,7 @@ public class ApiProjectController {
     }
 
     @RequestMapping(value = "/projects/{id}/join", method = RequestMethod.PATCH)
-    public ResponseEntity<Participations> projectJoin(@PathVariable("id") final Long id, HttpSession session) {
+    public ResponseEntity<Participations> projectJoin(@PathVariable("id") final Long id, HttpSession session) throws Exception{
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
@@ -182,6 +195,21 @@ public class ApiProjectController {
         if (participations == null) {
             participationsDao.save(new Participations(sessionedUser.getId(), id));
             projectDao.addParticipation(id);
+
+            Project project = projectDao.findById(id).get();
+
+            long participateionsCount = project.getParticipations_count();
+            if( participateionsCount == 800 || participateionsCount == 1000) {
+                MimeMessage message = javaMailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+                helper.setTo("soho@wagl.net");
+                helper.setSubject("국회톡톡: " + project.getTitle() + "프로젝트 " + participateionsCount + "명 돌파");
+                helper.setText("www.toktok.io/projects/" + project.getId(), true);
+                helper.setFrom("info@toktok.io");
+
+                javaMailSender.send(message);
+            }
             return new ResponseEntity<>(headers, HttpStatus.CREATED);
         }
         participationsDao.delete(participations);
