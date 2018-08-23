@@ -105,6 +105,16 @@ li.status {
             0 1px 5px 0 rgba(0,0,0,.12);
 }
 
+li.status.past {
+    background-color: #5ec4e3;
+}
+
+li.status.past::before {
+    content: '✓';
+    position: relative;
+    right: 5px;
+}
+
 li.status.active {
     background-color: #5d9eee;
     color: #FFFFFF;
