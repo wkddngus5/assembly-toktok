@@ -34,5 +34,4 @@ class header {
   }
 }
 
-
 export default header;

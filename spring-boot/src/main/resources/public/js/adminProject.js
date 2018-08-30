@@ -210,8 +210,7 @@ class adminProject {
     }).then(res => {
       if(res.status === 200) {
         alert('변경 완료');
-        // location.href = '/administrator/projects';
-
+        location.href = '/administrator/projects';
       }
     });
   }

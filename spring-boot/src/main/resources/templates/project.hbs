@@ -41,11 +41,17 @@
         </ul>
         {{#project.status}}
             <ul id="notice">
-                <li>'몰카 판매 금지 법안을 제안합니다.'에 대한 시민의 ‘참여하기'가 1,000명을 돌파했습니다.</li>
-                <li>'여성가족위원회' '행정안전위원회' 국회의원들에게 초대 메일을 보냈습니다.</li>
-                <li>2017년 4월 22일까지 2주 동안 국회의원들의 응답을 기다립니다.<br>
-                    응답을 원하는 의원을 댓글로 호출하세요!
-                </li>
+                {{#project.notice1}}
+                    <li>{{project.notice1}}</li>
+                {{/project.notice1}}
+
+                {{#project.notice2}}
+                    <li>{{project.notice2}}</li>
+                {{/project.notice2}}
+
+                {{#project.notice3}}
+                    <li>{{project.notice3}}</li>
+                {{/project.notice3}}
             </ul>
         {{/project.status}}
 
