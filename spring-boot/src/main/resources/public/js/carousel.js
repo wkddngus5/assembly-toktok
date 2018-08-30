@@ -1,6 +1,6 @@
 class carousel {
   constructor() {
-    this.nowIndex = 1;
+    this.nowIndex = 0;
     this.pageList = document.querySelectorAll('li.carousel-page');
     this.indexList = document.querySelectorAll('li.carousel-index');
     this.init();
@@ -35,13 +35,14 @@ class carousel {
     });
   }
 
-  moveCarousel(index) {
-    document.querySelector('ul.carousel-page-list').style.marginLeft = `-${(index - 1) * 100}%`
-    this.pageList[index - 2].classList.remove('is-visible');
-    this.indexList[index - 2].classList.remove('is-checked');
+  moveCarousel(order) {
+    const index = order - 1;
+    document.querySelector('ul.carousel-page-list').style.marginLeft = `-${(index) * 100}%`;
+    this.pageList[this.nowIndex].classList.remove('is-visible');
+    this.indexList[this.nowIndex].classList.remove('is-checked');
     this.nowIndex = index;
-    this.pageList[index - 1].classList.add('is-visible');
-    this.indexList[index - 1].classList.add('is-checked');
+    this.pageList[this.nowIndex].classList.add('is-visible');
+    this.indexList[this.nowIndex].classList.add('is-checked');
   }
 }
 

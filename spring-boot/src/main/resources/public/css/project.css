@@ -120,6 +120,17 @@ li.status.active {
     color: #FFFFFF;
 }
 
+#notice {
+    list-style: none;
+    margin: 60px 0;
+}
+
+#notice li {
+    border: solid 2px #18c3b3;
+    margin: 15px;
+    padding: 15px;
+}
+
 .step {
     display: inline-block;
     width: 50px;

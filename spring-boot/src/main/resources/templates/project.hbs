@@ -39,6 +39,22 @@
                 </div>
             </li>
         </ul>
+        {{#project.status}}
+            <ul id="notice">
+                {{#project.notice1}}
+                    <li>{{project.notice1}}</li>
+                {{/project.notice1}}
+
+                {{#project.notice2}}
+                    <li>{{project.notice2}}</li>
+                {{/project.notice2}}
+
+                {{#project.notice3}}
+                    <li>{{project.notice3}}</li>
+                {{/project.notice3}}
+            </ul>
+        {{/project.status}}
+
         <div class="writer-info">
             <div class="profile"></div>
             <h5 class="writer">{{project.proposer}}</h5>
