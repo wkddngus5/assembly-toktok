@@ -22,6 +22,8 @@ public class Project {
     private String updated_at;
     private Long participations_count;
     private Long participations_goal_count;
+    @Lob
+    @Column(length = 1500)
     private String image;
     private String summary;
     private String proposer_description;
@@ -45,6 +47,10 @@ public class Project {
     @OneToMany
     @JoinColumn(name = "commentable_id")
     List<Comment> commentList;
+
+    private String notice1;
+    private String notice2;
+    private String notice3;
 
 //    @Formula("'/uploads/project/image/' || id || '/' || image ")
 //    @Formula("'/uploads/project/image/' , id , '/' , image ")
@@ -256,6 +262,50 @@ public class Project {
         this.commentList = commentList;
     }
 
+    public String getMatching_start_date() {
+        return matching_start_date;
+    }
+
+    public void setMatching_start_date(String matching_start_date) {
+        this.matching_start_date = matching_start_date;
+    }
+
+    public String getMatching_end_date() {
+        return matching_end_date;
+    }
+
+    public void setMatching_end_date(String matching_end_date) {
+        this.matching_end_date = matching_end_date;
+    }
+
+    public String getNotice1() {
+        return notice1;
+    }
+
+    public void setNotice1(String notice1) {
+        this.notice1 = notice1;
+    }
+
+    public String getNotice2() {
+        return notice2;
+    }
+
+    public void setNotice2(String notice2) {
+        this.notice2 = notice2;
+    }
+
+    public String getNotice3() {
+        return notice3;
+    }
+
+    public void setNotice3(String notice3) {
+        this.notice3 = notice3;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public void updateProject(Project project) {
         if(project.getTitle() != null) {
             title = project.title;
@@ -298,6 +348,19 @@ public class Project {
         }
         if(project.committees != null) {
             this.committees = project.committees;
+        }
+
+        System.out.println("===========" + project.notice1 + "44444" + this.notice1);
+        if(project.notice1 != null) {
+            this.notice1 = project.notice1;
+        }
+
+        if(project.notice2 != null) {
+            this.notice2 = project.notice2;
+        }
+
+        if(project.notice3 != null) {
+            this.notice3 = project.notice3;
         }
     }
 

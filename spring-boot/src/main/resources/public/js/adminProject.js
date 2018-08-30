@@ -7,6 +7,10 @@ class adminProject {
     this.goalCount = document.querySelector('#goal-count');
     this.platformUri = document.querySelector('#platform-uri');
 
+    this.notice1 = document.querySelector('#notice1');
+    this.notice2 = document.querySelector('#notice2');
+    this.notice3 = document.querySelector('#notice3');
+
     this.inputAddAssemblyman = document.querySelector('input.add-assemblyman');
     this.inputAddCommittee = document.querySelector('#input-add-committee');
     this.init();
@@ -182,7 +186,10 @@ class adminProject {
       'matching_end_date': this.matchingPeriodEnd.value,
       'participations_goal_count': this.goalCount.value,
       'running_platform_url': this.platformUri.value,
-      'committees': JSON.stringify(committeesJson)
+      'committees': JSON.stringify(committeesJson),
+      'notice1': this.notice1.value,
+      'notice2': this.notice2.value,
+      'notice3': this.notice3.value
     };
 
     if(this.status.value !== 'none') {
@@ -203,7 +210,8 @@ class adminProject {
     }).then(res => {
       if(res.status === 200) {
         alert('변경 완료');
-        location.href = '/administrator/projects';
+        // location.href = '/administrator/projects';
+
       }
     });
   }
