@@ -1,8 +1,12 @@
 package controller;
 
+import com.google.common.base.Strings;
 import dao.ProjectDao;
 import dao.TimelineDao;
-import domain.*;
+import domain.Project;
+import domain.Timeline;
+import domain.User;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -13,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import service.S3Wrapper;
 import utils.ImageUploadUtil;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -32,6 +38,15 @@ public class ApiAdminProjectController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
         Project updateProject = projectDao.getOne(id);
+        if(!Strings.isNullOrEmpty(updateProject.getImage())){
+            try {
+                URL url = new URL(updateProject.getImage());
+                updateProject.setImage(FilenameUtils.getName(url.getPath()));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+
         updateProject.updateProject(project);
 
         updateProject = projectDao.save(updateProject);
