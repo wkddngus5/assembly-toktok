@@ -13,7 +13,7 @@
     <div class="page">
         <h3 id="{{project.id}}">{{project.title}}</h3>
         <div class="options">
-            <a href="/administrator/projectForm/1"><button class="projectForm">제안 내용 수정</button></a>
+            <a href="/administrator/projectForm/{{project.id}}"><button class="projectForm">제안 내용 수정</button></a>
             <button class="participation-list">참여 리스트 다운</button>
             <a href="/administrator/projects/{{project.id}}/timelines"><button class="update-timeline">타임라인 수정</button></a>
             <button class="suggestions">건의 내용 확인</button>
@@ -41,6 +41,15 @@
         <div class="input-zone">
             <label for="platform-uri">입법 플랫폼 URI</label>
             <input id="platform-uri" value="{{project.running_platform_url}}">
+        </div>
+
+        <div class="input-zone notice">
+            <label for="notice1">알림1</label>
+            <textarea id="notice1">{{project.notice1}}</textarea><br>
+            <label for="notice2">알림2</label>
+            <textarea id="notice2">{{project.notice2}}</textarea><br>
+            <label for="notice3">알림3</label>
+            <textarea id="notice3">{{project.notice3}}</textarea>
         </div>
 
         <div class="input-zone">

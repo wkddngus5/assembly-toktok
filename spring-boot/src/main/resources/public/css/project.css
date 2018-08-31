@@ -105,9 +105,30 @@ li.status {
             0 1px 5px 0 rgba(0,0,0,.12);
 }
 
+li.status.past {
+    background-color: #5ec4e3;
+}
+
+li.status.past::before {
+    content: '✓';
+    position: relative;
+    right: 5px;
+}
+
 li.status.active {
     background-color: #5d9eee;
     color: #FFFFFF;
+}
+
+#notice {
+    list-style: none;
+    margin: 60px 0;
+}
+
+#notice li {
+    border: solid 2px #18c3b3;
+    margin: 15px;
+    padding: 15px;
 }
 
 .step {
@@ -316,6 +337,10 @@ ul#assembly-man-list li {
 ul#committee {
     list-style: none;
     padding: 0;
+}
+
+.each-committee:hover {
+    cursor: pointer;
 }
 
 ul#committee li {
@@ -567,6 +592,44 @@ button.load-all-comments:hover {
     font-size: 20px;
     font-weight: bold;
     border-radius: 10px;
+}
+
+div.modal {
+    display: none;
+    position: fixed;
+    top: 10%;
+    width: 50%;
+    height: 70%;
+    left: 25%;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+    overflow-y: scroll;
+    z-index: 10;
+}
+
+div.modal.is-visible {
+    display: block;
+}
+
+div.modal ul {
+    list-style: none;
+}
+
+div.modal li {
+    display: none;
+    margin: 10px 15px;
+}
+
+div.modal li.is-visible {
+    display: inline-block;
+}
+
+#modal-no-response .profile-img {
+    opacity: 0.4;
 }
 
 @media screen and (min-width: 400px) {

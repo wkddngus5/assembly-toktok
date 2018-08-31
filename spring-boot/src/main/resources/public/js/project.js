@@ -5,12 +5,14 @@ class project {
     this.nowActiveInfo = document.querySelector('nav.info-subject button.active');
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
     this.dim = document.querySelector('div.dim');
-    this.infoModal = document.querySelector('div.info-modal');
+    this.modal = document.querySelector('div.modal');
     this.statusZone = document.querySelector('ul.status-zone');
     this.timelineList = document.querySelectorAll('li.each-timeline');
     this.showingGuide = null;
     this.id = parseInt(document.querySelector('h2').getAttribute('data-item'));
     this.countTag = document.querySelector('p.count');
+    this.committeeZone = document.querySelector('#committee');
+    this.modalCommitteeName = document.querySelector('.modal .committee-name');
 
     this.toggleGuide = this.toggleGuide.bind(this);
     this.closeGuide = this.closeGuide.bind(this);
@@ -24,6 +26,7 @@ class project {
     this.initCommittees();
     this.initImage();
     this.hideLastTimelineOuter();
+    this.loadAllComments();
 
     document.querySelector('ul.status-zone').addEventListener('click', this.toggleGuide);
     document.addEventListener('click', this.closeGuide);
@@ -51,8 +54,34 @@ class project {
       }
     });
 
-    this.loadAllComments();
+    if(this.committeeZone) {
+      this.committeeZone.addEventListener('click', e => {
+        this.showCommitteeModal(e);
+      })
+    }
+
+    this.dim.addEventListener('click', e => {
+      this.modalOff();
+    })
   };
+
+  showCommitteeModal(e) {
+    if(e.target.tagName !== 'LI') {
+      return;
+    }
+    this.dim.classList.add('is-visible');
+    this.modal.classList.add('is-visible');
+    const committeeName = e.target.getAttribute('data-item');
+    this.modalCommitteeName.innerText = committeeName;
+    const assemblymen = document.querySelectorAll('.modal li');
+    for(let i = 0 ; i < assemblymen.length ; i++) {
+      if(assemblymen[i].getAttribute('data-item')) {
+        assemblymen[i].classList.add('is-visible');
+      } else {
+        assemblymen[i].classList.remove('is-visible');
+      }
+    }
+  }
 
   loadAllComments() {
     fetch(`/projects/${this.id}/comments`, {
@@ -189,6 +218,7 @@ class project {
     });
   }
 
+
   postComment() {
     const data = {
       'commentable_id': document.querySelector('h2').getAttribute('data-item'),
@@ -243,42 +273,50 @@ class project {
     if (assembly.getAttribute('data-item') === '') {
       return
     }
-    ;
     const committees = JSON.parse(assembly.getAttribute('data-item')).committeeList;
     const ul = document.querySelector('#committee');
-    for (let i = 0; i < committees.length; i++) {
-      const committee = `<li>${committees[i].name}</li>`;
+    for (let i = 0 ; i < committees.length ; i++) {
+      const committee = `<li class="each-committee" data-item="${committees[i].name}">${committees[i].name}</li>`;
       ul.insertAdjacentHTML('beforeend', committee);
       this.insertAssemblymen(committees[i].assemblymanList);
     }
   }
 
   insertAssemblymen(assemblymanList) {
-    for (let i = 0; i < assemblymanList.length; i++) {
-      const ul = document.querySelector('#assembly-man-list');
+    const ul = document.querySelector('#assembly-man-list');
 
-      if (assemblymanList[i].status === '참여') {
-        fetch(`/congressmen/${assemblymanList[i].name}`, {
-          method: 'GET',
-          credentials: 'same-origin',
-          headers: new Headers({
-            'accept': 'application/json',
-            'content-type': 'application/json',
-          })
-        }).then(res => {
-          if (res.status === 200) {
-            return res.json();
-          }
-        }).then(json => {
-          const assemblymanLi = `
-            <li class="assembly-man">
+    const participateZone = document.querySelector('#modal-participate');
+    const rejectZone = document.querySelector('#modal-reject');
+    const noResponseZone = document.querySelector('#modal-no-response');
+
+    for (let i = 0; i < assemblymanList.length; i++) {
+      fetch(`/congressmen/${assemblymanList[i].name}`, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: new Headers({
+          'accept': 'application/json',
+          'content-type': 'application/json',
+        })
+      }).then(res => {
+        if (res.status === 200) {
+          return res.json();
+        }
+      }).then(json => {
+        const assemblymanLi = `
+            <li class="assembly-man" data-item="${assemblymanList[i].committee}">
                 <div class="profile-img" style="background-image: url(${json.image})"></div>
                 <p>${json.name} 의원</p>
             </li>
             `;
+        if (assemblymanList[i].status === '참여') {
           ul.insertAdjacentHTML('beforeend', assemblymanLi);
-        });
-      }
+          participateZone.insertAdjacentHTML('beforeend', assemblymanLi);
+        } else if(assemblymanList[i].status === '거부') {
+          rejectZone.insertAdjacentHTML('beforeend', assemblymanLi);
+        } else if(assemblymanList[i].status === '무응답') {
+          noResponseZone.insertAdjacentHTML('beforeend', assemblymanLi);
+        }
+      });
     }
   }
 
@@ -316,13 +354,20 @@ class project {
     let nowStatus = this.statusZone.getAttribute('data-item');
     switch (nowStatus) {
       case 'running':
-        this.statusZone.querySelector('.lawmaking').classList.add('active');
+        this.statusZone.querySelector('.running').classList.add('active');
+        this.statusZone.querySelector('.matching').classList.add('past');
+        this.statusZone.querySelector('.participation').classList.add('past');
         break;
       case 'fail':
         let step = this.statusZone.querySelector('.matching');
         step.classList.add('active');
         step.innerText = '매칭실패';
+        step.style.backgroundColor = '#fd515d';
+        this.statusZone.querySelector('.participation').classList.add('past');
         break;
+      case 'matching':
+        this.statusZone.querySelector('.matching').classList.add('active');
+        this.statusZone.querySelector('.running').classList.add('past');
       default:
         this.statusZone.querySelector('.participation').classList.add('active');
     }
@@ -335,7 +380,7 @@ class project {
 
   modalOff() {
     this.dim.classList.remove('is-visible');
-    this.infoModal.classList.remove('is-visible');
+    this.modal.classList.remove('is-visible');
   }
 
   percentageSet() {
@@ -361,6 +406,19 @@ class project {
   }
 
   join(button) {
+    this.countTag = document.querySelector('p.count');
+
+    if(button.innerText === '참여하기') {
+      button.innerText = '참여취소';
+      button.classList.add('is-active');
+      this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) + 1);
+      this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
+    } else {
+      button.innerText = '참여하기';
+      button.classList.remove('is-active');
+      this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) - 1);
+      this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
+    }
     fetch(`/projects/${this.id}/join`, {
       method: 'PATCH',
       credentials: 'same-origin',
@@ -369,17 +427,10 @@ class project {
         'content-type': 'application/json',
       })
     }).then(res => {
-      this.countTag = document.querySelector('p.count');
-      if (res.status === 201) {
-        button.innerText = '참여취소';
-        button.classList.add('is-active');
-        this.countTag.innerText = parseInt(this.countTag.innerText) + 1;
-      } else if (res.status === 202) {
-        button.innerText = '참여하기';
-        button.classList.remove('is-active');
-        this.countTag.innerText = parseInt(this.countTag.innerText) - 1;
-      } else if (res.status === 401) {
+      if (res.status === 401) {
         window.location.href = '/login';
+      } else if(res.status !== 201 && res.status !== 202) {
+        location.reload();
       }
     });
   }

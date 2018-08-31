@@ -39,6 +39,22 @@
                 </div>
             </li>
         </ul>
+        {{#project.status}}
+            <ul id="notice">
+                {{#project.notice1}}
+                    <li>{{project.notice1}}</li>
+                {{/project.notice1}}
+
+                {{#project.notice2}}
+                    <li>{{project.notice2}}</li>
+                {{/project.notice2}}
+
+                {{#project.notice3}}
+                    <li>{{project.notice3}}</li>
+                {{/project.notice3}}
+            </ul>
+        {{/project.status}}
+
         <div class="writer-info">
             <div class="profile"></div>
             <h5 class="writer">{{project.proposer}}</h5>
@@ -46,7 +62,7 @@
         <div class="percentage-zone">
             <div class="percentage"></div>
         </div>
-        <p class="count">{{project.participations_count}}</p>
+        <p class="count" data-item="{{project.participations_count}}">{{project.participations_count}}명</p>
         <p class="percentage-number" data-item="{{project.participations_goal_count}}">78%</p>
         {{#participations}}
             <button class="join-btn is-active">참여취소</button>
@@ -141,6 +157,17 @@
                 <button class="submit-comment-btn">입력</button>
             </div>
         </div><!--discussion-->
+    </div>
+    <div class="modal">
+        <h5 class="committee-name">상임위원회</h5>
+        <label for="modal-participate">참여 의원</label>
+        <ul id="modal-participate"></ul>
+
+        <label for="modal-reject">거부 의원</label>
+        <ul id="modal-reject"></ul>
+
+        <label for="modal-no-response">무응답 의원</label>
+        <ul id="modal-no-response"></ul>
     </div>
 </main>
 {{> include/footer}}

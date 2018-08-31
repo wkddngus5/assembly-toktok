@@ -20,6 +20,8 @@
     margin: 0;
     float: left;
     display: inline-block;
+    background-size: cover;
+    background-position: center;
     height: 100%;
     overflow-x: hidden;
     transition: all 800ms;
@@ -52,6 +54,7 @@
     color: #FFFFFF;
     position: relative;
     top: 50%;
+    font-size: 20px;
 }
 
 .page-1 h6 {
