@@ -119,6 +119,7 @@ li.project.long {
     font-size: 1.2em;
     font-weight: bold;
     margin: 20px;
+    height: 20px;
     text-align: left;
 }
 
@@ -157,7 +158,7 @@ li.project.long {
     font-size: 15px;
     font-weight: bold;
     color: #18c3b3;
-    margin: 0;
+    margin: 0 10px 10px 0;
     text-align: left;
 }
 

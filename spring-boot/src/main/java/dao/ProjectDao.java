@@ -17,7 +17,7 @@ public interface ProjectDao extends JpaRepository<Project, Long> {
     @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL order by participations_count desc LIMIT 0, 3", nativeQuery = true)
     List<Project> selectByBest();
 
-    @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL AND status IS NULL order by created_at asc LIMIT 0, 5", nativeQuery = true)
+    @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL AND participations_count < 1000 order by participations_count desc LIMIT 0, 5", nativeQuery = true)
     List<Project> selectByImminent();
 
     @Query(value = "SELECT * FROM projects WHERE deleted_at IS NULL order by created_at desc LIMIT 0, 3", nativeQuery = true)
@@ -25,6 +25,9 @@ public interface ProjectDao extends JpaRepository<Project, Long> {
 
     @Query(value = "SELECT * FROM projects where :where AND deleted_at IS NULL", nativeQuery = true)
     List<Project> sorted(@Param("where") String where, Pageable pageable);
+
+    @Query(value = "SELECT * FROM projects where :where AND deleted_at IS NULL AND participations_count < 1000", nativeQuery = true)
+    List<Project> sortedImminent(@Param("where") String where, Pageable pageable);
 
     @Query(value = "SELECT * FROM projects where title like :keyword  or body like :keyword ", nativeQuery = true)
     List<Project> search(@Param("keyword") String keyword);

@@ -20,9 +20,11 @@
             <a href="/login" id="login"><li class="mdl-menu__item">로그인</li></a>
         {{/authenticatedUser}}
         {{#authenticatedUser}}
+            <a href="/projectForm"><li class="mdl-menu__item">제안하기</li></a>
             <a href="/my"><li class="mdl-menu__item">마이페이지</li></a>
             <a href="/logout"<li class="mdl-menu__item">로그아웃</li></a>
         {{/authenticatedUser}}
+        <a href="/projectForm"><li class="mdl-menu__item">국회톡톡이란?</li></a>
         {{#staff}}
             <a href="/administrator/projects"><li class="mdl-menu__item">프로젝트 관리</li></a>
             <a href="/administrator/committees"><li class="mdl-menu__item">상임위 관리</li></a>

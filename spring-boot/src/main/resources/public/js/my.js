@@ -47,8 +47,10 @@ class my {
     });
     this.inputProfileImg.addEventListener('change', this.changeProfileImg);
     this.projectsNav.addEventListener('click', this.changeProjects);
-  }
 
+    document.querySelector('#participations-btn').classList.add('is-active');
+    document.querySelector('ul.project-list.participations').classList.add('is-visible');
+  }
 
   initProfileImg() {
     const imageZone = document.querySelector('.mdl-card__title.mdl-card--expand');
@@ -157,9 +159,14 @@ class my {
     });
   }
 
+
   projectsInit() {
     document.querySelectorAll('li.project').forEach((li, index) => {
       const status = li.querySelector('div.status');
+      const projectImg = li.querySelector('div.project-img');
+      if (projectImg.getAttribute('style').includes('null')) {
+        projectImg.removeAttribute('style');
+      }
       const nowStatus = status.getAttribute('data-item');
       switch (nowStatus) {
         case 'running':

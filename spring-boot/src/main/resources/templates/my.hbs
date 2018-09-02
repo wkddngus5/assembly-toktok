@@ -16,8 +16,13 @@
         </div>
         <div class="mdl-card__supporting-text">
             <div class="mdl-textfield mdl-js-textfield">
+                <label for="now-email">현재 이메일</label>
+                <p id="now-email">{{user.email}}</p>
+                <label for="now-nickname">현재 닉네임</label>
+                <p id="now-nickname">{{user.nickname}}</p>
                 <button class="change-nav" id="change-nickname-btn">닉네임 변경</button>
                 <button class="change-nav" id="change-password-btn">비밀번호 변경</button>
+
                 <div class="change-nickname-zone" data-item="nickname">
                     <form action="#">
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -55,37 +60,19 @@
 
     <div class="project-list-zone">
         <nav class="project-list-btns">
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-item="proposals">
-                내가 작성한 제안들
-            </button>
-            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" data-item="participations">
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="participations-btn" data-item="participations">
                 내가 참여한 제안들
             </button>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect" id="proposals-btn" data-item="proposals">
+                내가 작성한 제안들
+            </button>
         </nav>
-
-        <ul class="project-list proposals">
-            {{#each proposals}}
-                <a href="/projects/{{this.id}}">
-                    <li class="project">
-                        <div class="project-img">
-                            <div class="status" data-item="{{this.status}}">시민참여</div>
-                        </div>
-                        <div class="project-summary">
-                            <h5>{{this.title}}</h5>
-                            <div class="percentage-zone"><div class="percentage"></div></div>
-                            <p class="count" data-item="{{this.participations_count}}">{{this.participations_count}}명</p>
-                            <p class="percentage-number" data-item="{{this.participations_goal_count}}"></p>
-                        </div>
-                    </li>
-                </a>
-            {{/each}}
-        </ul>
 
         <ul class="project-list participations">
             {{#each participations}}
                 <a href="/projects/{{this.id}}">
                     <li class="project">
-                        <div class="project-img">
+                        <div class="project-img" style="background-image: url({{this.image}})">
                             <div class="status" data-item="{{this.status}}">시민참여</div>
                         </div>
                         <div class="project-summary">
@@ -98,6 +85,25 @@
                 </a>
             {{/each}}
         </ul>
+
+        <ul class="project-list proposals">
+            {{#each proposals}}
+                <a href="/projects/{{this.id}}">
+                    <li class="project">
+                        <div class="project-img" style="background-image: url({{this.image}})">
+                            <div class="status" data-item="{{this.status}}">시민참여</div>
+                        </div>
+                        <div class="project-summary">
+                            <h5>{{this.title}}</h5>
+                            <div class="percentage-zone"><div class="percentage"></div></div>
+                            <p class="count" data-item="{{this.participations_count}}">{{this.participations_count}}명</p>
+                            <p class="percentage-number" data-item="{{this.participations_goal_count}}"></p>
+                        </div>
+                    </li>
+                </a>
+            {{/each}}
+        </ul>
+
     </div>
 </main>
 

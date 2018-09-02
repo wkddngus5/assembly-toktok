@@ -50,11 +50,11 @@
 }
 
 .page-1 p {
-    margin: 0 0 20px 20px;
+    margin: 0 0 40px 20px;
     color: #FFFFFF;
     position: relative;
     top: 50%;
-    font-size: 20px;
+    font-size: 3em;
 }
 
 .page-1 h6 {

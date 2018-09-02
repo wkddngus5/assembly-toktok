@@ -40,19 +40,34 @@
             </li>
         </ul>
         {{#project.status}}
-            <ul id="notice">
+            <div id="notice">
                 {{#project.notice1}}
-                    <li>{{project.notice1}}</li>
+                    <table class="notice1">
+                        <tr>
+                            <td class="image-zone"></td>
+                            <td>{{project.notice1}}</td>
+                        </tr>
+                    </table>
                 {{/project.notice1}}
 
                 {{#project.notice2}}
-                    <li>{{project.notice2}}</li>
+                    <table class="notice2">
+                        <tr>
+                            <td class="image-zone"></td>
+                            <td>{{project.notice2}}</td>
+                        </tr>
+                    </table>
                 {{/project.notice2}}
 
                 {{#project.notice3}}
-                    <li>{{project.notice3}}</li>
+                    <table class="notice3">
+                        <tr>
+                            <td class="image-zone"></td>
+                            <td>{{project.notice3}}</td>
+                        </tr>
+                    </table>
                 {{/project.notice3}}
-            </ul>
+            </div>
         {{/project.status}}
 
         <div class="writer-info">
