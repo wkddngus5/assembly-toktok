@@ -115,6 +115,7 @@ li.project.long {
     font-weight: bold;
     margin: 20px;
     text-align: left;
+    height: 20px;
 }
 
 .category-list {
@@ -152,7 +153,7 @@ li.project.long {
     font-size: 15px;
     font-weight: bold;
     color: #18c3b3;
-    margin: 0;
+    margin: 0 10px 10px 0;
     text-align: left;
 }
 

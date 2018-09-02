@@ -11,6 +11,10 @@ html, body {
     font-family: NotoSans;
 }
 
+img, embed, object, video {
+    max-width: 100%;
+}
+
 h1, h2, h3 {
     font-family: NotoSans;
 }
@@ -28,6 +32,11 @@ a {
             0 2px 2px 0 rgba(0,0,0,.14),
             0 3px 1px -2px rgba(0,0,0,.2),
             0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+.header .move-page {
+    margin: 0 0 0 20px;
+    vertical-align: top;
 }
 
 .logo {
@@ -110,7 +119,7 @@ a {
 footer {
     background-color: #383838;
     color: #717171;
-    height: 150px;
+    height: 220px;
 }
 
 footer .left-side{

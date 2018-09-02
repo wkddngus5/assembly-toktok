@@ -88,7 +88,7 @@ input#agree {
 }
 
 div.input-zone.agree {
-    margin: 0 0 50px 0;
+    margin: 2px 0 50px 0;
 }
 
 form.signup-form .submit-btn {
@@ -99,6 +99,10 @@ form.signup-form .submit-btn {
     margin: 28px 0 80px 0;
     font-size: 18px;
     font-weight: bold;
+}
+
+form.signup-form .submit-btn:hover {
+    cursor: pointer;
 }
 
 .agree-info:hover {

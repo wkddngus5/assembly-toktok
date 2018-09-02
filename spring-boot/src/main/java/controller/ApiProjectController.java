@@ -154,7 +154,7 @@ public class ApiProjectController {
         } else if ("best".equals(by)) {
             orderBy = "participations_count";
         } else {
-            orderBy = "deleted_at";
+            orderBy = "participations_count";
         }
 
         int start = number - 1;
@@ -165,7 +165,12 @@ public class ApiProjectController {
             where = "category = " + category;
         }
 
-        List<Project> projectList = projectDao.sorted(where, pq);
+        List<Project> projectList;
+        if("imminent".equals(by)) {
+            projectList = projectDao.sortedImminent(where, pq);
+        } else {
+            projectList = projectDao.sorted(where, pq);
+        }
 
         return new ResponseEntity<>(projectList, headers, HttpStatus.OK);
     }
