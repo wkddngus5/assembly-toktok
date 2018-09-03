@@ -1,22 +1,45 @@
 class projectForm {
   constructor() {
+    this.pagePositions = [0, 0.13, 0.25, 0.37, 0.47, 0.63, 0.84];
+
+    this.main = document.querySelector('main');
     this.pages = document.querySelectorAll('.page');
     this.main = document.querySelector('main');
     this.projectImageInput = document.querySelector('input.project-img');
     this.projectImagePreview = document.querySelector('div.image-preview');
     this.completeBtn = document.querySelector('button.complete');
     this.inputImg = document.querySelector('input.project-img');
+    this.nowPage = 0;
+    this.remoteControllerBtns = document.querySelectorAll('ul.remote-controller li');
+
     this.init();
   }
 
   init() {
+    this.remoteControllerBtns[this.nowPage].classList.add('is-active');
+    window.addEventListener('scroll', e => {
+      this.setRemoteController();
+    });
+
+    document.querySelector('.remote-controller').addEventListener('click', e => {
+      if(e.target.tagName !== 'LI') {
+        return;
+      }
+      this.movePage(e.target.getAttribute('data-item'));
+    });
+
+    this.main.addEventListener('click', e => {
+      if(e.target.classList.contains('next')) {
+        this.movePage(e.target.getAttribute('data-item'));
+      }
+    });
+
     CKEDITOR.replace( 'editor1', {
         toolbar: [
           { name: 'clipboard', items: [ 'Undo', 'Redo' ] },
           { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
           { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
           { name: 'align', items: [ 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
-          '/',
           { name: 'basicstyles', items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'CopyFormatting' ] },
           { name: 'links', items: [ 'Link', 'Unlink' ] },
           { name: 'insert', items: [ 'Image', 'Table', 'Video' ] },
@@ -40,6 +63,8 @@ class projectForm {
       removeDialogTabs: 'image:advanced;link:advanced'
     });
 
+    window.parent.CKEDITOR.tools.callFunction()
+
     document.querySelectorAll('button.next').forEach((button, i) => {
       button.addEventListener('click', e => {
         this.main.style.marginTop = this.pageHeight * i * (-1) + 100 + 'px';
@@ -48,38 +73,7 @@ class projectForm {
     });
 
     this.completeBtn.addEventListener('click', e => {
-      e.preventDefault();
-      const data = {
-        'proposer': document.querySelector('#name').value,
-        'proposer_email': document.querySelector('#email').value,
-        'proposer_phone': document.querySelector('#phone').value,
-        'proposer_description': document.querySelector('#introduce').value,
-        'title': document.querySelector('#title').value,
-        'summary': document.querySelector('#desc').value,
-        'body': CKEDITOR.instances.editor1.getData(),
-        'category': document.querySelector('ul.category-list .is-checked').innerText,
-      };
-
-      if(this.inputImg.getAttribute('data-item')) {
-        data.image = this.inputImg.getAttribute('data-item');
-      }
-
-      fetch('/projects', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: new Headers({
-          'accept': 'application/json',
-          'content-type': 'application/json',
-        }),
-        body: JSON.stringify(data)
-      }).then(res => {
-        if(res.status === 200) {
-          window.location = '/';
-        }
-        return res.json();
-      }).then(json => {
-        console.log(json);
-      });
+      this.postProject(e);
     });
 
     document.querySelector('ul.category-list').addEventListener('click', e => {
@@ -96,6 +90,84 @@ class projectForm {
       this.changeProjectImage(e.target);
     });
   }
+
+  movePage(pageNumber) {
+    window.scroll({
+      top: document.querySelector('#page-' + pageNumber).offsetTop,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
+
+  postProject(e) {
+    e.preventDefault();
+    if(!document.querySelector('ul.category-list .is-checked')) {
+      alert('카테고리를 선택해주세요');
+    }
+
+    const data = {
+      'proposer': document.querySelector('#name').value,
+      'proposer_email': document.querySelector('#email').value,
+      'proposer_phone': document.querySelector('#phone').value,
+      'proposer_description': document.querySelector('#introduce').value,
+      'title': document.querySelector('#title').value,
+      'summary': document.querySelector('#desc').value,
+      'body': CKEDITOR.instances.editor1.getData(),
+      'category': document.querySelector('ul.category-list .is-checked').innerText,
+    };
+
+    if(this.inputImg.getAttribute('data-item')) {
+      data.image = this.inputImg.getAttribute('data-item');
+    }
+
+    fetch('/projects', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: new Headers({
+        'accept': 'application/json',
+        'content-type': 'application/json',
+      }),
+      body: JSON.stringify(data)
+    }).then(res => {
+      if(res.status === 200) {
+        window.location = '/';
+      }
+      return res.json();
+    }).then(json => {
+      console.log(json);
+    });
+  }
+
+
+  setRemoteController() {
+    let pageNumber = 0;
+
+    if(window.scrollY < document.querySelector('#page-1').offsetTop) {
+      pageNumber = 0;
+    } else if(window.scrollY < document.querySelector('#page-2').offsetTop) {
+      pageNumber = 1;
+    } else if(window.scrollY < document.querySelector('#page-3').offsetTop) {
+      pageNumber = 2;
+    } else if(window.scrollY < document.querySelector('#page-4').offsetTop) {
+      pageNumber = 3;
+    } else if(window.scrollY < document.querySelector('#page-5').offsetTop) {
+      pageNumber = 4;
+    } else if(window.scrollY < document.querySelector('#page-6').offsetTop) {
+      pageNumber = 5;
+    } else {
+      pageNumber = 6;
+    }
+
+    if(this.nowPage === pageNumber) {
+      return;
+    }
+
+    this.remoteControllerBtns[this.nowPage].classList.remove('is-active');
+    this.nowPage = pageNumber;
+    this.remoteControllerBtns[this.nowPage].classList.add('is-active');
+  }
+
 
   changeProjectImage(target) {
     let file = target.files[0];

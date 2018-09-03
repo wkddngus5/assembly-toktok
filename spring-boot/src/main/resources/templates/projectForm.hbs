@@ -9,7 +9,16 @@
 <body>
 {{> include/header}}
 <main>
-    <div class="notice page" id="page-1">
+    <ul class="remote-controller">
+        <li class="page-btn index-0 no-border" data-item="0">0.제안요건</li>
+        <li class="page-btn index-1" data-item="1">1.제안자 정보</li>
+        <li class="page-btn index-2" data-item="2">2.제안자 소개</li>
+        <li class="page-btn index-3" data-item="3">3.제안 제목</li>
+        <li class="page-btn index-4" data-item="4">4.제안 요약</li>
+        <li class="page-btn index-5" data-item="5">5.제안 내용</li>
+        <li class="page-btn index-6" data-item="6">6.대표 이미지</li>
+    </ul>
+    <div class="notice page" id="page-0">
         <table>
             <tr class="contents">
                 <td>
@@ -27,13 +36,13 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-2"><button class="next">다음</button></a>
+                    <button class="next" data-item="1">다음</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="writer-info-zone page" id="page-2">
+    <div class="writer-info-zone page" id="page-1">
         <table>
             <tr class="contents">
                 <td>
@@ -60,13 +69,13 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-3"><button class="next">다음</button></a>
+                    <button class="next" data-item="2">다음</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="writer-info-zone-2 page" id="page-3">
+    <div class="writer-info-zone-2 page" id="page-2">
         <table>
             <tr class="contents">
                 <td>
@@ -80,13 +89,13 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-4"><button class="next">다음</button></a>
+                    <button class="next" data-item="3">다음</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="title page" id="page-4">
+    <div class="title page" id="page-3">
         <table>
             <tr class="contents">
                 <td>
@@ -104,13 +113,13 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-5"><button class="next">다음</button></a>
+                    <button class="next" data-item="4">다음</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="categories page" id="page-5">
+    <div class="categories page" id="page-4">
         <table>
             <tr>
                 <td>
@@ -145,13 +154,13 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-6"><button class="next">다음</button></a>
+                    <button class="next" data-item="5">다음</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="project-detail page" id="page-6">
+    <div class="project-detail page" id="page-5">
         <table>
             <tr class="contents">
                 <td>
@@ -171,13 +180,13 @@
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-7"><button class="next">다음</button></a>
+                    <button class="next" data-item="6">다음</button>
                 </td>
             </tr>
         </table>
     </div>
 
-    <div class="project-image page" id="page-7">
+    <div class="project-image page" id="page-6">
         <table>
             <tr class="contents">
                 <td>
@@ -195,12 +204,11 @@
                     <!--<div class="desc">-->
                         <!--<p class="sub-info">대표 이미지는 이렇게 사용됩니다!</p>-->
                     <!--</div>-->
-
                 </td>
             </tr>
             <tr class="button">
                 <td>
-                    <a href="#page-6"><button class="next complete">완료</button></a>
+                    <button class="complete">완료</button>
                 </td>
             </tr>
         </table>
