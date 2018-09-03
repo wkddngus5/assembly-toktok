@@ -17,6 +17,45 @@ div.dim.is-visible {
     display: block;
 }
 
+div.join-modal {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    width: 350px;
+    margin: 0 0 0 -175px;
+    padding: 40px;
+    background-color: #ffffff;
+    text-align: center;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+div.join-modal.is-visible {
+    display: block;
+}
+
+
+#close-join-modal-btn {
+    margin: 30px 0 0 0;
+    width: 100px;
+    height: 40px;
+    font-size: 20px;
+    border: none;
+    background-color: #eeeeee;
+    box-shadow:
+            0 2px 2px 0 rgba(0,0,0,.14),
+            0 3px 1px -2px rgba(0,0,0,.2),
+            0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+#close-join-modal-btn:hover {
+    cursor: pointer;
+    background-color: #AAAAAA;
+}
+
 div.info-modal {
     background-color: #FFFFFF;
     width: 350px;
@@ -103,6 +142,10 @@ li.status {
             0 2px 2px 0 rgba(0,0,0,.14),
             0 3px 1px -2px rgba(0,0,0,.2),
             0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+li.status:hover {
+    cursor: pointer;
 }
 
 li.status.past {
@@ -704,3 +747,8 @@ div.modal li.is-visible {
     }
 }
 
+.join-modal ul.share-list {
+    display: block;
+    float: none;
+    margin: 0;
+}

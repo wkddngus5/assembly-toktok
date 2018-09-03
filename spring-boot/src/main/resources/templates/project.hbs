@@ -7,9 +7,17 @@
 <body>
 {{> include/header}}
 <div class="dim"></div>
-<div class="info-modal">
-    <h5 class="info-label">진행단계</h5>
-    <img class="info-img" src="/img/info.png">
+<div class="join-modal">
+    <p><strong></strong>번째 서명자로 참여해주셔서 감사합니다!<br>
+    주변에 널리널리 공유해주세요!<br>
+    더 많은 분들의 동참이 법안 통과 가능성을 높입니다.</p>
+    <br>
+    <ul class="share-list">
+        <li class="share facebook"></li>
+        <li class="share twitter"></li>
+        <li class="share kakao"></li>
+    </ul>
+    <button id="close-join-modal-btn">확인</button>
 </div>
 <main class="main">
     <img class="main-img" src="{{project.image}}">
@@ -80,7 +88,7 @@
         <p class="count" data-item="{{project.participations_count}}">{{project.participations_count}}명</p>
         <p class="percentage-number" data-item="{{project.participations_goal_count}}">78%</p>
         {{#participations}}
-            <button class="join-btn is-active">참여취소</button>
+            <button class="join-btn is-active">참여중</button>
         {{/participations}}
         {{^participations}}
             <button class="join-btn">참여하기</button>
