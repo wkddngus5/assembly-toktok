@@ -173,3 +173,9 @@ div.input-zone {
 div.image-preview:hover {
     cursor: pointer;
 }
+
+@media screen and (max-width: 900px) {
+    ul.remote-controller {
+        display: none;
+    }
+}

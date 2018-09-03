@@ -5,7 +5,7 @@ class project {
     this.nowActiveInfo = document.querySelector('nav.info-subject button.active');
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
     this.dim = document.querySelector('div.dim');
-    this.modal = document.querySelector('div.modal');
+    this.joinModal = document.querySelector('div.join-modal');
     this.statusZone = document.querySelector('ul.status-zone');
     this.timelineList = document.querySelectorAll('li.each-timeline');
     this.showingGuide = null;
@@ -13,6 +13,7 @@ class project {
     this.countTag = document.querySelector('p.count');
     this.committeeZone = document.querySelector('#committee');
     this.modalCommitteeName = document.querySelector('.modal .committee-name');
+    this.joinModalCount = document.querySelector('.join-modal strong');
 
     this.toggleGuide = this.toggleGuide.bind(this);
     this.closeGuide = this.closeGuide.bind(this);
@@ -44,6 +45,11 @@ class project {
     document.querySelector('.submit-comment-btn').addEventListener('click', e => {
       this.postComment();
     });
+
+    document.querySelector('#close-join-modal-btn').addEventListener('click', e => {
+      this.joinModal.classList.remove('is-visible');
+    });
+
 
     document.querySelector('ul.discussion-list.new').addEventListener('click', e => {
       const target = e.target;
@@ -405,15 +411,22 @@ class project {
     this.nowVisibleInfo.classList.add('is-visible');
   }
 
+
   join(button) {
     this.countTag = document.querySelector('p.count');
 
     if(button.innerText === '참여하기') {
-      button.innerText = '참여취소';
+      button.innerText = '참여중';
       button.classList.add('is-active');
       this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) + 1);
       this.countTag.innerText = this.countTag.getAttribute('data-item') + '명';
+      this.joinModalCount.innerText = this.countTag.getAttribute('data-item');
+      document.querySelector('.join-modal').classList.add('is-visible');
     } else {
+      const cancel = confirm('참여를 취소하시겠습니까?');
+      if(!cancel) {
+        return;
+      }
       button.innerText = '참여하기';
       button.classList.remove('is-active');
       this.countTag.setAttribute('data-item', parseInt(this.countTag.getAttribute('data-item')) - 1);
@@ -437,3 +450,4 @@ class project {
 }
 
 export default project;
+
