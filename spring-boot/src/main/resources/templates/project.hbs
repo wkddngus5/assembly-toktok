@@ -13,9 +13,9 @@
     더 많은 분들의 동참이 법안 통과 가능성을 높입니다.</p>
     <br>
     <ul class="share-list">
-        <li class="share facebook"></li>
-        <li class="share twitter"></li>
-        <li class="share kakao"></li>
+        <a href="http://www.facebook.com/sharer/sharer.php?u=www.toktok.io/projects/{{project.id}}"><li class="share facebook"></li></a>
+        <a href="https://twitter.com/intent/tweet?text=TEXT&url=www.toktok.io/projects/{{project.id}}"><li class="share twitter"></li></a>
+        <li class="share kakao" id="share-kakao2"></li>
     </ul>
     <button id="close-join-modal-btn">확인</button>
 </div>
@@ -94,9 +94,9 @@
             <button class="join-btn">참여하기</button>
         {{/participations}}
         <ul class="share-list">
-            <li class="share facebook"></li>
-            <li class="share twitter"></li>
-            <li class="share kakao"></li>
+            <a href="http://www.facebook.com/sharer/sharer.php?u=www.toktok.io/projects/{{project.id}}"><li class="share facebook"></li></a>
+            <a href="https://twitter.com/intent/tweet?text=TEXT&url=www.toktok.io/projects/{{project.id}}"><li class="share twitter"></li></a>
+            <li class="share kakao" id="share-kakao"></li>
         </ul>
         {{#project.status}}
             <div class="assembly" data-item="{{project.committees}}">
@@ -118,7 +118,7 @@
     <div class="info">
         <div class="info-contents contents is-visible">
             <h4>제안 요약</h4>
-            {{{project.summary}}}
+            <div id="project-summary">{{{project.summary}}}</div>
             <h4>제안 내용</h4>
             {{{project.body}}}
         </div>
@@ -172,9 +172,10 @@
                     {{/each}}
                 </div>
             {{/authenticatedUser}}
-            <ul class="discussion-list new">
+            <ul class="discussion-list new" data-item="{{commentsCount}}">
 
             </ul>
+            <button id="more-committees">댓글 더 보기</button>
             <div id="write-comment-zone">
                 <textarea class="input-comment" rows="5" placeholder="댓글을 입력해주세요"></textarea>
                 <button class="submit-comment-btn">입력</button>

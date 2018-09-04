@@ -38,7 +38,7 @@ class adminSlides {
       'name': name
     };
 
-    fetch(`/administrator/committees/${id}`, {
+    fetch(`/administrator/slides/${id}`, {
       method: 'PUT',
       credentials: 'same-origin',
       headers: new Headers({
@@ -58,11 +58,11 @@ class adminSlides {
     const isDelete = confirm('삭제하시겠습니까?');
     if(!isDelete) {
       return
-    };
+    }
 
     const committee = target.closest('tr');
     const id = committee.getAttribute('data-item');
-    fetch(`/administrator/committees/${id}`, {
+    fetch(`/administrator/slides/${id}`, {
       method: 'DELETE',
       credentials: 'same-origin',
       headers: new Headers({
@@ -84,8 +84,6 @@ class adminSlides {
       'image': this.inputImage.getAttribute('data-item')
     };
 
-
-    console.log(data);
     fetch('/administrator/slides', {
       method: 'POST',
       credentials: 'same-origin',

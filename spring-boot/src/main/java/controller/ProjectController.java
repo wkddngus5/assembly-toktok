@@ -53,6 +53,7 @@ public class ProjectController {
 
         List<Map<String, Object>> timelineList = timelineDao.findByProjectId(project.getId());
         modelAndView.addObject("timelines", timelineList);
+        modelAndView.addObject("commentsCount", commentDao.countByProjectId(id));
 
         if(sessionedUser != null) {
             modelAndView.addObject("likes", likesDao.findByUser_id(sessionedUser.getId()));

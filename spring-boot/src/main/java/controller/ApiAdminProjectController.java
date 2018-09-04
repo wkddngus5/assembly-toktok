@@ -56,10 +56,10 @@ public class ApiAdminProjectController {
             if(project.getImage() != null && project.getImage().contains("s3")) {
                 return new ResponseEntity<>(updateProject, headers, HttpStatus.OK);
             }
-            if (!StringUtils.isEmpty(project.getImage())) {
-                s3Wrapper.updateImage(updateProject.getImage(), ImageUploadUtil.saveImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
-                updateProject.setImage(ImageUploadUtil.getImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
-            }
+//            if (!StringUtils.isEmpty(project.getImage())) {
+//                s3Wrapper.updateImage(updateProject.getImage(), ImageUploadUtil.saveImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
+//                updateProject.setImage(ImageUploadUtil.getImagePath(Project.class.getSimpleName(), String.valueOf(updateProject.getId()), updateProject.getImage()));
+//            }
             return new ResponseEntity<>(updateProject, headers, HttpStatus.OK);
         }
     }

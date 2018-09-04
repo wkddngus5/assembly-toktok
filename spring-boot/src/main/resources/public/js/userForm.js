@@ -46,12 +46,13 @@ class userForm {
     }).then(res => {
       if(res.status === 200) {
         window.location = '/login';
+      } else if(res.status === 500) {
+        this.showSnackBar('이미 존재하는 계정입니다.');
       }
       return res.json();
-    }).then(json => {
-      this.showSnackBar('이미 존재하는 계정입니다.');
     });
   }
+
 
   isValidForm() {
     if(!this.verifyEmail(this.inputEmail.value)) {

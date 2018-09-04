@@ -13,7 +13,48 @@
         <ul class="account-list">
             <a href="http://www.facebook.com/sharer/sharer.php?u=www.toktok.io"><li class="facebook"></li></a>
             <a href="https://twitter.com/intent/tweet?text=TEXT&url=www.toktok.io"><li class="twitter"></li></a>
-            <li class="kakao"></li>
+            <li class="kakao" id="kakao-link-btn"></li>
         </ul>
     </div>
 </footer>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type='text/javascript'>
+    //<![CDATA[
+    // // 사용할 앱의 JavaScript 키를 설정해 주세요.
+    Kakao.init('e75d813957d26c4c8a00535facb7b071');
+    // // 카카오링크 버튼을 생성합니다. 처음 한번만 호출하면 됩니다.
+    Kakao.Link.createDefaultButton({
+        container: '#kakao-link-btn',
+        objectType: 'feed',
+        content: {
+            title: '내게 필요한 법, 국회톡톡으로 국회에 직접 제안하자!',
+            description: '국회톡톡은 시민의 제안을 법으로 만듭니다. 지금 참여해서 시민의 제안을 국회로 연결해주세요!',
+            imageUrl: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+            link: {
+                mobileWebUrl: 'https://toktok.io',
+                webUrl: 'https://toktok.io'
+            }
+        },
+        social: {
+            likeCount: 286,
+            commentCount: 45,
+            sharedCount: 845
+        },
+        buttons: [
+            {
+                title: '웹으로 보기',
+                link: {
+                    mobileWebUrl: 'https://toktok.io',
+                    webUrl: 'https://toktok.io'
+                }
+            },
+            {
+                title: '앱으로 보기',
+                link: {
+                    mobileWebUrl: 'https://toktok.io',
+                    webUrl: 'https://toktok.io'
+                }
+            }
+        ]
+    });
+</script>
