@@ -159,8 +159,8 @@ li.status.past::before {
 }
 
 li.status.active {
-    background-color: #5d9eee;
-    color: #FFFFFF;
+    background-color: #f0d102;
+    color: #002a4f;
 }
 
 #notice {
@@ -350,6 +350,10 @@ ul.share-list .share {
             0 2px 2px 0 rgba(0,0,0,.14),
             0 3px 1px -2px rgba(0,0,0,.2),
             0 1px 5px 0 rgba(0,0,0,.12);
+}
+
+ul.share-list .share:hover {
+    cursor: pointer;
 }
 
 ul.share-list .facebook {
@@ -623,7 +627,7 @@ button.likes.is-active {
     display: inline-block;
 }
 
-button.load-all-comments {
+#more-committees {
     margin: 20px auto;
     display: block;
     font-size: 20px;
@@ -636,7 +640,11 @@ button.load-all-comments {
             0 1px 5px 0 rgba(0,0,0,.12);
 }
 
-button.load-all-comments:hover {
+#more-committees.hide {
+    display: none;
+}
+
+#more-committees:hover {
     cursor: pointer;
     opacity: 0.8;
 }
@@ -649,6 +657,7 @@ button.load-all-comments:hover {
     width: 70%;
     background-color: #efefef;
     border: none;
+    font-size: 17px;
 }
 
 #write-comment-zone button.submit-comment-btn {

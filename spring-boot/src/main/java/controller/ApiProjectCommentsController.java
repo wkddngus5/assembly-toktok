@@ -3,6 +3,9 @@ package controller;
 import dao.*;
 import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,19 +44,32 @@ public class ApiProjectCommentsController {
     @Autowired
     private UserDao userDao;
 
-    @RequestMapping(value = "/projects/{id}/comments", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> getComments(@PathVariable("id") final Long id) {
+//    @RequestMapping(value = "/projects/{id}/comments", method = RequestMethod.GET)
+//    public ResponseEntity<List<Comment>> getComments(@PathVariable("id") final Long id) {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.add("Content-Type", "application/json; charset=utf-8");
+//
+//        List<Comment> comments = commentDao.findByProjectId(id);
+//        for(Comment comment : comments) {
+//            comment.setWriter(userDao.findById(comment.getUser_id()).get());
+//        }
+//
+//        return new ResponseEntity<>(comments, headers, HttpStatus.OK);
+//    }
+
+    @RequestMapping(value = "/projects/{id}/comments/{index}", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> getCommentsPage(@PathVariable("id") final Long id, @PathVariable("index") final int index) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json; charset=utf-8");
 
-        List<Comment> comments = commentDao.findByProjectId(id);
+        Pageable pq = PageRequest.of(index, 10, Sort.Direction.DESC, "created_at");
+        List<Comment> comments = commentDao.findByProjectId(id, pq);
         for(Comment comment : comments) {
             comment.setWriter(userDao.findById(comment.getUser_id()).get());
         }
 
         return new ResponseEntity<>(comments, headers, HttpStatus.OK);
     }
-
 
     @RequestMapping(value = "/projects/{id}/comments", method = RequestMethod.POST)
     public ResponseEntity<Comment> post(@PathVariable("id") final Long id, @RequestBody Comment comment) {

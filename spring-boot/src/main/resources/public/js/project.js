@@ -6,6 +6,7 @@ class project {
     this.nowVisibleInfo = document.querySelector('div.info .is-visible');
     this.dim = document.querySelector('div.dim');
     this.joinModal = document.querySelector('div.join-modal');
+    this.committeeModal = document.querySelector('.modal');
     this.statusZone = document.querySelector('ul.status-zone');
     this.timelineList = document.querySelectorAll('li.each-timeline');
     this.showingGuide = null;
@@ -14,12 +15,17 @@ class project {
     this.committeeZone = document.querySelector('#committee');
     this.modalCommitteeName = document.querySelector('.modal .committee-name');
     this.joinModalCount = document.querySelector('.join-modal strong');
+    this.commentsNew = document.querySelector('ul.discussion-list.new');
+    this.moreCommittees = document.querySelector('#more-committees');
 
+    this.userNickname = document.querySelector('#userNickname').getAttribute('data-item');
+    this.userRole = document.querySelector('#userRole').getAttribute('data-item');
+
+    this.commentIndex = 0;
     this.toggleGuide = this.toggleGuide.bind(this);
     this.closeGuide = this.closeGuide.bind(this);
     this.init();
   };
-
 
   init() {
     this.percentageSet();
@@ -27,10 +33,16 @@ class project {
     this.initCommittees();
     this.initImage();
     this.hideLastTimelineOuter();
-    this.loadAllComments();
+    this.loadComments(this.commentIndex);
+    this.makeKakaoLink('#share-kakao');
+    this.makeKakaoLink('#share-kakao2');
 
     document.querySelector('ul.status-zone').addEventListener('click', this.toggleGuide);
     document.addEventListener('click', this.closeGuide);
+    this.moreCommittees.addEventListener('click', e => {
+      this.loadComments(++this.commentIndex);
+    });
+
 
     document.querySelector('.join-btn').addEventListener('click', e => {
       this.join(e.target);
@@ -50,8 +62,7 @@ class project {
       this.joinModal.classList.remove('is-visible');
     });
 
-
-    document.querySelector('ul.discussion-list.new').addEventListener('click', e => {
+    this.commentsNew.addEventListener('click', e => {
       const target = e.target;
       if (target.classList.contains('delete')) {
         this.deleteComment(target);
@@ -71,12 +82,45 @@ class project {
     })
   };
 
+
+  makeKakaoLink(target) {
+    Kakao.Link.createDefaultButton({
+      container: target,
+      objectType: 'feed',
+      content: {
+        title: document.querySelector('h2').innerText,
+        description: document.querySelector('#project-summary').innerText,
+        imageUrl: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+        link: {
+          mobileWebUrl: 'window.location.href',
+          webUrl: 'window.location.href'
+        }
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'window.location.href',
+            webUrl: 'window.location.href'
+          }
+        },
+        {
+          title: '앱으로 보기',
+          link: {
+            mobileWebUrl: 'window.location.href',
+            webUrl: 'window.location.href'
+          }
+        }
+      ]
+    });
+  }
+
   showCommitteeModal(e) {
     if(e.target.tagName !== 'LI') {
       return;
     }
     this.dim.classList.add('is-visible');
-    this.modal.classList.add('is-visible');
+    this.committeeModal.classList.add('is-visible');
     const committeeName = e.target.getAttribute('data-item');
     this.modalCommitteeName.innerText = committeeName;
     const assemblymen = document.querySelectorAll('.modal li');
@@ -89,8 +133,15 @@ class project {
     }
   }
 
-  loadAllComments() {
-    fetch(`/projects/${this.id}/comments`, {
+  loadComments(index) {
+    const userNickname = this.userNickname;
+    const userRole = this.userRole;
+
+    if((index + 1) * 10 > this.commentsNew.getAttribute('data-item')) {
+      this.moreCommittees.classList.add('hide');
+    }
+
+    fetch(`/projects/${this.id}/comments/${index}`, {
       method: 'GET',
       credentials: 'same-origin',
       headers: new Headers({
@@ -101,9 +152,13 @@ class project {
       return res.json();
     }).then(json => {
       const commentList = document.querySelector('.discussion-list.new');
-      commentList.innerHTML = '';
       for (let i = 0; i < json.length; i++) {
         const comment = json[i];
+
+
+        const deleteBtn = userRole === 'staff' || userNickname === comment.writer.nickname ?
+          `<button className="delete">삭제</button>` : '';
+
         const commentLi = `
             <li class="each-discussion" data-item="${comment.id}">
                 <table>
@@ -119,7 +174,7 @@ class project {
                             <div class="discussion-info">
                                 <!--<button class="reply">답글 6</button>-->
                                 <button class="likes" id="like-{{this.id}}">${comment.likes_count}</button>
-                                <button class="delete">삭제</button>
+                                ${deleteBtn}
                             </div>
                         </td>
                         <td class="right">
@@ -245,7 +300,7 @@ class project {
       }
     }).then(json => {
       const newComment = `
-            <li class="each-discussion" data-item="{{this.id}}">
+            <li class="each-discussion" data-item="${json.id}">
                 <table>
                     <tr>
                         <td class="left">
@@ -282,6 +337,8 @@ class project {
     const committees = JSON.parse(assembly.getAttribute('data-item')).committeeList;
     const ul = document.querySelector('#committee');
     for (let i = 0 ; i < committees.length ; i++) {
+      console.log(committees[i]);
+
       const committee = `<li class="each-committee" data-item="${committees[i].name}">${committees[i].name}</li>`;
       ul.insertAdjacentHTML('beforeend', committee);
       this.insertAssemblymen(committees[i].assemblymanList);
@@ -386,7 +443,7 @@ class project {
 
   modalOff() {
     this.dim.classList.remove('is-visible');
-    this.modal.classList.remove('is-visible');
+    this.committeeModal.classList.remove('is-visible');
   }
 
   percentageSet() {

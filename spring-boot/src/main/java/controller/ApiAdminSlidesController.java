@@ -61,7 +61,6 @@ public class ApiAdminSlidesController {
         return new ResponseEntity<>(dbSlide, headers, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "/administrator/slides/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<MainSlide> deleteSlide(@PathVariable Long id) {
         HttpHeaders headers = new HttpHeaders();

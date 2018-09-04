@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             {{#each slides}}
-                <tr>
+                <tr data-item="{{this.id}}">
                     <td>{{this.id}}</td>
                     <td><input value="{{this.order}}"></td>
                     <td class="image" style="background-image: url({{this.image}})">

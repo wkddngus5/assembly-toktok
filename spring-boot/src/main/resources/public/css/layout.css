@@ -147,6 +147,10 @@ footer .account-list {
     border-radius: 2em;
 }
 
+.account-list li:hover {
+    cursor: pointer;
+}
+
 footer p {
     color: #b2b2b2;
 }

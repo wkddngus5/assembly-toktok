@@ -17,7 +17,7 @@ label.subject {
 
 div.subject hr {
     display: block;
-    margin: auto;
+    margin: 0 auto;
     width: 30px;
     height: 5px;
     border-width: 3px;
